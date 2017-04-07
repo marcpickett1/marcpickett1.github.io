@@ -37,6 +37,13 @@ GitHubPages::Dependencies.gems.each do |gem, version|
 end
 ```
 
+```python
+if True:
+  print 'foo'
+def bar(bat):
+  bing
+```
+
 #### [](#header-4)Header 4
 
 *   This is an unordered list following a header.
