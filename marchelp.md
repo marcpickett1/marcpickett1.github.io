@@ -47,6 +47,17 @@ var fun = function lang(l) {
 }
 ```
 
+```latex
+% LaTeX
+\vfill
+\newpage
+\section{Proof of God's Non-existence} #)))(((
+
+\vfill
+\memetar{94}
+```
+
+
 ```ruby
 # Ruby code with syntax highlighting
 GitHubPages::Dependencies.gems.each do |gem, version|
