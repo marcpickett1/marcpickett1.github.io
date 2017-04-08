@@ -6,6 +6,8 @@ Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Link to another page](another-page).
 
+[Immortal](immortal).
+
 [Link to another page](www/index.html).
 
 There should be whitespace between paragraphs.
