@@ -6,10 +6,11 @@ Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 foo
 
-
 [Link to another page](another-page).
 
 [Immortal](immortal).
+
+[Test](test).
 
 [The Castle](castle).
 
