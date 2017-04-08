@@ -4,6 +4,22 @@ layout: default
 
 ## Help for Marc
 
+### Commands
+
+```zsh
+# To download
+git clone https://github.com/marcpickett1/marcpickett1.github.io
+# To run jekyll server
+bundle exec jekyll serve
+# To submit
+git add --all && git commit -m "Foo." && git push -u origin master
+# To create new post
+cp post.md `./mmdate`post-name.md
+```
+
+
+### The Rest
+
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 There should be whitespace between paragraphs.
@@ -38,7 +54,7 @@ GitHubPages::Dependencies.gems.each do |gem, version|
 end
 ```
 
-```python
+```py
 if True:
   print 'foo'
 def bar(bat):
@@ -192,22 +208,35 @@ If you'd like to add your own custom styles:
 
 If you'd like to change the theme's HTML layout:
 
-1. [Copy the original template](https://github.com/pages-themes/slate/blob/master/_layouts/default.html) from the theme's repository<br />(*Pro-tip: click "raw" to make copying easier*)
-2. Create a file called `/_layouts/default.html` in your site
+1. [Copy the original template](https://github.com/pages-themes/slate/blob/master/_layouts/default.html)
+   from the theme's repository<br />(*Pro-tip: click "raw" to make
+   copying easier*)
+2. Create a file called `/_layouts/default.html` in your site.
 3. Paste the default layout content copied in the first step
 4. Customize the layout as you'd like
 
 ## Roadmap
 
-See the [open issues](https://github.com/pages-themes/slate/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/pages-themes/slate/issues)
+for a list of proposed features (and known issues).
 
 ## Project philosophy
 
-The Slate theme is intended to make it quick and easy for GitHub Pages users to create their first (or 100th) website. The theme should meet the vast majority of users' needs out of the box, erring on the side of simplicity rather than flexibility, and provide users the opportunity to opt-in to additional complexity if they have specific needs or wish to further customize their experience (such as adding custom CSS or modifying the default layout). It should also look great, but that goes without saying.
+The Slate theme is intended to make it quick and easy for GitHub Pages
+users to create their first (or 100th) website. The theme should meet
+the vast majority of users' needs out of the box, erring on the side
+of simplicity rather than flexibility, and provide users the
+opportunity to opt-in to additional complexity if they have specific
+needs or wish to further customize their experience (such as adding
+custom CSS or modifying the default layout). It should also look
+great, but that goes without saying.
 
 ## Contributing
 
-Interested in contributing to Slate? We'd love your help. Slate is an open source project, built one contribution at a time by users like you. See [the CONTRIBUTING file](CONTRIBUTING.md) for instructions on how to contribute.
+Interested in contributing to Slate? We'd love your help. Slate is an
+open source project, built one contribution at a time by users like
+you. See [the CONTRIBUTING file](CONTRIBUTING.md) for instructions on
+how to contribute.
 
 ### Previewing the theme locally
 
@@ -221,6 +250,9 @@ If you'd like to preview the theme locally (for example, in the process of propo
 
 ### Running tests
 
-The theme contains a minimal test suite, to ensure a site with the theme would build successfully. To run the tests, simply run `script/cibuild`. You'll need to run `script/bootstrap` one before the test script will work.
+The theme contains a minimal test suite, to ensure a site with the
+theme would build successfully. To run the tests, simply run
+`script/cibuild`. You'll need to run `script/bootstrap` one before the
+test script will work.
 
 [back](./)
