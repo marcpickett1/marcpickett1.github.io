@@ -4,17 +4,21 @@ layout: default
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
+foo
+
+
 [Link to another page](another-page).
 
 [Immortal](immortal).
 
 [The Castle](castle).
 
-[Link to another page](www/index.html).
+[Link to my old page](www/index.html).
 
 There should be whitespace between paragraphs.
 
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
+There should be whitespace between paragraphs. We recommend including
+a README, or a file with information about your project.
 
 # [](#header-1)Header 1
 
