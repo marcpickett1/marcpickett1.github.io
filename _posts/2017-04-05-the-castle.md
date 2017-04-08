@@ -1,5 +1,6 @@
 ---
 layout: default
+title: "The Castle"
 ---
 
 ## The Castle

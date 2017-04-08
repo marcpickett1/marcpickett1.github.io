@@ -2,15 +2,7 @@
 layout: default
 ---
 
-[Link to another page](another-page).
-
-[Immortal](immortal).
-
-[The Castle](castle).
-
 [Link to my old page](www/index.html).
-
-[Help for Marc](test).
 
 <ul>
   {% for post in site.posts %}
@@ -20,3 +12,4 @@ layout: default
   {% endfor %}
 </ul>
 
+Some [help for Marc](marchelp).
