@@ -121,5 +121,3 @@ other becomes almost impossible.
 [2] Bill Holstein once said that he can't remember anything new because, to do so, he'd have to
 forget something he already knew, and, at his age (through a Darwinian process), almost
 everything he knew was really important.
-
-[back](./)

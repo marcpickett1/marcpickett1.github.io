@@ -170,8 +170,6 @@ To use the Slate theme:
     gem "github-pages", group: :jekyll_plugins
     ```
 
-
-
 ## Customizing
 
 ### Configuration variables
