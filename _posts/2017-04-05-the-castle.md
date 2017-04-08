@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: "The Castle"
 ---
-
-## The Castle
 
 In a story called The Library of Babel, Jorge Luis Borges describes an endless library filled
 with books with seemingly random contents.  I view this as a thought-experiment in
