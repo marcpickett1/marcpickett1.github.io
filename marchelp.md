@@ -6,6 +6,16 @@ layout: default
 
 ### Commands
 
+[//]: # (This may be the most platform independent comment)
+[//]: foo bar
+[#]: foo bar
+
+```md
+[//]: # (This may be the most platform independent comment)
+[//]: foo bar
+[#]: foo bar
+```
+
 ```zsh
 # To download
 git clone https://github.com/marcpickett1/marcpickett1.github.io
