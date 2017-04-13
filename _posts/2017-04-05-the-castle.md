@@ -91,7 +91,7 @@ or so-- become so filled with dust that the mysterious night crew completely rep
 sometimes closing off all tunnels into the neglected room.  The caretakers, aware of this
 possibility ever scramble to preserve what rooms they can.
 
-* * *
+***
 
 And so it is with my memories of Brussels, which remains frozen as it was over a decade ago,
 and my cousin who remains 5 years old, though she is no younger than myself.
