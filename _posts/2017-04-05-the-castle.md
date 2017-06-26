@@ -115,6 +115,8 @@ days over and over again, they get in a rut and become a (many-state) automaton.
 
 ![]({{ site.url }}/assets/coronaRadiata.gif)
 
+<img src="{{ site.url }}/assets/coronaRadiata.gif" title="The Castle" width="400"/>
+
 [1] It's unlikely that there is another crew of caretakers during the day.  Though the likelihood
 of two crews running into each other on any given day is similar to that for winning a
 low-stakes lottery, after several centuries, the probability that they *won't* run into each
