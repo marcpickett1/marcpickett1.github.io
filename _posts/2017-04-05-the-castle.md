@@ -27,19 +27,19 @@ miles wide.  The rooms and the tunnels and staircases connecting them --which ta
 space than the rooms themselves-- leave little space for the actual rock of the mountain, the
 majority of which has been mined away over the centuries.
 
-No one has found two rooms are exactly alike, though some vary in minor details.  For example,
-one room might contain 19th century hunting rifles surrounding a full-size taxidermied African
-elephant.  An adjacent room might be otherwise identical except the stuffed elephant is Indian.
-But in general, the rooms vary significantly.  One enormous room larger than an airplane hangar
-contains a full scale replica of a Saturn V rocket amid space suits and operational Mars
-rovers.  Another closet-sized room contains nothing other than a single monarch butterfly.
-Some rooms are pristine and a pleasant temperature, others are filthy with polluted air and
-well below freezing.
+No one has found two rooms that are exactly alike, though some vary in minor details.  For
+example, one room might contain 19th century hunting rifles surrounding a full-size taxidermied
+African elephant.  An adjacent room might be otherwise identical except the stuffed elephant is
+Indian.  But in general, the rooms vary significantly.  One enormous room larger than an
+airplane hangar contains a full scale replica of a Saturn V rocket amid space suits and
+operational Mars rovers.  Another closet-sized room contains nothing other than a single
+monarch butterfly and a wall calendar.  Some rooms are pristine and a pleasant temperature,
+others are filthy with polluted air and well below freezing.
 
 There are two aspects every room has in common.  First, there is a plaque above the door
-entering every room that has a seemingly random string of 20 letters.  This label that seems to
-be the room's identifier in some bizarre index.  Second, somewhere in every room there is a
-wall calendar.
+entering every room that has a seemingly random string of 20 letters.  This label seems to be
+the room's identifier in some bizarre index.  Second, somewhere in every room there is a wall
+calendar.
 
 Finally, the tunnels connecting the rooms are each lined with moving walkways such that a
 person may step out of one of the exits from one room and rapidly be whisked along over a mile
@@ -58,7 +58,7 @@ apprenticing and eventually replacing the old.  In a day, the team may visit sev
 rooms.  Despite this, there are rooms that have not been visited for over a thousand years, and
 which are buried in layers of dust.  (What process generates this dust is another mystery.)
 
-The caretakers task is to prevent dust from building too much, and some room accumulate dust
+The caretakers' task is to prevent dust from building too much, and some rooms accumulate dust
 faster than others, which the caretakers have picked up on, and have duly modified their routes
 in accordance.
 
@@ -76,8 +76,8 @@ kept marching, and the dust kept piling up ever higher.
 Some speculate that the number of rooms in the castle has grown over the centuries, and that
 the existing rooms become rearranged from time-to-time.  This is possible.  The walkways are
 shut down every day after the caretakers have returned to their quarters for the evening.  The
-caretakers have never been able to ventured far with the walkways out, so no one has been able to
-disprove that another crew or some other agent meddles with the rooms[1].
+caretakers are unable to venture far with the walkways out, so no one has been able to disprove
+that another crew or some other agent meddles with the rooms[1].
 
 Some speculate further that the castle started much smaller, with only a few thousand rooms.
 If so, then a hundred years was enough time to clean each room many times.  A caretaker could
