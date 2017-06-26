@@ -113,7 +113,7 @@ living the same period over and over again because he couldn't remember anything
 Chimpanzees (or dogs) are like this too.  After a certain point, they simply relive the same
 days over and over again, they get in a rut and become a (many-state) automaton.
 
-![]({{ site.url }}/assets/coronaRadiata.gif "The Castle"){:width="400"}
+![]({{ site.url }}/assets/coronaRadiata.gif "The Castle"){:width="600"}
 
 <!-- <img src="{{ site.url }}/assets/coronaRadiata.gif" title="The Castle" width="400"/> -->
 
