@@ -113,6 +113,8 @@ living the same period over and over again because he couldn't remember anything
 Chimpanzees (or dogs) are like this too.  After a certain point, they simply relive the same
 days over and over again, they get in a rut and become a (many-state) automaton.
 
+![]({{ site.url }}/assets/coronaRadiata.gif)
+
 [1] It's unlikely that there is another crew of caretakers during the day.  Though the likelihood
 of two crews running into each other on any given day is similar to that for winning a
 low-stakes lottery, after several centuries, the probability that they *won't* run into each
