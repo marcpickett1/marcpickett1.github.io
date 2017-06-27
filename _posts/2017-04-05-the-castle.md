@@ -11,8 +11,9 @@ somewhere in this library.
 When we try to visualize it, the hypothetical size of Borges's library is staggering: The
 number of rooms it must contain would be larger than the number represented by 1 followed by
 100,000 zeroes.  It would be as if every subatomic particle in the universe had its own
-universe with as many particles, and every particle in that universe had its own, down 1,000
-levels, and at the bottom, each subatomic particle was a room in this enormous library.
+universe with as many particles, and every particle in that universe had *its* own universe,
+repeating this down 1,000 levels, and at the bottom, each subatomic particle was a room in this
+enormous library.
 
 In comparison, my construction is quite easy to imagine.  A castle with maybe a hundred million
 rooms, though I haven't been able to count, with an intricate network of hallways connecting
