@@ -4,46 +4,73 @@ title: "The Meaning of Life"
 ---
 [#]: ((((((
 
+```
+Happiness of Rabbits
+Walking = Falling + Catching
+Enter Complexity: The Peacock's Tail
+Will: Interaction of Cognitive System and Reward System
+Squiggly Lines
+Taste
+  Specifying Reward: The Bulldog Hugging Robot
+  Hill Climbing on the Cingulate Cortex
+  Some Strategies for Maximizing Reward
+Artificial Sweetener, Drugs, and Virtual Reality
+  Habits and Pain
+  Hedonism
+conomics and Ethics
+Atomic Waves and Platonic Forms
+Designing your Successor
+Entropy: A Petri Dish Falling into a Volcano
+  Nihilism
+Consciousness and Death (How a person never dies)
+Free Will
+Conclusions
+```
+[Boundless Will](boundless)<br>
+[Religion](religion)<br>
+[Immortal](2017/04/06/immortal)<br>
+[Closet Space](closet)<br>
 
 [#]: )))))(((((
 
-# TL;DR
+# Introduction
+[#]: ))))((((
 
 This essay is a collection of insights gained from my work in Developmental Robotics,
 Artificial Intelligence, and Reinforcement Learning, as they pertain to the age-old question
 "What is the meaning of life?".  I don't claim to have all the answers, though I hope that this
 essay will help us get a little closer to answering the question.
 
-# The Meaning of Life
-
-The biological meaning of life is reproduction...
+With that in mind...  *The biological meaning of life is reproduction.*
 
 If it were that simple, this would be a much shorter essay, but there's some truth to the
 statement: Barring any organisms created in a lab by humans, the only organisms that are alive
 today are those whose ancestors reproduced, and it's likely that today's organisms have
 inherited their ancestors' tendency to reproduce.  But you're right to be skeptical that a
-single word, *reproduction*, can answer such a often-pondered question as "What is the meaning
+single word, "reproduction", can answer such a often-pondered question as "What is the meaning
 of life?".  The complexity of the meaning of life lies in describing the intricacies that are
 entailed by the term "reproduction".
 
-## Happiness of Rabbits
+# Happiness of Rabbits
+[#]: ))))((((
 
-To get a handle on some of these intricacies, consider rabbits in Australia: Rabbits are
-non-native to Australia.  Today there are hundreds of millions there, all descended from a few
-dozen brought over from Europe.  But suppose we were able to go back in time before rabbits
-were introduced to that continent, and suppose we played a game (similar to
-[core wars](https://wikipedia.com/core_wars)) where competing players design artificial
-rabbits, and we drop a small population of each player's rabbits in pre-colonial Australia,
-then see which player's rabbit population is higher after a few centuries.  To constrain
-things, we'll make it so that the players are given identical rabbit *body* designs, and
-they're only allowed to design the *brains* of the rabbits.  The players can make the rabbits'
-brains as powerful as they want, but a bigger brain will consume more energy (that could be
-used for other activities like running away from predators) than a smaller brain.  Note that a
-big brain might not always be selected by evolution.  For one, big brains require a lot of
-energy to run.  Our brains consume around 20% of our body's energy, despite being only about 2%
-of our body weight.  Also, because of our big brains, childbirth has been especially
-treacherous for humans.  (Thus, the width of women's hips has been a somewhat literal
-bottleneck for our intelligence.)
+To help us get a handle on what the meaning of life might be, I'll propose an intuition-pump
+that involves rabbits in Australia.  Rabbits are not native to Australia, but today there are
+millions of rabbits there, all descended from a few dozen brought over from Europe.  Suppose we
+were able to go back in time before rabbits were introduced to that continent, and suppose we
+played a game, that I'll call *hare wars* similar to
+[core wars](https://wikipedia.com/core_wars), where competing players design artificial
+rabbits, then we drop a small population of each player's rabbits in pre-colonial Australia and
+see which player's rabbit population is higher after a few centuries.  To constrain things,
+we'll make it so that the players are given identical rabbit *body* designs, and they're only
+allowed to design the *brains* of the rabbits.  The players can make the rabbits' brains as
+powerful as they want, but a bigger brain will consume more energy than a smaller brain, energy
+that could be used for other activities like running away from predators.  Note that a big
+brain might not always be selected by evolution.  For one, big brains require a lot of energy
+to run.  Our brains consume around 20% of our body's energy, despite being only about 2% of our
+body weight.  (Also, because of our big brains, childbirth has been especially treacherous for
+humans.  Thus, the width of women's hips has been a somewhat literal bottleneck for our
+intelligence.)
 
 Once the rabbits are dropped in Australia, the players won't be allowed to change the rabbits'
 design.  The players' rabbits should be adaptable because Australia has a diverse environment,
@@ -51,9 +78,9 @@ and no rabbit design will be optimal for all environments.  Because of the rabbi
 computational limitations, there will be rabbits that are "buggy" or suboptimal.  For example,
 from a computational-perception point of view, telling the front end of a rabbit from the back
 is non-trivial, and we might end up having rabbits trying to mate with other rabbits by
-mounting the wrong end (I've seen this happen, the rabbits were so eager to mate, they didn't
+mounting the wrong end.  (I've seen this happen, the rabbits were so eager to mate, they didn't
 seem to pay attention to the gender of the other rabbit, whether the other rabbit was a close
-relative, or whether they were even mounting the back end of the other rabbit).  But this is OK
+relative, or whether they were even mounting the back end of the other rabbit.)  But this is OK
 from an evolutionary standpoint, because the extra computation might not be worth the brain
 matter needed to do it, and these bunnies will be at the correct end half the time, which is
 good enough to reproduce.
@@ -61,7 +88,7 @@ good enough to reproduce.
 ***
 
 To answer questions such as "What makes me happy?" or "Why does *x* make me happy?", we can
-gain some insight by stepping outside the humanities and go down to biology, economics, and
+gain some insight by stepping outside the humanities and going down to biology, economics, and
 cognitive science.  A lot of what makes people happy can be explained in terms of these fields:
 e.g., men might enjoy sex with lots of different women because the type of people who did so
 had more kids and are more likely to be around.
@@ -82,8 +109,8 @@ me too because it was successful evolutionarily.
 ***
 
 There are important differences in the process we'd use to design our rabbits and the process
-of evolution.  For example, evolution lacks foresight.  For example, the vas deferens loops
-around the bladder in mammals, when a direct line would probably have been slightly more
+of evolution.  For example, evolution lacks foresight.  For example, in male mammals, the vas
+deferens loops around the bladder, when a direct line would probably have been slightly more
 advantageous.  As mammals became warm-blooded and their testes descended, the vas deferens had
 to follow the testes, resulting in the current design.  Evolution is also slow and has
 "inertia", for example the myriad of evolutionary relics such as the hip bones of snakes.
@@ -95,7 +122,8 @@ shape of lenses that people have designed for cameras and other optics.  Therefo
 insights can be gained by considering what designs are successful even if we ignore the design
 process itself.
 
-There's also the principle of The Selfish Gene  CITE{dawkins:1976}: our goal isn't really to
+There's also the principle of
+[The Selfish Gene](https://en.wikipedia.org/wiki/The_Selfish_Gene): our goal isn't really to
 make our rabbits take over the island, but to make our rabbits' *genes* take over the island.
 Thus, we'd want to design our rabbits such that their behaviour sometimes might be bad for the
 reproductive success of an individual, but good for the individual's genes.  A classic example
@@ -103,20 +131,21 @@ would be where a rabbit sacrifices itself to a predator in order to save its off
 
 The reason that the goal of our game is to take over the island is that, in evolution, those
 beings that had a design that caused them to reproduce were the ones that did reproduce.  So
-any animal living today (including humans) is here because its "design" is likely to cause it
-to reproduce (at least in the environment where it evolved).
+any animals living today (including humans) are here because their "designs" are likely to
+cause them to reproduce (at least in the environment where they evolved).
 
 An important point here is that, in general, *every* part of our innate being, both physically
 and mentally, is "designed" as it is because that design traditionally helped our ancestors
 reproduce.
 
-Likewise, *every* aspect of a plant is that way for a reason.  The reason is evolution.  Even
-the designs of the flowers, and the shape of the leaves have been constrained to be the way
-they are by some ruthless evolutionary process.  For example, the designs on some flowers
-radiate inward, which acts, in effect, as guidance for insects coming, which come to pollinate
-the flowers in exchange for a bit of nectar.
+<!-- Likewise, *every* aspect of a plant is that way for a reason.  The reason is evolution.  Even -->
+<!-- the designs of the flowers, and the shape of the leaves have been constrained to be the way -->
+<!-- they are by some ruthless evolutionary process.  For example, the designs on some flowers -->
+<!-- radiate inward, which acts, in effect, as guidance for insects coming, which come to pollinate -->
+<!-- the flowers in exchange for a bit of nectar. -->
 
-## Walking = Falling + Catching
+# Walking = Falling + Catching
+[#]: ))))((((
 
 > If I ever say to the moment: <br>
 > Stay! You are so beautiful! <br>
@@ -124,14 +153,21 @@ the flowers in exchange for a bit of nectar.
 > and I'll happily go to the abyss! <br>
 >     --Johann Wolfgang von Goethe (from Faust, 1808)
 
-When roboticists first began to make robots that could walk, they focused on stability
- CITE{westervelt+grizzle+chevallereau+choi+morris:2007}.  If a walking robot froze in its
-tracks it would be stable in the sense that it wouldn't fall down.  Because of this stability,
-it could walk as slowly as you wanted it to.  This is contrasted to the gallop of a horse.
-When a horse runs, there are instances when all 4 hooves are in the air at the same time.
-Thus, a horse can't gallop in "slow motion" because it can't be suspended with all its feet
-in the air at the same time.
 
+> How much money is enough?  Just a little bit more. <br>
+> --John D. Rockefeller (1839-1937)
+
+The player with the most successful rabbits probably won't have the happiest rabbits.  We'd
+want our rabbits to be constantly moving forward.  We'd want them to only have enough glimpses
+of happiness or contentment that they don't give up completely.  This is how it is with human
+nature, and it's this way for a good evolutionary reason.
+
+An analogy might be made to walking.  When roboticists first began to make robots that could
+walk, they focused on stability.  If a walking robot froze in its tracks it would be stable in
+the sense that it wouldn't fall down.  Because of this stability, it could walk as slowly as
+you wanted it to.  This is contrasted to the gallop of a horse.  When a horse runs, there are
+instances when all 4 hooves are in the air at the same time.  Thus, a horse can't gallop in
+"slow motion" because it can't be suspended with all its feet in the air at the same time.
 The normal walking gait of people isn't stable either.  During each step, our center of mass
 moves to its highest point when it is in front of the foot that's on the ground.  So, we begin
 to *fall* forward, but our other foot rushes forward to *catch* us.  We then raise our center
@@ -142,12 +178,10 @@ Likewise, one way of getting our rabbits to reproduce is to have them built such
 always on the edge: that they always feel like if they do just this next goal, they'll be
 happy.  When they do accomplish the next goal, they get some reward, but not permanent
 happiness.  We don't want our rabbits ever to be content because content rabbits don't
-reproduce.  So our rabbits will never actually attain fulfillment.  To do so would mean that
-the rabbits stop striving for more and stop reproducing.  On the other hand, the rabbits'
-reward structure should be such that they don't give up either, because that would mean an end
-of reproduction too.
-
-***
+reproduce as much as those that are constantly striving.  So our rabbits will never actually
+attain fulfillment.  To do so would mean that the rabbits stop striving for more and stop
+reproducing.  On the other hand, the rabbits' reward structure should be such that they don't
+give up either, because that would mean an end of reproduction too.
 
 If I were designing people to reproduce (or gain power or help their offspring to reproduce),
 I'd also structure their reward system such that they're always trying to attain something.
@@ -156,341 +190,191 @@ goal, they'll be happy.  When they finally catch the carrot, I'll give them mome
 happiness, but I'd structure them such that this happiness would fade after some time and
 they'd devise a new goal.
 
+So, it's possible that we can only distract ourselves from the feeling that might be described
+as emptiness or disquiet, that the emptiness can't be banished, only put off.  For example, in
+Anna Karenina, the character Levin is happiest when he's mowing hay with a scythe.  It's a
+simple action, but he's making "progress" on something.
+
 ***
 
-> People will always have problems.  If a person runs out of problems to solve, that's a problem.
-> --Jason Pickett (1993)
-
-***
-
-In some video games "cheat codes" or "god" mode (where your character is invincible) makes
-the game boring quickly.
-
-Likewise, suppose you found a genie who would grant as many wishes as you wanted.  The wishes
-couldn't be contradictory or too poorly specified.  For example, the wish for "permanent
-happiness" wouldn't be granted on the grounds that it's too vague.  With this genie you could
-make it such that the world was at peace, famine and disease were gone, you had eternal life,
-money was virtually meaningless, you had all the women you could imagine, and your friends,
-family and power were limitless.  But, would you ever be happy?  Can you imagine a situation
-where you don't have any more wishes to make?
+In some video games "cheat codes" or "god" mode (where your character is invincible) makes the
+game boring quickly.  Likewise, suppose you found a genie who would grant as many wishes as you
+wanted.  The wishes couldn't be contradictory or too poorly specified.  For example, the wish
+for "permanent happiness" wouldn't be granted on the grounds that it's too vague.  With this
+genie you could make it such that the world was at peace, famine and disease were gone, you had
+eternal life, money was virtually meaningless, you had all the women you could imagine, and
+your friends, family and power were limitless.  But, would you ever be happy?  Can you imagine
+a situation where you don't have any more wishes to make?
 
 I suspect that there'd never be a *permanent* situation where a person was satisfied.  I
 suspect that (via evolution) the human reward system is structured such that permanent
 happiness is impossible.  For people (or any evolutionary being), it'd make more sense if
-happiness was the *event* of going to a better situation. FOOTNOTE{Recognizing that
-  permanent fulfillment of desire is impossible, Buddhism teaches that a person should seek to
-  free themselves from desire.  On the face of it, this is a self-contradiction: a desire to
-  have no desire.  If the tendency to become Buddhist were inheritable, these tendencies would
-  become weeded out of our rabbits.  That is, a rabbit that had no desire to eat would soon
-  starve.}
+happiness was the *event* of going to a better situation[^1].
+
+[^1]: Recognizing that permanent fulfillment of desire is impossible, Buddhism teaches that a
+    person should seek to free themselves from desire.  On the face of it, this is a
+    self-contradiction: a desire to have no desire.  If the tendency to become Buddhist were
+    inheritable, these tendencies would become weeded out of our rabbits.  That is, a rabbit
+    that had no desire to eat would soon starve.
 
 ***
 
-[#]: My holy hanging state.
-
-It's possible that we can only distract ourselves from the feeling that might be described as
-emptiness or disquiet, that the emptiness can't be banished, only put off.  For example, in
-Anna Karenina, the character Levin is happiest when he's mowing hay with a scythe.  It's a
-simple action, but he's making "progress" on something.
-
-As humans, our Will is boundless.  We'll always want to fall and catch.  But "permanent"
-happiness is possible because our life is finite.  So we only need to stay happy for 70 years
-or so, then we die.
+If we want to win at Hare Wars, we'd also want our rabbits to use up all of their resources.
+We'd want them to be greedy and lazy.  Laziness encourages efficiency.  There should be some
+drive for our rabbits to try to find more efficient ways of accomplishing things, or ways of
+reducing their own effort.  Because if they can do something with half the effort, they can do
+twice as much.
 
 ***
 
-### Closet Space
-[#]: )))(((
-
-```quote
-How much money is enough?  Just a little bit more.
-    --John D. Rockefeller (1839-1937)
-```
-
-The idea that happiness is never permanent is concretely manifested in my closet.  I moved to a
-new place that had 4 times the closet space as my old bedroom.  As you might have guessed, the
-new closet was full within a year.  The same thing happens every time I get a new (bigger) hard
-drive or I find myself free from a weekly commitment.  In the case of my hard drive, it's a big
-number of small things that fill it up.  With a bigger hard drive, I'll be a little more lax
-about cleaning up files.  With my closet, I'll keep shirts a little longer, or be less
-reluctant to get new shirts.  In the case of time, I'll be less apt to say no to new
-commitments.  The same principle goes for governments and taxes.  No matter how big the budget
-is, it's easy to find ways to use all of it.
-
-A problem with the tendency to fill up your closet is that you're constrained to moving to a
-new bedroom with a smaller closet.  Likewise, if you never keep much money in savings, you'll
-be constrained if there's an emergency.
-
-There are countless "tasks" that can fully consume a person: reading the entire works of
-Tolstoy, watching all episodes of the Simpsons, dusting the underside of every banister.  Be
-careful which battles you pick.  Every now and then, we might want to step back and evaluate
-whether what we're doing is the most important thing we can be doing.
-
-***
-
-A chock-full closet is a bad thing.  A chock-full closet is tight, which makes it difficult to
-take out and put in new clothes.  So, if you want to go through your closet 1 shirt at a time
-to find out what you might want to throw out, it'd take significantly longer to do so if it
-were 100% full than if it were 90% full.  This isn't just because the 100%-full closet has 10%
-more shirts.  It's because looking at each shirt in the 100%-full might take twice as long,
-meaning it'd take 20% longer.  So, if your closet is chock-full, you don't have much room to
-maneuver to free up closet space.
-
-Likewise, if your daily schedule is completely full, you won't have much time to sit and think
-about how you can reduce your workload or how you can get out of certain ruts.  So, if you're
-working 3 jobs to make ends meet, then you don't have a lot of time to sit back and try to
-figure out what you could cut to make ends meet.
-
-Automobile traffic follows the same principle.  If there are twice as many cars on the highway,
-a person's commute-time likely be significantly higher than twice as high.
-
-In Computer Science, this principle is called "thrashing", where your computer is spending
-all its system resources trying to figure out how to free up its system resources.
-
-The general principle here is that if your resources are completely consumed, you don't have
-any wiggle room, and you can't spend resources to free up more resources.
-
-***
-
-If a single pair of mice get into a granary and go unchecked, they'll reproduce until there are
-thousands and thousands of mice and all the grain is gone (at which point almost all of the
-mice will starve to death).
-
-Any mouse with a long view who excersized some constraint in converting the grain into more
-mice would soon find himself outnumbered by mice who don't have this constraint.
-
-The *unconstrained* mouse would find himself *locally* successful.  By this, I mean the
-mouse will outperform (i.e., out-reproduce) any other single mouse that doesn't use all of its
-resources.  The problem is that a *group* of mice that exercises some constraint in
+Why would we want our rabbits to exhaust their resources?  Consider what happens if a single
+pair of mice get into a stocked granary and go unchecked.  They'll reproduce until there are
+thousands and thousands of mice and all the grain is gone... at which point almost all of the
+mice will starve to death.  But any mouse with a long view who exercised some constraint in
+converting the grain into more mice would soon find himself outnumbered by mice who don't have
+this constraint.  The *unconstrained* mouse would find himself *locally* successful.  By this,
+I mean the mouse will outperform (i.e., out-reproduce) any other single mouse that doesn't use
+all of its resources.  The problem is that a *group* of mice that exercises some constraint in
 managing their resources can do better in the long run than a group of short-sited mice.
-Analagously, a group of goats on an island should be careful not to eat all the vegetation,
-lest they make the island barren of vegetation and therefore goats too.
 
-***
-
-Nature is an arms race, in a sense.  For example, plants develop mechanisms, such as poisons,
-to prevent themselves from being eaten by animals, and animals develop means (such as enzymes)
-to get around those mechanisms  CITE{attenborough:1995}.  Usually, each party is just barely in
-front or behind the other, and this prevents either from completely dominating the other
-(unlike the mice in the granary or the goats on the island).
+There's almost always some bottleneck resource in nature though.  Nature is an arms race, in a
+sense.  For example, plants develop mechanisms, such as poisons, to prevent themselves from
+being eaten by animals, and animals develop means (such as enzymes) to get around those
+mechanisms.  Usually, each party is just barely in front or behind the other, and this prevents
+either from completely dominating the other, unlike the mice in the granary.
 
 For most of our evolution, it was a rare thing to have a virtually unlimited supply of fatty
 foods.  Thus, because there was an *external* constraint on the amount of bacon we could
 eat (i.e., its limited supply) there was no need to have an internal mechanism that limited our
 intake of bacon.
 
-***
-
-```quote
-Hofstadter's Law: It always takes longer than you expect, even when
-you take into account Hofstadter's Law.
-
---Douglas Hofstadter  CITE{hofstadter:1979}
-```
-
-Hofstadter's law is a corollary of closet space: any time that's allocated for a task is used
-up.
-
-***
-
-One solution to the problem of a full closet is to get a bigger closet.  This is usually the
-first solution I think of.  Perhaps a better solution, though, would be to figure out which of
-my clothes are most important, and throw out some of the clothes of lesser importance.  Unless
-I adopt this latter attitude, I'll simply need bigger and bigger closets.
-
-For example, the first time I saw a computer with a "hard drive", I was amazed.  This was in
-1990, and it was 50 megabytes of disk space.  I wondered why anyone would ever need so much
-memory.  Until then, all my computer files were on diskettes, each holding half a megabyte.  I
-had about 20 of them, 10 megabytes in all.
-
-20 years later, my hard drive is now half a terabyte, which is *10,000* times as big as as the
-"virtually limitless" hard drive from 1990.  And I've managed to fill it up.
-
---
-
-Similarly, if you figure out a way to get a little more money, such as borrowing off a credit
-card (for an individual), or issuing bonds (for a government), these tend to be pushed to their
-limits, like having extra hard drive space.
-
---
-
-This idea of consuming all available resources isn't new.  In 1866, the English economist
-William Stanley Jevons noted this phenomenon.  For example, James Watt introduced his steam
-engine in the latter half of the 18th, which made much more efficient use of coal than
-previously existing engines.  Paradoxically this new efficiency caused the rate of coal
-consumption to *increase* rather than decrease.  The new steam engine effectively made coal a
-cheaper power source, so cheap that steam engines began to replace oxen, sails, and other
-non-coal-fired power sources.  So the total amount of coal consumption went up, even though the
-amount of coal needed for any particular task went down.  This phenomenon --the introduction of
-a more efficient use of resources causing *more* of that resource to be consumed-- is called
-the Jevons paradox  CITE{jevons:1866}.
-
-## Enter Complexity: The Peacock's Tail
+# Enter Complexity: The Peacock's Tail
 [#]: ))))((((
 
-***
 
-[#]: What people spend a lot of their energy doing, because survival is
-[#]: almost given.  (Peacock tail)
-"Eat.  Survive.  Reproduce."  It sounds almost trivial as the answer to a question as big as
-"What is the meaning of life?".  If it's so simple, then why is life so complicated?  Part of
-the answer lies in the peacock's tail.
+We might say that the meaning of life is to eat, survive, and reproduce.  Actually, we could
+just say the meaning of life is to reproduce, since eating and surviving are really just means
+to this end.  If the meaning of life can be summed up in one simple word, then why is life so
+complicated?  Part of the answer lies in the peacock's tail.
 
 ***
 
-When selecting which male to mate with a peahen (a female peacock) will choose to mate with the
-peacock with the "best" tail.  The best tail isn't necessarily the biggest or brightest tail.
-A shorter, dimmer, symmetrical tail can be preferable to a longer, brighter, asymmetrical tail.
-The design is certainly an issue as well.  I have little doubt that peacock tails' eyespots
-aren't there by accident.  Although I'm sure that she's not conscious of this fact, a peahen
-chooses the tail that she thinks will most likely appeal to future generations of peahens (so
-that her male offspring can also attract mates).
-
-The peacock tail's design is an emergent property of the process in which a peahen mates with
-the peacock that has the "best" tail.  The definition of "best" is a little tricky.  The peahen
-(consciously or unconsciously) mates with the peacock whose genes will cause her male
-descendents to have the kind of tail so that future generations of peahens will mate with them.
-So this definition of "best" is recursive.  Certainly, size and shine play a roll, but style
-also plays a part.  For example, peahens might prefer a tail that's symmetrical over a slightly
-longer asymmetrical tail.  I'm willing to bet that a long, shiny, symmetrical tail with a very
-unconventional color-scheme wouldn't yield its owner very good reproductive results.  So any
-tail that was markedly different from the status quo would be unlikely to be successful.  On
-the other hand, a tail that was exactly the status quo would likely be outdone by a slightly
-longer or "better" designed tail.  Countless pea-generations ago, this was grounded in
-fundamental fitness: going for a male with a longer or shinier tail made sense.  A longer tail
-was a sign of being well fed, and a longer tail may have even had a functional use.  But this
-process has resulted in a tail that's so long that not only is it not functional, but it's
-rather cumbersome for its owner.
+When selecting which male to mate with, a female peacock, or pea*hen*, will choose to mate with
+the peacock with the "best" tail.  The definition of "best" is a little tricky.  Certainly,
+size and shine play a roll, but style also plays a part.  The best tail isn't necessarily the
+biggest or brightest tail.  A shorter, dimmer, symmetrical tail might be preferable to a
+longer, brighter, asymmetrical tail.  The "design" of the tail is certainly an issue also.  The
+peacock tail's design is an emergent property of the process of the cognitive systems of
+peahens, and how it affects what they decide the "best" tail is.  I doubt that peacock tails'
+eyespots are there by accident.  I'm also willing to bet that a long, shiny, symmetrical tail
+with a very unconventional color-scheme wouldn't yield its owner very good reproductive
+results.  So any tail that was markedly different from the status quo would be unlikely to be
+successful.  On the other hand, a tail that was exactly the status quo would likely be outdone
+by a slightly longer or "better" designed tail.  Countless pea-generations ago, this was
+grounded in fundamental fitness: going for a male with a longer or shinier tail made sense.  A
+longer tail was a sign of being well fed, and a longer tail may have even had a functional use.
+But this process has resulted in a tail that's so long that not only is it not functional, but
+it's rather cumbersome for its owner.  Although I'm sure that she's not conscious of this fact,
+a peahen chooses the tail that she thinks will most likely appeal to future generations of
+peahens, so that her male offspring will inherit this trait and then can also attract mates.
 
 There are 2 points to keep in mind:
 * The peacock must spend significant resources on his tail, which has little (or even negative)
   survival value.
-* The design of the peacock's tail is generated by a hall of mirrors, which can yield virtually
-  limitless complexity.  That is, a peahen is (at some level) trying to predict other peahens,
-  which are trying to predict other peahens, etc..  This complexity is limited by the brains of
-  peahens.  So the design of the "best" peacock's tail isn't the optimization of a simple
-  formula.  By contrast, the wing of an aircraft is a design fully based on function (to
-  maximize lift while minimizing weight and cost).
+* The design of the peacock's tail is generated by a "hall of mirrors", which can yield
+  virtually limitless complexity.  That is, at some level a peahen is trying to predict other
+  peahens, which are trying to predict other peahens, etc..  This complexity is limited by the
+  brains of peahens.  So the design of the "best" peacock's tail isn't the optimization of a
+  simple formula.  This is in contrast to something "objective" like the optimal shape for the
+  cross-section of the wing of an aircraft, which is a design fully based on function: to
+  maximize lift while minimizing weight and cost.
 
 ***
 
-For most people (and even most chimpanzees), surviving is almost a given.  Or, the "survive"
-problem is pretty much solved for people.  In Chimpanzee Politics  CITE{dewaal:1982}, Frans De
+Primates, including people, also have a peacock's tail of sorts.  For most people (and even
+most chimpanzees) throughout history, surviving is almost a given once one achieved adulthood.
+Or, the "survive" problem is more or less solved for people.  In Chimpanzee Politics, Frans De
 Waal writes that "in order to get enough to eat, wild chimpanzees have to spend more than half
-their time foraging".  Much of the rest of the chimps' time is spent "politicizing" (whereas
-things got even more more political in the Arnhem zoo because they didn't have to forage at
-all).  So even chimps spend a good percentage of their efforts on the non-surviving "reproduce"
-part of the meaning of life (well, they're always breathing (for survival), but you know what I
-mean).  With people, I'd guess it's much more so.  For day to day activities, surviving is
-almost a given (it's pretty simple, at least) FOOTNOTE{According to the Center For Disease
-Control, of the top 10 causes of death in the U.S. in 2006, all were "natural" causes save
-"Accidents", which ranked 5th.  Murder and malnutrition ("war and famine") were responsible for
-only 21,129 or .87% of the 2,426,264 American deaths in 2006.  The top 10 causes in 2006 were:
-Heart disease (631,636), Cancer (559,888), Stroke (137,119), Chronic lower respiratory diseases
-(124,583), Accidents (121,599), Diabetes (72,449), Alzheimer's disease (72,432), Influenza and
-Pneumonia (56,326), Nephritis, nephrotic syndrome, and nephrosi (45,344), and Septicemi
-(34,234).}.
-
-***
+their time foraging".  Much of the rest of the chimps' time is spent "politicizing".  So even
+chimps spend a good percentage of their conscious efforts on the non-surviving "reproduce" part
+of the meaning of life.  With people, I'd guess it's much more so.  For example, according to
+the Center For Disease Control, of the top 10 causes of death in the U.S. in 2006, all were
+"natural" causes save "Accidents", which ranked 5th.  Murder and malnutrition ("war and
+famine") were responsible for only 21,129 or 0.87% of the 2,426,264 American deaths that year.
+The top 10 causes in 2006 are shown in the table below.
 
 If life were just about survival and asexual reproduction (as it is for amoebas), then it'd be
-pretty straightforward.  The "flower" comes from *sexual* reproduction and producing a
-peacock's tail.  This is what people spend most of their efforts on.  This is why the "Eat,
-Survive, Reproduce" seems so empty.  Eating and survival are simple compared to the last.  As
-Dan Savage (of Savage Love) puts it "Civilization is mostly a big effort to get laid.".
+pretty straightforward.  The "flower" of complexity comes from *sexual* reproduction and
+producing a peacock's tail.  This is what people spend most of their efforts on.  This is why
+the "Eat, Survive, Reproduce" seems so empty.  Eating and survival are simple compared to the
+last.  The potential complexity of Politics, Economics (which includes the unbounded complexity
+of human relations), and Game Theory is limitless because each consists of people trying to
+model other people, who are also trying to model other people.
 
-The potential complexity of Politics, Economics (which includes the unbound complexity of human
-relations), and Game Theory is limitless because each consists of people trying to model other
-people, who are also trying to model other people.
-
-***
-
-To illustrate the connection from the idea of the Peacock Tail to the Meaning of Life consider
-this: A monkey must wait for its stomach to digest the leaves it eats (the plants have been
-selected to be less digestible, and the better the monkeys' stomachs get, the more indigestible
-the plants evolve), and it has to do *something* while waiting (sleeping, running around,
-etc.).  This is probably why life isn't all about fundamentals, because at this point, the
-fundamentals are as taken care of as they can be, and there's nothing left to do but
-non-fundamentals.
-
-***
-
-So what kind of Will would we give our rabbits if we knew they were in a cognitive niche?  What
-if we knew they were social and their reproductive success was correlated with their social
-success?  We might start by giving them a Will to power, and a Will to being socially
-successful.
-
-The Mating Mind  CITE{miller:2001} makes a case that, what amounts to fundamentally the same
-process that created the peacock's tail (that is, the use of non-fundamentals for reproductive
-success), created in humans the drive to create music, art, and literature.
+| **Top 10 deaths by cause in U.S. in 2006** |
+--:|--:|
+Heart disease | 631,636
+Cancer | 559,888
+Stroke | 137,119
+Chronic lower respiratory diseases | 124,583
+Accidents | 121,599
+Diabetes | 72,449
+Alzheimer's disease | 72,432
+Influenza and Pneumonia | 56,326
+Nephritis, nephrotic syndrome, and nephrosi | 45,344
+Septicemi | 34,234
 
 ***
 
-A peacock tail is the ultimate resource sink.  An animal's tendency is to fill its extra closet
-space with its peacock tail.  Any of our rabbits that fails to do this won't be as successful
-as a rabbit who does do it (at least locally).
+As Matt Ridley argues in The Red Queen, people happen to be in a *cognitive niche*, meaning
+there is evolutionary pressure for us to be smart, which may account for our brain mass to body
+weight ratio, which is ridiculously high from the perspective of the animal kingdom at large.
+
+So what kind of innate will or reward system would we give our rabbits if we knew they would be
+in a cognitive niche?  What if we knew they were social and their reproductive success was
+correlated with their social success?  We might start by giving them a will to power, and a
+will to being socially successful.
+
+For the rabbits, suppose we don't worry about "happiness" the rabbits just have a signal
+("reward") that they try to maximize.  When the signal is high, there are mechanisms that cause
+the rabbit to take those sorts of actions again.  It turns out that this signal (and behavior)
+correspond to happiness.
 
 ***
+
+A peacock tail is the ultimate resource sink.  An animal's tendency is to fill its extra
+"[closet space](closet)" with its peacock tail.  Any of our rabbits that fails to do this won't
+be as successful as a rabbit who does do it (at least locally).
 
 A nice peacock tail is expensive (in terms of what the peacock has to devote to it as far as
 food and preening).  A large peacock tail is also cumbersome.  The analog of peacock tails for
 people also has a cost associated with it.  So fashionable clothes tend to be *expensive*.
 There's some time investment you need to make to learn the hip slang (or jargon even) for a
-particular group FOOTNOTE{Such a group might be called a "Shibboleth Club".  This term comes
-from a story in the Bible that documents one of the several cases where the Hebrews commit
-genocide.  In Judges 12:5-6, 42,000 people lost their lives due to an accent that made them
-mispronounce the word "Shibboleth" Hebrew for "an ear of wheat".
-
-> Then said they unto him, Say now Shibboleth: and he said Sibboleth: for he could not frame to
-> pronounce it right. Then they took him, and slew him at the passages of Jordan: and there
-> fell at that time of the Ephraimites forty and two thousand.
->
-> --Judges 12:6
-}.
+particular group.
 
 In Victorian England, being able to quote in Greek would get you respect, despite the fact that
 Greek's practical "survival" value was low.  Greek did have survival uses on occasion, however.
-Initially, learning Greek was useful because it allowed one to read ancient texts.  After a
-while, (as translations became plentiful) reading Plato took a back seat to *appearing*
-educated.  In fact, a peacock's tail gets the peacock peahens *because* it has a negative
-fundamental survival value.  It shows the peahens that the peacock has resources to
-spare FOOTNOTE{A twist here is that an extreme peacock tail could theoretically lead to the
-extinction of a species.  If a peacock spends all its resources on its tail, it spends less on
-"survival" value.  It might be forced to spend more on its tail than what's valuable for it
-because of how much *other* peacocks are spending on their tail (another arms race).  It's
-my theory that this has some explanatory power about why the Dominican Republic is so poor as a
-country: the peacock tail level is high.  There's such an emphasis on dancing merengue well and
-being good at baseball that little fundamental *work* gets done.}.  Other "peacock tails"
-include being good at basketball, being a good RISK player (in some circles), being well
-traveled (which also has some practical uses), buying expensive tulip bulbs (in Holland in
-1636), and wearing mink coats FOOTNOTE{Mink coats, luxury cars, (overly) expensive wines, and
-tulip bulbs in the 17th century are sometimes called Veblen goods  CITE{leibenstein:1950}.
-These goods are purchased for the same fundamental reason that a peacock grows such a huge
-tail: to prove that you have resources to spare.}.
+Initially, learning Greek was useful because it allowed one to read ancient texts.  But as
+translations became plentiful, reading Plato took a back seat to *appearing* educated.  In
+fact, a peacock's tail gets the peacock peahens *because* it has a negative fundamental
+survival value.  It shows the peahens that the peacock has resources to spare.  A twist here is
+that an extreme peacock tail could theoretically lead to the extinction of a species.  If a
+peacock spends all its resources on its tail, it spends less on "survival" value.  It might be
+forced to spend more on its tail than what's valuable for it because of how much *other*
+peacocks are spending on their tail (another arms race).
 
-Neither basketball nor RISK have value in and of themselves.  Up to a certain point, skills and
-general lessons learned from these games transfer to "real" tasks, but after that point, the
-skills become pretty specific.  It's a rare occasion outside of basketball where it'd be a
-useful skill to be able to consistently throw a sphere into a foot-wide ring 16 yards away, but
-teams in the National Basketball Association would pay millions of dollars for such a person to
-"work" for them (the distance for a 3 point shot is just under 8 yards, and such a person would
-be able to shoot from as far back as half-court).  The star basketball player (of even a
-highschool or college team) is an envied individual.
+Some modern "peacock tails" might include being good at basketball, being a good RISK player
+(in some circles), being well traveled (which also has some practical uses), buying expensive
+tulip bulbs (in Holland in 1636), and wearing mink coats.  Neither basketball nor RISK have
+value in and of themselves.  Up to a certain point, skills and general lessons learned from
+these games transfer to "real" tasks, but after that point, the skills become pretty specific.
+It's a rare occasion outside of basketball where it'd be a useful skill to be able to
+consistently throw a sphere into a foot-wide ring 16 yards away, but teams in the National
+Basketball Association would pay millions of dollars to hire such a person (the distance for a
+3 point shot is just under 8 yards, and such a person would be able to shoot from as far back
+as half-court).  In modern America, a star basketball player is envied by many.
 
-Peacock tails takes different forms in different cultures.  In the Dominican Republic, it's
-baseball and merengue.  In Victorian England it was learning Latin, Greek, becoming cultured,
-and mastering the vast array of rules of etiquette.  In surfer sub-cultures, it's, well,
-surfing well FOOTNOTE{Though in the context of a surfer sub-culture, you might feel like
-*everyone's* goal is to surf well.}.  The ultimate peacock tail for people, though, is the
-human brain.  There's a book called The Red Queen  CITE{ridley:1995} which argues that a good
-deal of human intelligence is driven by an escalating arms race (though it makes no reference
-to RISK).  Basically, people were trying to outsmart other people.  Then, the bigger brained
-people reproduced (more than the dumber people) and the intelligence level for the whole group
-rose, meaning that the successful people of the next generation had to be even smarter.  (It's
-like the Red Queen's race in Alice in Wonderland where the earth moves backwards as fast as the
-sprinters move forward so that the net gain is 0.)
-
-## Will: Interaction of Cognitive System and Reward System
+# Will: Interaction of Cognitive System and Reward System
 [#]: ))))((((
 
 > Zwei Seelen wohnen, ach!  in meiner Brust, <br>
@@ -656,12 +540,11 @@ conditioning, like Pavlov's dogs.
 
 ***
 
-```quote
-Reason is, and ought only to be the slave of the passions, and can never pretend to any other
-office than to serve and obey them.
+> Reason is, and ought only to be the slave of the passions, and can never pretend to any other
+> office than to serve and obey them.
+>
+> --David Hume  CITE{hume:1740}
 
---David Hume  CITE{hume:1740}
-```
 
 Consider an ideal optic lens.  The "purpose" of an ideal lens isn't reproduction, but rather to
 focus light as a parabola.  A lens's "goal FOOTNOTE{In this sense, I'm stretching the meaning
@@ -691,7 +574,7 @@ life from the point of view of an ideal cognitive system, which is to characteri
 It's interesting to consider which system "we" truly are.  Or it's possible that what we
 consider to be our inner selves is actually the combination of both these systems.
 
-## Squiggly Lines
+# Squiggly Lines
 [#]: ))))((((
 
 From my work in robotics, I can say that perception is a tricky computational problem.  Like
@@ -751,11 +634,8 @@ Another (not incompatible) reason is that eyespots were originally useful for th
 they are for the Buckeye Butterflies), and the genes got "recycled".  (The former reason at
 least seems plausible to me.)
 
-## Taste is like the Butt, Divided
+# Taste
 [#]: ))))((((
-[#]: Smaken ar som baken, delad.
-
-***
 
 Until he retired, my godfather worked as an engineer at the Ford Motor Company in Detroit.  He
 had bought one of their new models, and said that although Ford's model was more aerodynamic,
@@ -910,10 +790,8 @@ desire to not fall from high places (as a form of bootstrapping), even though th
 "corollary" of the more fundamental desire to not break bones.  So, some of our rabbits'
 desires could be redundant or even contradictory.
 
-### Specifying Reward: The Bulldog Anal Rapin' Robot
+## Specifying Reward: The Bulldog Hugging Robot
 [#]: )))(((
-
-***
 
 A problem with innate rewards for people or rabbits is that we have to be born with them.
 There are people (and presumably rabbits) that are born blind or deaf, yet are still attracted
@@ -922,12 +800,11 @@ to a specific sensory modality.
 
 ***
 
-The Gedankenexperiment of the "Bulldog A.R.R." is that you want to build an Anal Rapin'
-Robot (or A.R.R.) whose goal is to anally rape bulldogs.  The Robot would have
-little interest in dalmatians, and no interest at all in mating with people.  In this
-Gedankenexperiment, we're not allowed to know what the robot's sensor suite is (we're back at
-the squiggly lines problem).  So, how do we tell the robot about bulldogs (since we can't
-ground the concept)?
+The Gedankenexperiment of the "Bulldog Hugging Robot" is that you want to build a robot whose
+goal is to hug bulldogs.  The robot would have little interest in dalmatians, and no interest
+at all in hugging people.  In this Gedankenexperiment, we're not allowed to know what the
+robot's sensor suite is (we're back at the squiggly lines problem).  So, how do we tell the
+robot about bulldogs (since we can't ground the concept)?
 
 My idea for a solution is that you can provide an *ungrounded* concept of what a bulldog is.
 This representation will be *invariant* with respect to any specific sensory modality.  The
@@ -978,7 +855,7 @@ The robot quickly learned that the policy that maximized its reward (or minimize
 punishment) was to not move at all.  So Leslie changed the reward function to also include a
 positive reward for moving.  After this, the robot learned to simply spin in circles.
 
-### Hill Climbing on the Cingulate Cortex
+## Hill Climbing on the Cingulate Cortex
 [#]: )))(((
 
 ***
@@ -1031,10 +908,8 @@ connectivity with the hypothalamus, I'm putting my money on the cingulate.  I do
 hypothalamus itself has the necessary structure to encode an innate representation of social
 power, for example.
 
-### Some Strategies for Maximizing Reward
+## Some Strategies for Maximizing Reward
 [#]: )))(((
-
-***
 
 Some sort of reinforcement mechanism is still at play in the human brain.  It might be an
 obsolete relic from the time before people evolved their higher cognitive capacity, but this
@@ -1085,13 +960,10 @@ the water waiting for "the big one", or any number of analogous
 activities waiting for a *Holy Moment*, those rare, but immensely
 rewarding windfalls.
 
-## Artificial Sweetener, Drugs, and Virtual Reality
+# Artificial Sweetener, Drugs, and Virtual Reality
 [#]: ))))((((
 
-***
-
 [#]: cognitive "hacks"
-
 
 **Artificial Sweetener** FOOTNOTE{I'm not sure if insects' mechanisms for sensing sweetness are
 fooled by some of the same tricks that ours are.  I once did an experiment with ants, giving
@@ -1171,14 +1043,13 @@ sex.
 
 ***
 
-```quote
-For Moral Virtue has for its object-matter pleasures and pains, because by reason of pleasure
-we do what is bad, and by reason of pain decline doing what is right (for which cause, as Plato
-observes, men should have been trained straight from their childhood to receive pleasure and
-pain from proper objects, for this is the right education).
+> For Moral Virtue has for its object-matter pleasures and pains, because by reason of pleasure
+> we do what is bad, and by reason of pain decline doing what is right (for which cause, as
+> Plato observes, men should have been trained straight from their childhood to receive
+> pleasure and pain from proper objects, for this is the right education).
+>
+> --Aristotle (384-322 BC), The Ethics
 
---Aristotle (384-322 BC), The Ethics
-```
 
 Why we don't naturally find pleasure and pain in the right objects?  Is it all just a result of
 evolving in a different environment from which we're now surrounded?  For example, why isn't
@@ -1238,10 +1109,8 @@ over 100 hours playing Civilization II, while everything I learned playing this 
 been compressed into just a few hours.  I can't help but think that those 100 hours could have
 been better spent.
 
-### Habits and Pain
+## Habits and Pain
 [#]: )))(((
-
-***
 
 Pain killers can be a form of artificial sweetener.  Pain has an evolutionary purpose.
 Physical pain can be a way of knocking a person out of a damaging rut or habit.  For example,
@@ -1298,17 +1167,13 @@ windfall only expands what you can do, so old habits aren't actually harmful.)
 In general, it seems that pain is a way to modify behaviour.  More specifically, it seems like
 pain is a way to break habits, both cognitive and behavioral.
 
-### Hedonism
+## Hedonism
 [#]: )))(((
 
-***
-
-```quote
-Junkies are not interested in sex and they have no interest in other
-people except as suppliers of junk.
-
-     --William S. Burroughs (1914-1997)
-```
+> Junkies are not interested in sex and they have no interest in other people except as
+> suppliers of junk.
+>
+> --William S. Burroughs (1914-1997)
 
 If a Reinforcement Learning agent is simply trying to take actions to maximize its reward
 signal, then wouldn't this lead to hedonism (the philosophy that attainment of pleasure is the
@@ -1342,13 +1207,11 @@ rewards be innate.
 
 ***
 
-```quote
-  Take the best orgasm you ever had, multiply it by a thousand and you're still nowhere near
-  [the feeling of being on heroin].  When you're on junk you have only one worry: scoring
-  [more junk].
-
-     --From the movie Train Spotting (1996)
-```
+>  Take the best orgasm you ever had, multiply it by a thousand and you're still nowhere near
+>  [the feeling of being on heroin].  When you're on junk you have only one worry: scoring
+>  [more junk].
+>
+> --From the movie Train Spotting (1996)
 
 Evolutionarily, beings that found pleasure in ultimately procreative acts are the beings that
 procreated (and are around today).  So, although I believe there's some truth to the above
@@ -1371,18 +1234,15 @@ will be 80 years old and lying on your deathbed reflecting back on your life.  W
 do then?  I imagine I'd forget about pleasure and just try to maximize my legacy.  Certainly,
 rabbits that tried to maximize their legacies would have more legacy than those that didn't.
 
-## Economics and Ethics
+# Economics and Ethics
 [#]: ))))((((
-
-***
 
 As I mentioned at the beginning of **Enter Complexity: The Peacock's Tail**, the mantra "Eat.
 Survive.  Reproduce." sounds too trivial to be the answer of the meaning of life.  But hidden
 in this mantra is a good deal of what economists call Game Theory.  This is where multiple
 "agents" (e.g., people) partake in a "game" and are trying to maximize their utility or reward.
 Evolution has structured our "reward" such that maximizing it tends to maximize reproduction
-(see the sections in the chapter "Taste is like the Butt, Divided" about how this reward is
-specified).
+(see the sections in the chapter "Taste" about how this reward is specified).
 
 A classic example from Game Theory is called Prisoner's Dilemma.  The situation is that there
 are 2 captives accused of a minor crime, and they're put into separate rooms and both are
@@ -1448,18 +1308,19 @@ tries to exploit the same niche, then it won't be useful to try to exploit the n
 
 One can derive much of ethics by applying Game Theory when there are multiple players.  For
 example:
-```quote
-  RISK is interesting because when you have more than 2 players, "governments" emerge.  The
-  fundamental philosophy in RISK is "Macht macht Recht." or "Might makes right.".  Ultimately,
-  someone *will* end up conquering the world.  Andy can make verbal treaties with Gabe, but
-  it's not in the rules that they need to abide by those agreements.  However, a "government"
-  emerges when Andy becomes more powerful than me or Gabe, but not more powerful than both of
-  us together.  At this point, Gabe and I will realize that we're both doomed unless we might
-  cooperate by forming a pact to pound on Andy at least until he's not so powerful.  There's
-  nothing in the rules of the game to prevent either player breaking the pact though.
 
-  --From Europe Debris  CITE{pickett:2006}, **Day 10**
-```
+>   RISK is interesting because when you have more than 2 players, "governments" emerge.  The
+>   fundamental philosophy in RISK is "Macht macht Recht." or "Might makes right.".
+>   Ultimately, someone *will* end up conquering the world.  Andy can make verbal treaties with
+>   Gabe, but it's not in the rules that they need to abide by those agreements.  However, a
+>   "government" emerges when Andy becomes more powerful than me or Gabe, but not more powerful
+>   than both of us together.  At this point, Gabe and I will realize that we're both doomed
+>   unless we might cooperate by forming a pact to pound on Andy at least until he's not so
+>   powerful.  There's nothing in the rules of the game to prevent either player breaking the
+>   pact though.
+>
+> --From Europe Debris  CITE{pickett:2006}, **Day 10**
+
 
 ***
 
@@ -1491,10 +1352,15 @@ to contact the owner.  What good does it do you to do so?  It could be that if y
 habits of character to do good (i.e., what's good for other people), then you'll establish a
 reputation for this, which is good for you.
 
-## Atomic Waves and Platonic Forms
+# Atomic Waves and Platonic Forms
 [#]: ))))((((
 
-***
+[#]: A couple notes:
+
+1. Ship of Theseus: Many philosophical quandries can be resolved by "mu", that they presume
+   e.g.  binary attributes ("it's either the same ship or not").
+2. The way we carve up the world is at least in part affected by information theory.
+
 
 [#]: Even for materialists, not everything is matter.
 
@@ -1608,17 +1474,13 @@ universe on a supercomputer, I have little doubt that the "beings" that evolved 
 feel as real as I feel because everything it interacted with would be as "real" as it was.
 "Infinitesimal objects have real significance when viewed through infinitesimal eyes."
 
-## Designing your Successor
+# Designing your Successor
 [#]: ))))((((
 
-***
-
-```quote
-What, then, when an agent can best bear The Will be steering the creation of a new agent?
-The Will is to reach ultimate existence.
-
---HElmut neeman (aka Marc Pickett I), The Will (1998)
-```
+> What, then, when an agent can best bear The Will be steering the creation of a new agent?
+> The Will is to reach ultimate existence.
+>
+> --HElmut neeman (aka Marc Pickett I), The Will (1998)
 
 In our rabbit Gedankenexperiment, Hare Wars, we assume we know what one of our rabbits is, but
 a rabbit is simply a collection of atoms (an atomic wave).  It's not always clear whether an
@@ -1685,10 +1547,8 @@ a biological creature should be mostly unconcerned about the cells that make it 
 organism should only be concerned with these as far as its survival is dependent on having
 hosts and how different hosts have different effects.
 
-## Entropy: A Petri Dish Falling into a Volcano
+# Entropy: A Petri Dish Falling into a Volcano
 [#]: ))))((((
-
-***
 
 A rabbit's success is not measured by how many children it has, but better by how many
 grandchildren it has, even better yet by how many great-great-great-...grandchildren.  This is
@@ -1788,10 +1648,8 @@ meaning of life?" is to figure out how to reverse entropy (and thereby allowing 
 and reproduce indefinitely). If entropy is not reversible, then we're the bacteria in the
 lava-bound petri dish.
 
-### Nihilism
+## Nihilism
 [#]: )))(((
-
-***
 
 In one sense, the universe is dead.  That is, the universe is a collection of matter that is
 simply following the laws of physics, coldly carrying out calculations.  For example, my brain,
@@ -1849,10 +1707,8 @@ Finally, even if you're not convinced that there is a meaning of life, it would 
 prove that there isn't.  Meanwhile, we can create AI, which will help us determine whether
 there is a meaning of life, and if there is, it will help us fulfill it.
 
-## Consciousness and Death (How a person never dies)
+# Consciousness and Death (How a person never dies)
 [#]: ))))((((
-
-***
 
 Any discussion on the meaning of life would be incomplete without a mention of death.  Death is
 the cessation of consciousness or sentience.  Consciousness, sentience, and self awareness are
@@ -1874,15 +1730,10 @@ understanding of sentience.
 
 ***
 
-```quote
-Jeder einzelne Mensch ist schon eine Welt, die mit ihm geboren wird und mit ihm stirbt, unter
-jedem Grabstein liegt eine Weltgeschichte.
-
-Every single person is a World, which is born and dies with him.  Under every gravestone lies a
-World's history.
-
---Heinrich Heine (1797-1856)
-```
+> Every single person is a World, which is born and dies with him.  Under every gravestone lies a
+> World's history.
+>
+> --Heinrich Heine (1797-1856)
 
 What a tragedy when someone dies.  All that knowledge acquired over a lifetime, the entire
 tacit Weltanschauung, all gone to rot.  A million secrets taken to the grave, synapses
@@ -1905,29 +1756,27 @@ drowned out by even more significant memories.}.
 
 ***
 
-```quote
-  The syllogism he had learnt from Kiesewetter's Logic: "Caius is a man, men are mortal,
-  therefore Caius is mortal," had always seemed to him correct as applied to Caius, but
-  certainly not as applied to himself.  That Caius -- man in the abstract -- was mortal, was
-  perfectly correct, but he was not Caius, not an abstract man, but a creature quite, quite
-  separate from all others. He had been little Vanya, with a mamma and a papa, with Mitya and
-  Volodya, with the toys, a coachman and a nurse, afterwards with Katenka and with all the
-  joys, griefs, and delights of childhood, boyhood, and youth. What did Caius know of the smell
-  of that striped leather ball Vanya had been so fond of? Had Caius kissed his mother's hand
-  like that, and did the silk of her dress rustle so for Caius? Had he rioted like that at
-  school when the pastry was bad? Had Caius been in love like that? Could Caius preside at a
-  session as he did?  "Caius really was mortal, and it was right for him to die; but for me,
-  little Vanya, Ivan Ilych, with all my thoughts and emotions, it's altogether a different
-  matter. It cannot be that I ought to die. That would be too terrible."
 
-  --From "The Death of Ivan Ilych" (1886) by Leo Nikolayevich Tolstoy
-```
+> The syllogism he had learnt from Kiesewetter's Logic: "Caius is a man, men are mortal,
+> therefore Caius is mortal," had always seemed to him correct as applied to Caius, but
+> certainly not as applied to himself.  That Caius -- man in the abstract -- was mortal, was
+> perfectly correct, but he was not Caius, not an abstract man, but a creature quite, quite
+> separate from all others. He had been little Vanya, with a mamma and a papa, with Mitya and
+> Volodya, with the toys, a coachman and a nurse, afterwards with Katenka and with all the
+> joys, griefs, and delights of childhood, boyhood, and youth. What did Caius know of the smell
+> of that striped leather ball Vanya had been so fond of? Had Caius kissed his mother's hand
+> like that, and did the silk of her dress rustle so for Caius? Had he rioted like that at
+> school when the pastry was bad? Had Caius been in love like that? Could Caius preside at a
+> session as he did?  "Caius really was mortal, and it was right for him to die; but for me,
+> little Vanya, Ivan Ilych, with all my thoughts and emotions, it's altogether a different
+> matter. It cannot be that I ought to die. That would be too terrible."
+>
+> --From "The Death of Ivan Ilych" (1886) by Leo Nikolayevich Tolstoy
 
-```quote
-It is not I who will die but the world that will end.
 
-  --Ayn Rand (1905-1982), when asked about death
-```
+> It is not I who will die but the world that will end.
+>
+> --Ayn Rand (1905-1982), when asked about death
 
 I think of understanding one's own death as being similar to understanding consciousness.
 Actually, understanding one's own death is understanding the end of one's own consciousness
@@ -1993,14 +1842,14 @@ inert matter.
 
 ***
 
-```quote
-Death is nothing to us, when we exist, death is not yet present, and when death is present,
-then we do not exist.  All sensation and consciousness ends with death and therefore in death
-there is neither pleasure nor pain. The fear of death arises from the false belief that in
-death there is awareness.
 
-  --Epicurus (341-270 BC)
-```
+> Death is nothing to us, when we exist, death is not yet present, and when death is present,
+> then we do not exist.  All sensation and consciousness ends with death and therefore in death
+> there is neither pleasure nor pain. The fear of death arises from the false belief that in
+> death there is awareness.
+>
+> --Epicurus (341-270 BC)
+
 
 Dying is the *event* of going to existing to not.  Any creature with a nervous system
 sophisticated enough to support the notion, will have a strong aversion to death.  In fact,
@@ -2081,16 +1930,14 @@ matter in my skull.
 
 ***
 
-```quote
-Death is the release from all pain and complete cessation, beyond which our suffering will not
-extend. It will return us to that condition of tranquility, which we had enjoyed before we were
-born. Should anyone mourn the deceased, then he must also mourn the unborn. Death is neither
-good nor evil, for good or evil can only be something that actually exists. However, whatever
-is of itself nothing and which transforms everything else into nothing will not all be able to
-put us at the mercy of Fate.
-
-  --Lucius Annaeus Seneca (4 BC - 65 AD)
-```
+> Death is the release from all pain and complete cessation, beyond which our suffering will not
+> extend. It will return us to that condition of tranquility, which we had enjoyed before we were
+> born. Should anyone mourn the deceased, then he must also mourn the unborn. Death is neither
+> good nor evil, for good or evil can only be something that actually exists. However, whatever
+> is of itself nothing and which transforms everything else into nothing will not all be able to
+> put us at the mercy of Fate.
+>
+> --Lucius Annaeus Seneca (4 BC - 65 AD)
 
 Marc being not-alive is the natural state of the universe.  For its approximately
 12,000,000,000 year existence, Marc has been alive for less than 32, and will certainly be
@@ -2144,10 +1991,15 @@ what we call "ourself" might live on after our bodies die: we can spread our ide
 people through conversations and writings, and our genes can also live on after our deaths, not
 only through our children, but through other relatives, such as our siblings' children.
 
-## Free Will
-[#]: )))(((
-
 ***
+
+[Aside about Robot consciousness and will to self-preservation]
+
+Thus, robots would be conscious in an entirely different way that people are unless this signal
+is carefully crafted to have *specific* things like self-preservation.
+
+# Free Will
+[#]: )))(((
 
 Discussions on consciousness usually include some mention of free will, which is why I'm
 including this here.
@@ -2204,654 +2056,8 @@ choice (in a deterministic sense) in their actions, does it make sense to punish
 example?  Yes.  The purpose of punishment is to act as a deterrent.  The fact that you may be
 punished for doing something goes into your own process for determining your actions.
 
-# Applications
-[#]: )))))(((((
-## Boundless Will and Finiteness of Life
+# Conclusions
 [#]: ))))((((
-
-***
-
-```quote
-Und was der ganzen Menschheit zugeteilt ist,         And I want to savor in my inner self
-Will ich in meinem innern Selbst genie\ss en,        whatever's the lot of all mankind,
-Mit meinem Geist das H\"ochst' und Tiefste greifen,  to grasp the highest and deepest with my mind,
-Ihr Wohl und Weh auf meinen Busen h\"aufen...        to heap man's wells and woes on my bosom...
---Johann Wolfgang von Goethe (from Faust, 1808)
-```
-
-
-The preceding quote by Goethe is one of my life's mottos.  When faced with a choice of 2
-activities where one will give me an experience I hadn't had before while the other will be
-more routine, I'll tend to go with the 1st, even if the 1st is more likely to be
-unpleasant FOOTNOTE{This is true up to a point.  I've never experienced losing a limb, but I
-wouldn't chop my foot off because that would limit my future possibilities.}.  It's my view
-that this philosophy is useful to have and will give a person a fuller life experience.  Below,
-I examine the validity of my view.
-
-On the one hand, I want to minimize the regret I might have when I'm an 80-year-old man on my
-deathbed FOOTNOTE{When faced with a situation where I'm feeling lazy or afraid, I might imagine
-myself as being controlled by my 80-year-old bedridden future-self, as if future-Marc's
-controlling a character in a video game.  This is a good motivator, but there are occasional
-situations where I'm not sure what future-Marc will want to have done.}.  When people look back
-on their lives, they tend to regret the things they haven't done, rather than the things they
-have done.  I suspect my regrets will be along the lines of "I should've been braver, bolder,
-and less lazy."  rather than "I was way too daring.  I should have settled into more ruts.".
-
-On the other hand, what's the point of a full life experience and a head full of knowledge of
-the world if they just die with you?  Is a life's experience useful only insofar as it leaves a
-*legacy*?  To that end, how much do the philosophies that lead to a fullness of life help a
-person reproduce and otherwise leave a legacy?  Should we make our rabbits adopt this
-philosophy?
-
-***
-
-```quote
-Those who eat fugu soup are stupid. But those who don't eat fugu soup are also stupid.
-
---Japanese Proverb FOOTNOTE{Fugu soup can be deadly poisonous if prepared improperly.  The soup
-is said to be quite good, though.  As I understand it, the meaning of this proverb is that it's
-foolish to eat fugu fish because it's potentially deadly, but it's also foolish to refuse to
-take any risks in life because you'll miss out on so many experiences.}
-```
-
-```quote
-Audentes Fortuna iuvat. (Fortune favors the bold.)
-
---Virgil (70-19 BC)
-```
-
-Life is inherently unsafe.  What feels safe will end you up as a bitter old man (after which
-you die anyway).  This seems hardly a better fate than dying in a blaze of glory.
-
-***
-
-When I was 9 years old, I used a compass, ruler, and protractor to make a circular chess board.
-This chess board had the same dynamics as a regular 8 by 8 grid, but it was "warped" onto an
-annulus.  I naively thought that someone who was into chess would be interested in playing on
-the circular board.  It'd be a new kind of chess, "circular" chess.  I was wrong.  The
-differences between "square" chess and circular chess are entirely superficial.  It's the same
-game underneath.
-
---
-
-When I 1st learned to ski, I remember thinking at a very low-level action level.  I was
-thinking about putting my left leg into a particular position, or shifting my weight to my
-right leg.  After I learned to ski well enough, my thoughts were rarely at that level.  Instead
-my thoughts were about avoiding particular obstacles, or trying to figure out a route through
-the trees or moguls.  I had *abstracted away* my conscious thoughts about low-level motor
-actions, and turned them into macro-actions.
-
---
-
-I remember the excitement when Nintendo released its "Wii" gaming system: an entirely different
-kind of controller, one that worked on motion detection rather than buttons.  When I 1st
-started to play Wii, the game *did* seem different.  It took a little while to get used to the
-new kind of play.  But after several hours of play, I had abstracted away the controller.  That
-is, I wasn't thinking about the controller any more, but about how Link was going to acquire
-some particular item, like a new sword.  It turns out that the "entirely different" controller
-didn't matter at all.  It was almost entirely a surface difference.
-
---
-
-My entire life, I've had more or less the same heart-rhythm and breathing pattern.  This is
-predictable and boring on one level, but is unimportant and abstracted away (like the Wii
-controller) on another level.
-
-So what do I mean by deeper meaning vs. surface features?  I don't need to drive every color
-of car because the color is a surface feature.
-
---
-
-It's important to have a childhood.  That is, it's important to have an exploratory period so
-you can try things like driving different colored cars and realize that this is just a surface
-difference, with no real bearing on the actual function of the car.
-
-***
-
-Immanuel Kant spent his entire life within 100 miles of K\"onigsberg.  His life was rumored to
-be so predictable that there's a story about neighbors setting their clocks by his daily walks.
-At the same time, Kant definitely lived an extraordinary life, coming up with deep
-philosophical ideas that no one ever had before.
-
-***
-
-When we 1st learn to write out the alphabet, we have a virtually unlimited range of styles that
-we might use.  By the time we've graduated college, our handwriting is fairly solidified.
-Unless we see some reason to change it (e.g., for legibility), we stick with whatever
-handwriting style we're used to.  It'd take a long time to write a letter if we had to rethink
-our style every time we wrote a word.  Changes, if they exist, to our handwriting after a
-certain age are usually gradual.  The script on papers I wrote over a decade ago is still
-recognizable as my own.  The choice of our handwriting style is rarely consciously decided, but
-I'm willing to bet that a child has the ability to emulate almost anyone else's handwriting,
-such that the other style becomes their own.
-
-***
-
->   The infinite possibilities each day holds should stagger the mind.  The sheer number of
->   experiences I could have is uncountable, breathtaking, and I'm sitting here refreshing my
->   inbox.  We live trapped in loops, reliving a few days over and over, and we envision only a
->   handful of paths laid out ahead of us.  We see the same things each day, we respond the
->   same way, we think the same thoughts, each day a slight variation on the last, every moment
->   smoothly following the gentle curves of societal norms.  We act like if we just get through
->   today, our dreams will come back to us.
->
->   And no, I don't have all the answers.  I don't know how to jolt myself into seeing what
->   each moment could become.
->
->   ...
->
->   All you see is the choice between working and slacking off.  There are so many adventures
->   that you miss because you're waiting to think of a plan.  To find them, look for tiny
->   interesting choices, and remember that you are *always* making up the future as you go.
->
-> --Randall Munroe (XKCD)
-
-
-Our brains are like closet space: we find ways to fill them.  It's possible to let unimportant
-small decisions consume us.  For example, when I worked for Sandia Nationals Laboratories in
-California, I had a 3-day weekend every other week (on what was called a 9-80 schedule).  I
-lived there a year, but never made it to Sequoia National Park, which was only a few hours
-drive away.  More than once, I spent the entire 3-day weekend playing a video game called
-"Heroes of Might and Magic III".  My brain was completely consumed by questions such as "Should
-I invade this castle or produce more ranged units before doing so.".  Because I was consumed
-with the game, I didn't take sufficient time to step back and consider the option of turning
-the game off and going to Sequoia National Park.
-
-Likewise, as Randy Pausch mentioned, if you spend all your time polishing the underside of the
-banister, you won't have as much time for important things.
-
-***
-
-Why a person should go to Preakness once in their lives:
-1. A person's *experience* is limited.
-2. There are a combinatorially huge number of possible experiences a person can have.
-3. Even if we exclude all the absurd possibilities, the remaining possibilities are still
-   combinatorially huge.
-4. Even the number of events that *have* happened or will happen (never mind the events that
-   are conceivable but don't happen) in a human lifetime are vastly more than can be
-   experienced by a single person.
-5. Human nature errs on the side of consistency and safety.
-6. Consistency makes life seem shorter.
-7. Our rabbits (and us) want immortality.
-8. We want minimal regret when we're old.
-9. A fuller experience gives a more accurate Weltanschauung.
-10. Therefore, a person should strive to experience as much as possible to have the fullest
-    life experience.
-11. Preakness (for me) is further outside my other experiences than most other activities I
-    could think of doing.  Thus, going to Preakness (if I haven't been before) is that activity
-    that will give me the widest experience.
-
-Couldn't the same argument be applied to Why a person should be raped by Bobo, the A.R.R., once
-in their lives?  With Bobo, the cost is too high.  But how do you decide what that line is?
-
-***
-
-```quote
-A foolish consistency is the hobgoblin of little minds.
-
---Ralph Waldo Emerson (1803-1882)
-```
-
-```quote
-  You, the partner in my journey, you have built your existence like a termite.  You sealed off
-  all holes outside, and rolled like a hank in a cocoon of habits, in a choking ritual of daily
-  life.  Despite it causing your madness, you have built a fortification out of this ritual
-  against hurricanes, tides, stars and feelings.  It is exhausting to you enough to forget
-  about your condition as a human.  Now, the clay, out of which you were built, got dry and
-  hard.  Nobody will ever wake in you an astronomer, musician, altruist, poet, or man, who
-  maybe once inhabited you.
-
---From the movie Day of the Wacko (Dzie\'n \'Swira) (2002), translated by B\l a\.zej Bu\l ka
-```
-
-There are arguments for specialization.  For example, there's Economy of Scale and Division of
-Labor.  It's more efficient to have a company that specializes in making pencils and another
-company that specializes in dry-cleaning laundry than to have both companies making their own
-pencils and doing their own laundry.  If we spend all our time dabbling in a huge range of
-activities or areas of knowledge, we won't become experts in anything.  Many fields, like
-neurosurgery, require years of focused dedication, practice, and learning to become proficient.
-And in a world full of dilettantes, an expert neurosurgeon would be in demand (and he would be
-able to reap the rewards of that demand).
-
-This being said, people's natural Will and behaviour tend to err too far on the side of routine
-and specialization.  Because of cultural, cognitive, and genetic inertia, we're overly
-influenced by fear and laziness FOOTNOTE{The fundamental idea behind the phrase "Carpe diem."
-or "Seize the day." is to prevent fear and laziness from overly influencing one's actions.}.
-Food used to be more scarce than it is now, so laziness, which helped conserve a scarce
-resource, is less useful than it used to be.
-
-Fear is also less useful than it used to be.  Generally, people are overly cautious.  This is
-caused by cultural and maybe even genetic inertia that made sense 400 years ago when our
-"safety net" was much smaller.  400 years ago, starving on the street was a more real
-possibility in the western world than it is today.  Medicine also wasn't as advanced and most
-occupations were more physical, so a broken leg could be more physically debilitating.  And a
-loss of a functioning leg had a higher likelihood of causing you to lose your means of support
-(which was more likely to be some sort of physical labor).
-
-Mental laziness might be why we find ourselves "rolled like a hank in a cocoon of habits".
-Thinking costs calories, which have been historically expensive: the brain uses 20% of our
-metabolism despite being only 2% of our bodyweight.  But don't habits make sense?  Don't habits
-free up cognitive resources?  It's human nature to fall into ruts.  Habits make life easier.
-For example, if I had to rethink about how to dry myself off every time I took a shower, or how
-to walk or write, I wouldn't get much done.  Likewise, when I shattered the top joint of my
-right index finger, I found out just how many habits I had.  I was painfully reminded of my
-habits every time I "forgot" and tried to use the finger to tie my shoes, get dressed, etc..  I
-try to minimize cognitive overhead by consistency: e.g., always putting my keys in the same
-spot.  Habits are how we avoid having to think about things.  On the other hand, ruts and an
-aversion for the unfamiliar can prevent a person from fully experiencing life, causing him to
-live the same day over and over.  Furthermore, people tend to get trapped in cycles too easily.
-Habits are the embodiment of laziness and fear.  Both of these have their uses, but our brains
-developed in an era when physical threats were plentiful (so fear was necessary), but food was
-not (so laziness was necessary).  So, people are "tuned" to have too much of these for our
-current environment.  Both our instincts and our culture are victims of this environmental
-inertia.  So habits can be useful, but it's important to be mindful that humans' natural
-tendencies err far on the side of consistency.  Knowing this, I try to consciously remind
-myself of this, and will often take deliberate actions to step outside of my comfort zone.  I
-also have to ask myself what the potential harm is in getting into a routine.
-
-Even the neurosurgeon's training would suffer if he keeps doing the same routine operations.
-My friend, Gabe, said when he was in high school, after a heavy snow he would drive his car to
-an empty parking lot and do donuts and otherwise play around.  Although the authorities
-discouraged this, he pointed out that this was a useful experience for him: it taught him the
-dynamics of the car in non-standard conditions and how to handle the car if he ever starts to
-skid on some ice.  Thus, his exploration earlier probably prevented him from getting into at
-least a few accidents.
-
-***
-
-```quote
-Moderation is liberation.
-
---Jason Pickett (1998)
-```
-
-There are arguments for having a wide range of experiences.  The *Pareto
-Principle* FOOTNOTE{This is not to be confused with the concept of *Pareto Optimality* from
-\meme{47}.  Though both are named after the Italian economist Vilfredo Pareto.} (also called
-the 80/20 rule) states that, for many systems, roughly 80% of the effects come from 20% of the
-causes.  To attain an expert level in (or 100% mastery of) many domains, such as hang gliding
-or neurosurgery, a good deal of time must be invested, but a 90% mastery will probably take
-roughly 10% of the effort.  For example, suppose you want to learn to a new language.  Zipf's
-law states that, "In a natural language (such as Swedish or English), the frequency of a word
-is inversely proportional to its rank in frequency.".  So the 100 most frequent words in
-written English ({\tt the}, {\tt of}, {\tt and}, {\tt to}, {\tt a}, {\tt in}, etc.)  will
-account for nearly *half* of the words in a document.  So, if you learn just these 100 words,
-you'll already be able to understand half the words in a given document.  If you learn 1000
-words (and the basic rules of grammar), you'll be able to understand most sentences in a
-language.  But the typical vocabulary of a language contains tens of thousands of words.
-English is estimated to have at least 50,000 root words.  Even the artificial language
-Esperanto, which prides itself on its small vocabulary has 15,000-20,000 root words.  So a
-complete mastery of the vocabulary of a language would take over 50 times the time to learn "a
-basic understanding".  Thus, a person could attain basic understanding in 50 languages, or
-totally master a single language.  Similarly, you can reach 90% mastery of being a Family
-Practice doctor with the first 10% of the effort (since most patients are the "common cases"
-for which you quickly learn what to do).
-
-On the other hand, there are cases where expertise is necessary, where having a 90% mastery
-simply won't do.  For example, a sprinter who runs 90% as fast as the fastest won't make the
-olympics, even if he also throws the javelin put 90% as far as the best javelin.  On the other
-other hand, such an athlete might be preferred company on a spear-hunting expedition.
-
-***
-
-```quote
-Happy families are all alike; every unhappy family is unhappy in its own way.
-
---The 1st sentence of Anna Karenina (1873), by Leo Nikolayevich Tolstoy
-```
-
-In developing a model of The World, its useful to know about outliers.  Although most cases are
-common, it's useful to spend a disproportionate amount of time learning about the "unhappy
-families" because the variety in these 10% is so big.  For example, if we wanted to write a 100
-page pamphlet on mammals you might see in Colorado, a "proportional" pamphlet would have 90
-pages of the book devoted to the ubiquitous prairie dogs, with chipmunks, bison, elk, big horn
-sheep, black bears, mountain lions, etc. crammed into the remaining 10 pages.  In reality,
-although you might devote a few more pages to the more common animals, a more useful pamphlet
-would have roughly the same number of pages for both prairie dogs and mountain
-lions FOOTNOTE{Mountain lions are rarely seen in Colorado.  I lived in Colorado for 18 years,
-and I never saw a mountain lion in the wild, though I saw thousands of prairie dogs.}.
-Experience has a number of dimensions that are difficult to capture through other means (books,
-photos, films).  Thus, it's hard to find a substitute for learning through experience.  This is
-another reason it's useful to have experiences far outside what you've already experienced.
-
-Learning about a wide variety of fields also allows for generalization and transfer of
-principles.  For example, I've learned to ski, hang glide, and touch type.  By doing each of
-these, I was able to developed a theory about how low-level motor actions become abstracted (in
-our cerebellum) so that they're no longer conscious.  This pattern wouldn't have been as easily
-noticeable to me if I hadn't done this range of activities.  Another example would be
-automobile traffic and fluid dynamics.  If a person learned about both, he'd see a good deal of
-overlap.  Sometimes cars behave like a fluid FOOTNOTE{Sometimes cars behave very much unlike a
-fluid.  Traffic can be complex and nonlinear.}.
-
-A wide experience also helps broaden our perspective.  With a limited set of data, we might
-feel that we've characterized The World, when in reality we've only glimpsed a tiny part of it.
-Even if a wide experience doesn't help you much to characterize the rest of The World, it will
-at least give you some sense of how much you don't know.
-
---
-
-Ignorance is the product of a narrow context.  If we have a large set of outliers, unexplained
-data, or incorrect predictions, we realize how imperfect our Weltanschauung is.  If we spend
-all our time in a limited context, we'll begin to forget that there are things outside of that
-context.  For example, when Gabe and I were in a pub in Malm\"o:
-```quote
-  It was interesting that Gabe and I hadn't heard of the Euro 2004 until we got to Sweden.
-  Neither Astrid nor any of her friends had mentioned anything about it.  This is in contrast
-  to the feeling at the pub where the Euro 2004 consumed the attention of everyone there.  From
-  the context of the pub (and later games in Germany and Brussels), it seemed like everyone in
-  the world was focused on this tournament.  The pub felt like "This is where everything's
-  happening!", it felt like it was the center of The World.
-
-  --From Europe Debris  CITE{pickett:2006}, {\tt **Day 07**}
-```
-
---
-
-```quote
-What is laid down, ordered, factual, is never enough to embrace the whole truth.
-
---Boris Pasternak (1890-1960)
-```
-There's no substitute for experience.  But you can reach a point of diminishing returns, where
-new experiences are so similar to old ones that it's not worth the effort.  For example,
-cathedrals in Europe, though each individually amazing, start to look like each other after a
-while.  Also, with more and more experience, you learn a better mapping between what's written
-down and what the experience is actually like.
-
-***
-
-[#]: Marcpoint
-Suppose you were supposed to memorize the following sequence of numbers:
-```quote
-0, 1, 3, 8, 15, 24, 35, 48, 63, 80, 99
-```
-If you were given only the first few numbers, you'd only be able to rote memorize them.  But,
-as the sequence goes on, you'd start to notice a pattern: the numbers are just 1 less than the
-sequence of squares of 1 through 10.  That is the $n$th number is $n^2 - 1$.
-
---
-
-In immersive language learning, we start to pick up on patterns like this too.  For example, if
-we're learning Korean we might learn from context that "Ojingoe juseyo." means "I'd like some
-squid." and "Nae hoebuhkeurapeuteuneun jangoero kadeuk cha itseyo." means "My hovercraft is
-full of eels".  At this point, you wouldn't know how to say "My hovercraft is full of squid.".
-But if you also knew that "Jangoe juseyo." meant "I'd like some eel.", then you could deduce
-the words for eel and squid and perhaps construct the sentence "Nae hoebuhkeurapeuteuneun
-**ojingoero** kadeuk cha itseyo.".  This is another example where more knowledge allows for a
-more compressed Weltanschauung.  Initially we were given only 2 sentences and could only
-reproduce those 2, but with the 3rd sentence, we are able to generalize and we can construct at
-least 4 sentences.
-
---
-
-Whenever I tour a new town (or even a new building), I like the feeling of everything falling
-into place.  For example, when I first went to high school, I used a system of landmarks to
-help me navigate the wings of the building.  Eventually, I started "connecting the dots".  I
-would figure out that the computer lab was next to the math room and in front of the teachers'
-offices, whereas before, these 3 landmarks were disconnected.  When things fell into place, I
-discarded my system of landmarks for the more parsimonious "map" that I'd built in my head.
-
---
-
-This phenomenon, things falling into place or "clicking" at a certain point after a sufficient
-amount of learning, happens in a broad range of areas of knowledge: how cars work, human
-anatomy, the history of the Roman Empire, etc..  The problem is that if we didn't spend enough
-time learning about a field, we wouldn't reach this point, and we wouldn't have a real
-understanding of the field.
-
-The conclusion here is that it's useful to know that these click-points exist, and it's good to
-reach them if it's not too much effort.  Knowing a lot about a lot of areas can help a person
-develop the meta-knowledge that will let them estimate how much effort will need to go into a
-new area before it clicks (and whether it's worth it).
-
-***
-
-```quote
-  So many people live within unhappy circumstances and yet will not take the initiative to
-  change their situation because they are conditioned to a life of security, conformity, and
-  conservatism, all of which may appear to give one peace of mind, but in reality nothing is
-  more damaging to the adventurous spirit within a man than a secure future.  The very basic
-  core of a man's living spirit is his passion for adventure.  The joy of life comes from our
-  encounters with new experiences, and hence there is no greater joy than to have an endlessly
-  changing horizon, for each day to have a new and different sun.
-
---Chris McCandless (from a letter to Ron Frans, 1992)
-```
-
-If we vary our experience, then our life at least *seems* longer and more full of events.  The
-explanation for this is related to the "chairlift phenomenon":
-```quote
-  Some days [while skiing], I'd want to "master" a particularly difficult run, so I'd end up
-  taking the same chairlift over a dozen times.  In doing this, I'd experience what I call the
-  "chairlift phenomenon": the chairlift ride would seem to get shorter near the end of the day.
-  No, the actual ride wasn't any quicker (I timed it), it just *seemed* shorter.
-
-  ...
-
-  [D]uring the 1st ride on the chairlift, everything I see is new and unpredicted: an odd rock
-  formation, a beautiful view, or a particularly treacherous looking piece of slope.  When I've
-  reached the top of the lift, there are a number of things I'll know that I didn't know when I
-  was at the bottom.  It's not this conscious, but when I get to the top for the 1st time, I
-  might implicitly think "Just 10 minutes ago, I didn't know about (such and such a hazard) or
-  a certain enticing tree-trail.".  During my 12th ride on the chairlift, there'll be much less
-  significant that's new, so I'll have noted or *learned* less.  So the change in my
-  brain-state (in terms of information) from the bottom to the top for the 1st run is greater
-  than the change in brain-state for the 12th run, and in general, more change is correlated
-  with more time passing.
-
-  --From Europe Debris  CITE{pickett:2006}, {\tt **Day 18**}
-```
-
-I don't know that having life *seem* longer is useful in itself.  It could be just putting our
-heads in the sand, but I can't escape the idea that a variety of experiences will produce a
-more fulfilling life.  Would our rabbits do better if they wanted their lives to seem longer?
-Well, we'd at least want for our rabbits to want to live a long time FOOTNOTE{There are
-arguments that it's evolutionarily advantageous *for a species* if the individuals have shorter
-lifespans.  The reasoning goes that a shorter lifespan allows for quicker evolution, which
-makes the species more adaptable to environmental changes.}, or a long-lived rabbit would
-survive and reproduce more than a short-lived one.  I think a diversity of experience allows
-for a better world-model, which is useful for the rabbits' survival and reproduction.
-
---
-
-On the other hand, fragmenting your life into too many slices can make it seem shorter.  I'm a
-slow reader.  It takes me about 40 hours of reading to finish a book, and I read about an hour
-each day.  If I read 30 different books at once, reading a different book every day of the
-month, it'll take me years to finish any of them.  If I looked at any book, I'd think "Wow.  I
-started this book 3 years ago, and I'm still not finished.".
-
-***
-
-[#]: [fullness of life and limited time] vs. [reproduction and purpose of experience]
-
-The purpose of a cognitive system is to characterize and make predictions about The World.  For
-reasons described above, it'd make sense for a cognitive system to want to learn as much as
-possible.  I call this thirst for knowledge {\mgreek ja$\wideparen{\textrm{\mgreek u}}$ma},
-which is the open-eyed wonder that impels us to explore The World, a sort of intense curiosity.
-Our rabbits should have {\mgreek ja$\wideparen{\textrm{\mgreek u}}$ma} too, but balanced by
-fear and laziness.  After all, *exploring* The World comes at a cost of *exploiting* what is
-known already.  How much to explore vs. exploit depends on how much life you expect to have
-yet, so when you're young it makes sense to explore and have a diversity of experiences.
-
-It makes sense to be curious and acquire lots of knowledge without an obvious use.
-```quote
-On the other hand, perhaps one could take a view of The World as being similar to the
-dictionary: I've always accepted that I'll probably never look up most of the words in the
-dictionary (and certainly, I'll never read the entire phone book), and I doubt that many people
-do.
-
-It could also be like having a fancy *versal* font (the font used to make the large ornate
-letters at the beginning of a book or chapter).  You'd always want a full set of 26 of these,
-even if you never use some of the letters (like X and Z, those high scoring, and therefore
-hard-to-use Scrabble letters) for a book.
-
---From Europe Debris  CITE{pickett:2006}, {\tt **Day 15**}
-```
-
-A drive related to {\mgreek ja$\wideparen{\textrm{\mgreek u}}$ma} is what I call Boundless
-Will.  This is the Will to do everything, to pop every push, to tie up all loose ends, to
-travel all paths, to get to know everyone, to find all patterns, to experience all of the
-combinatorially huge number of possibilities.  It'd make sense to give our rabbits a boundless
-Will (see **Walking = Falling + Catching**).  So how do they (we) achieve this well?
-
-***
-
-I read once somewhere that the the academic being is ever a child, or at least ever filled with
-a child's sense of wonder (i.e., deeply motivated by {\mgreek ja$\wideparen{\textrm{\mgreek
-u}}$ma}).
-
-I've always been reluctant to "grow up".  Because after growing up comes growing old, and after
-growing old comes death.  Perhaps I implicitly believe that if I can stall growing up, then I
-can stall death.  It might be because of this, but I get disturbed when my friends'
-conversations turns to buying and remodeling their houses.  It seems so mundane.  Of all the
-boundless possible topics of conversation, all the Gedankenexperiments to be investigated, all
-the analysis of historical trends, the rise and fall of empires, the topic chosen is so often
-whether to go with oak or cherry cabinets for the kitchen.  Maybe the realities of mundane life
-will force me into this abyss, but I think the fate I dread is at least escapable.  While in
-high school, we were as the chimpanzees in the Arnhem zoo: the basic necessities are
-automatically taken care of, and all that is left is politics and peacock's tails.
-
-If you have children, it seems you'll be faced with life's real problems: mortgages, car
-insurance, school-district zones.  This is what will be on your plate, so this is where your
-interests will be.  In high school, there seemed to be so many paths, and possibilities.  It
-seems that as one gets older, one falls on this well trampled path of practicality.  There
-seems to be a lack of friends and socialization, a lack of intellectual fervor, of
-philosophical pondering, of wonder, of {\mgreek ja$\wideparen{\textrm{\mgreek u}}$ma}.  Thus,
-one passes from the phase of exploration to that of exploitation.
-
-In life there are again so many combinations, but a fairly common story is to graduate from
-high school at 18, graduate from college at 22, get a job, marry, buy a house, have kids, then
-retire.  This might sound uninteresting, but it works.  It causes people to be successful.  It
-does the job of reproduction.  (And isn't there room for creativity elsewhere?)
-
-Our rabbits can live The Unexamined Life and still be successful in our eyes (i.e.,
-evolutionarily successful).  Real rabbits reproduce just fine without having the barest inkling
-of the meaning of any of what they're doing.
-
-***
-
-The World can hold only a tiny fraction of all possibilities.  If I'm dealt a particular hand
-of Gin Rummy, I only get that single hand, but there are 15,820,024,219 possible hands I'm not
-being dealt.  Before the hand was dealt, there were almost 16 billion hands it could've been,
-but it had to be only one of those.
-
---
-
-There are many instruments that people have invented, and even more ways to possibly make
-sound.  For example, I could invent an "instrument" that makes sounds by throwing various sized
-rubber balls against a racquetball court wall.  Then there are also existing instruments such
-as the Jew's harp, the didgeridoo, and the theremin, but most bands that I see in Baltimore
-typically have a vocalist, a guitar, a bass guitar, and a set of drums.  This seems to be only
-a tiny slice of the unimaginably large number of possibilities for a band.
-
-I'm sure there are some musical reasons why the standard music set is better than a band with
-an accordian, a didgeridoo, a jew's harp, and no drums.  But I can't help but suspect that the
-standard set is largely a historical accident, and continues to exist largely due to cultural
-inertia.
-
---
-
-There are also an unimaginably large number of things a person could do on a Friday night: one
-could build Lego creations. One could attend a painting party in which the guests all paint
-portraits of each other.  One could play parlor games.  One could lock themselves up in a
-library with friends, everyone grabbing stacks of books on ideas they're interested in.  My
-friend, Dan Bernstein, recommended fetal position night, in which the attendees stay in fetal
-position the entire night.  Yet, the selection in most cities seems to be typically limited to
-going to a bar or going to a theatre.
-
---
-
-Eggs Benedict seems pretty arbitrary: A poached egg and Canadian bacon on an English muffin
-covered with Hollandaise sauce.  If we allow 2 combinations for each part of this menu item
-(e.g. egg over-easy instead of poached), then there would be 16 combinations.  Yet none of
-these are specially named.
-
-***
-
-On one hand you have the combinatorial explosion of possible outcomes, and the tiny
-perturbations and chance happenings that cause decks of cards to fall into a particular order.
-On the other hand you have Mutual Information and convergence, which say that many outcomes are
-basically equivalent.
-
-As an example of the latter, when I was 8, my parents took me to the Humane Society to get a
-puppy.  There were dozens to choose from, and I chose one from a particular litter of 6 or 7
-puppies.  My decision was rather arbitrary in that the only difference I could see in the
-puppies was their coloration.  So in choosing 1 puppy (that I later named "Oreo"), I excluded
-the 5 or 6 other puppies.  Also, in choosing a future with Oreo, I also excluded at least 5 or
-6 other futures with the other puppies.  My question here is "Does it matter?".  Would all
-these futures have been basically equivalent?
-
-***
-
-I only have so many days before I die, and I want to have the whole human experience as fully
-as possible, and it bugs me that there are some things that I'll have died without doing.
-Along similar lines, I view it as a little tragedy every time I pass a stranger on the
-sidewalk.  Here's this full interesting person with dreams, concepts, a family, and a life
-story.  If the stranger and I were stranded on a desert island for 20 years, we'd probably end
-up as good friends, and I'd still never fully figure the person out.  Yet, all those
-possibilities are quashed as we walk past.
-
---
-
-Consciousness is seemingly infinite (or at least combinatorially unbound), but life is very
-finite ($<$ 51,135 days (140 years) and usually closer to 29,400 days (80 years)).  In that
-time, we can't possibly conceive all possible thoughts or dream all possible dreams.
-
-***
-
-```quote
-From the child of five to myself is but a step.  But from the new-born baby to the child of
-five is an appalling distance.
-
---Leo Nikolayevich Tolstoy (1828-1910)
-```
-
-Our highest level concepts are probably formed very early in life, and some of these concepts
-are influenced implicitly by our early experiences.  These might be things like good and bad
-(maybe the very idea of good and bad), that to have effect you have to take an action, etc..
-
-In working on artificial developmental learning, I've come under the suspicion that the amount
-of new information put into our heads after the age of 3 might be *less* than the amount of
-information that was in our heads by the time we're 3.  Tacit knowledge that we don't usually
-think about, like recognizing physical objects, object permanence, and inertia, might be more
-difficult to describe starting from scratch, than are the ideas in a college Complex Variables
-course, when using those fundamental concepts as building blocks.  Paul Cohen (my academic
-grandfather) once noted that the concepts that an army General uses to plan battle strategy are
-fundamentally the same as those his 3-year-old daughter uses to push blocks around a table.
-Therefore, a good deal of the knowledge that's in my head is also in everyone else's head.  So
-the amount of knowledge in my head that's unique might actually be pretty small.  The amount of
-knowledge that's unique to me, and not directly related to me (e.g., no one else knows that I
-read a Sherlock Holmes story last night) is even smaller.
-
-I consider this a good thing though.  This is because I'm interested in the whole human
-experience.  The day I graduated from college, I was depressed because I had the thought that
-"That *was* my undergrad experience.".  There were all the paths that I could have taken, but
-that was it.  I was allowed only one path.  ("Einmal ist keinmal." (Once is never.) I read
-years later in Milan Kundera's "Unbearable Lightness of Being".)  There were all the movies
-that you saw about college and all the crazy times, and not all those were part of my college
-experience.  So, I want to experience everything.  I want to be everywhere and know everything,
-but there simply isn't time in my "expected" 29,400 days.  It's the finiteness of life vs. the
-infinity of possibilities.  Mutual Information mitigates this.  There are a large number of
-paths that all lead to pretty much the same state.  So, Jim's experiences might be radically
-different from mine, but the distance between the information content in our heads might not
-reflect that.  The laws of the universe work the same always and everywhere, so most of what
-Jim learned in his experiences might be fundamentally the same as what I learned in my
-experiences.
-
-***
-
-My current answer to the question I asked at the beginning of this section ("What's the point
-of a full life experience and a head full of knowledge of the world if they just die with
-you?") is this: a full life experience gives a person a better Weltanschauung.  Just as it's
-useful to have a full encyclopedia even if few people read every entry in it, it's still useful
-to have a well-developed Weltanschauung so that a person can make use of the relevant parts if
-the need arises.  Because of evolutionary and cultural inertia, we tend to err far on the side
-of fear and laziness.  So a constant effort must be put forth to combat these forces.
-
-## Conclusions
-[#]: ))))((((
-
-***
 
 Although, these memes may have raised more questions than they answered, I hope they've at
 least given some tools for thinking about the bigger questions such as "What should I do with
@@ -2870,12 +2076,10 @@ is different from Hedonism for reasons explained in the section on that subject.
 
 ***
 
-```quote
-Equations are more important to me than politics because politics are for the present, but an
-equation is something for eternity.
-
---Albert Einstein (1879-1955)
-```
+> Equations are more important to me than politics because politics are for the present, but an
+> equation is something for eternity.
+>
+> --Albert Einstein (1879-1955)
 
 In **Walking = Falling + Catching**, I wrote that a person always needs goals.  This begs the
 question of what these goals should be.  What is progress?  Reproduction is so broad.  When we
@@ -2944,28 +2148,22 @@ and sow some wild oats.  I should have been more moderate.
 
 ***
 
-```quote
-  Let an ultraintelligent machine be defined as a machine that can far surpass all the
-  intellectual activities of any man however clever.  Since the design of machines is one of
-  these intellectual activities, an ultraintelligent machine could design even better machines;
-  there would then unquestionably be an "intelligence explosion", and the intelligence of man
-  would be left far behind.  Thus the first ultraintelligent machine is the last invention that
-  man need ever make, provided that the machine is docile enough to tell us how to keep it
-  under control.  It is more probable than not that, within the twentieth century, an
-  ultraintelligent machine will be built and that it will be the last invention that man need
-  make.
+>  Let an ultraintelligent machine be defined as a machine that can far surpass all the
+>  intellectual activities of any man however clever.  Since the design of machines is one of
+>  these intellectual activities, an ultraintelligent machine could design even better
+>  machines; there would then unquestionably be an "intelligence explosion", and the
+>  intelligence of man would be left far behind.  Thus the first ultraintelligent machine is
+>  the last invention that man need ever make, provided that the machine is docile enough to
+>  tell us how to keep it under control.  It is more probable than not that, within the
+>  twentieth century, an ultraintelligent machine will be built and that it will be the last
+>  invention that man need make.
+>
+> --I. J. Good  CITE{good:1965}
 
---I. J. Good  CITE{good:1965}
-```
 
-```quote
-Der \"Ubermensch ist der Sinn der Erde.
-
-The \"Ubermensch is the meaning of the earth.
-
---Friedrich Wilhelm Nietzsche, from Also Sprach Zarathustra CITE{nietzsche:1885}
-```
-
+>The Übermensch is the meaning of the earth.
+>
+>--Friedrich Wilhelm Nietzsche, from Also Sprach Zarathustra CITE{nietzsche:1885}
 
 I've found I can accomplish the most by doing research in Artificial Intelligence.  Even if not
 achieved during my lifetime, this has the potential to give me an academic legacy.  But, if
@@ -2973,114 +2171,3 @@ achieved during my lifetime, AI has the potential to think all those thoughts th
 died without thinking otherwise.  It has the potential to figure out a way to preserve me.  It
 would create a superbrain that could help answer the question of whether entropy is reversible
 (if the universe is a closed system).
-
-# Appendices
-[#]: )))))(((((
-
-## Why Religion isn't the Answer
-[#]: ))))((((
-
-> If you wish to strive for peace of soul and happiness, then believe; <br>
-> if you wish to be a disciple of truth, then inquire. <br>
-> --Friedrich Wilhelm Nietzsche (1844-1900)
-
-***
-
-I don't believe that the meaning of life has anything to do with the Abrahamic religions (i.e.,
-Judaism, Christianity, and Islam) because fundamental to these religions is the belief in the
-god of Hebrew mythology, commonly known as "God".
-
-### Are Religion and Science equally justified?
-[#]: )))(((
-
-***
-
-One could claim that Science and Religion are both axiomatic belief systems.  That is, both
-science and religion start with a set of assumptions (e.g., "God exists." for religion, and
-Ockham's Razor for Science) that have no backing and on which other beliefs are based.  Since
-Science and Religion are both systems of axioms, one might claim that there is no fundamental
-difference between them, and therefore, belief in Religion is as justified as belief in
-Science.
-
-However, Science isn't a set of specific beliefs, but rather a set of principles for generating
-beliefs, so the axioms are few.  For example, Newton's 3rd Law of Motion (i.e., "For every
-action there is an equal and opposite reaction.")  is *not* a core belief of science.  The core
-tenets of science allow that Newton's generalization might not be entirely correct.  When
-Newton proposed this law, it was the most parsimonious theory that explained observations.  The
-tenets of Science allow both that a more parsimonious explanation might still be found and that
-new observations might be made which Newton's 3rd Law will be unable to explain.  By contrast,
-the axioms of religions are specific and numerous.  For example, Christian dogma states that
-the scriptures are divinely inspired.  Therefore, the entirety of these scriptures (several
-hundred pages) are included in the set of Christian axioms.  Within these are such statements
-as 1. Jesus rose from the dead, 2. belief in Jesus grants one eternal life, 3. Jesus was
-born of a virgin, and 4. Jesus turned water into wine.
-
-If our goal is to understand The World and make predictions, then axiomatic systems *can* be
-compared.  A system of axioms that has few contradictions, has high predictive power, and is
-parsimonious and easier to apply is more useful for that goal (and therefore has more
-justification) than a system that is rife with contradictions, has little predictive power, and
-is bloated and tangled.  Science being the former and Religion the latter, belief in Science is
-more justified than belief in Religion.
-
-### Proof of God's Non-existence
-[#]: )))(((
-
-***
-
-It's sometimes claimed that it's impossible to disprove the existence of God.  While it's true
-that to disprove the existence of some things, such as a diamond the exact size and dimensions
-of the Statue of Liberty, one would have to exhaustively search all the corners of the universe
-and show that such an implausible diamond doesn't exist anywhere.  However, it's possible to
-disprove the existence of God the same way we can disprove the existence of the largest prime
-number: namely, that assumption of its attributes results in a contradiction.  My proof runs as
-follows:
-
-1. Belief in the God of the Bible implies the belief that people have non-material souls
-   which are sentient and live on after a person's body has died.
-2. Belief in the God of the Bible also implies that one's own senses are not deliberately
-   deceptive because God, by definition, is righteous, has an extreme affinity for truth and
-   honesty, is infallible, and is the creator of a person and their senses.  This means that
-   I'm not a brain in a vat deliberately led to believe in a false universe.  (This was
-   Descartes' argument for being able to believe his senses.)
-3. Belief in one's senses forces one to believe in many of the findings of neuroscience.
-   Namely, that most of the processes formerly attributed to soul have been proven to be
-   properties of a material brain.
-4. Since these properties are properties of a physical brain, they can't also be properties of
-   a non-material soul, because this implies either redundancy or contradiction (in that a
-   property of the non-material soul may disagree with that of the physical brain).  If it's
-   redundancy, then a person's soul would be damaged if we damaged a person's brain.  When a
-   person dies, and his brain is destroyed (by rot and worms), redundancy would imply that the
-   overlapping parts of the soul would also be destroyed.  Neuroscience has established that by
-   physically affecting a person's brain, one can cause the person to have mental changes.
-   (For example, would an Alzheimer's patient still be short of memory in his afterlife?  What
-   about a person who had suffered severe brain damage?  Would their soul be catatonic in the
-   afterlife?)  To say that the brain is a physical manifestation of the soul (like a shadow is
-   of a physical object) doesn't help this problem because shooting my shadow's legs doesn't
-   impair my ability to run, but damaging our brain does impair our ability to think.
-5. Therefore, neuroscience implies that there's little left to the non-material soul.  So
-   little, in fact, that we could hardly consider the non-material soul to be sentient (any
-   more than we could consider a severely brain-damaged catatonic person to be sentient).  This
-   is contrary to 1.
-
-One can reconcile this contradiction by altering the definition of God.  However, any
-alteration sufficient to do this would have to be so fundamental that I would no longer apply
-the term "Abrahamic God" to the new concept.
-
-One can also reconcile this contradiction by dropping 1.  Namely, by claiming that one can
-believe in God without believing in a non-material soul.  But belief in an afterlife is central
-to the teachings of Christianity, Judaism, and Islam.
-
-## Addenda
-[#]: ))))((((
-
-***
-
-Another way of looking at the memex: For the rabbits, suppose we don't worry about
-"happiness" the rabbits just have a signal ("reward") that they try to maximize.  When the
-signal is high, there are mechanisms that cause the rabbit to take those sorts of actions
-again.  It turns out that this signal (and behavior) correspond to happiness.
-
-Thus, robots would be conscious in an entirely different way that people are unless this signal
-is carefully crafted to have *specific* things like self-preservation.
-
-[#]: ))))))
