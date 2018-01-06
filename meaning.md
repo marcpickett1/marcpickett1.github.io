@@ -506,9 +506,8 @@ into a situation that would normally induce fear in people, she understood on an
 level why there was cause to be concerned, but she simply didn't experience the emotion of
 fear.
 
-(A note on my terminology: the terms "limbic system" and
-"neocortex" refer to the actual structures in our brains.  The
-terms "reward system" and "cognitive system" refer to idealized
+(A note on my terminology: the terms "limbic system" and "neocortex" refer to the actual
+structures in our brains.  The terms "reward system" and "cognitive system" refer to idealized
 versions of these structures.)
 
 ***
