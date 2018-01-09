@@ -2,21 +2,16 @@
 layout: default
 ---
 
+![](./assets/marc3.jpg "Marc with a sideways door."){:width="140"}
+
 # Marc Pickett
 
 Artificial Intelligence/Machine Learning
 
-I'm at Google AI in Mountain View, CA and Washington, DC
+I'm at [Google AI](https://ai.google/) in Mountain View, CA and Washington, DC
 
 myfirstname (no dot) mylastname thenumeral1 at gmail dot com
 
-![](./assets/marc3.jpg "Marc with a sideways door."){:width="140"}
-
-# Debris
-
-[Europe Debris](./debris/europe.pdf) (2006): Also on [Amazon](http://www.amazon.com/EUROPE-DEBRIS-Epic-Gabe-Europe/dp/0557033764).
-
-[A Memex on The Meaning of Life](./debris/meaning.pdf)
 
 # Publications
 
