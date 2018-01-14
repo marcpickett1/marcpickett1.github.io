@@ -1,5 +1,6 @@
 ---
 layout: default
+title: "Marc's Page"
 ---
 
 ![](./assets/marc3.jpg "Marc with a sideways door."){:width="140"}
@@ -34,15 +35,15 @@ I am also on [Google Scholar](http://scholar.google.com/citations?user=TJaFa1oAA
   * *ICML workshop on Continual Learners* (2nd Best Paper Award)
     2017
 * [A Growing Long-term Episodic & Semantic Memory](https://arxiv.org/abs/1610.06402)
-  * **[Pickett, Marc]**; Al-Rfou, Rami; Shao, Louis; Tar, Chris 
+  * **[Pickett, Marc]**; Al-Rfou, Rami; Shao, Louis; Tar, Chris
   * *NIPS workshop on Continual Learning*
   2016
 * [On the Personalities of Dead Authors](https://research.googleblog.com/2016/02/)
-  * **[Pickett, Marc]**; Tar, Chris; Strope, Brian 
+  * **[Pickett, Marc]**; Tar, Chris; Strope, Brian
   * *Google Research Blog*
   2016
 * [Conversational Contextual Cues: The Case of Personalization and History for Response Ranking](https://arxiv.org/abs/1606.00372)
-  * Al-Rfou, Rami; **[Pickett, Marc]**; Snaider, Javier; Sung, Yun-hsuan; Strope, Brian; Kurzweil, Ray 
+  * Al-Rfou, Rami; **[Pickett, Marc]**; Snaider, Javier; Sung, Yun-hsuan; Strope, Brian; Kurzweil, Ray
   * *arXiv preprint*
   2016
 * [Building High Assurance Human-Centric Decision Systems](./papers/ASE-SpecIssueAISE.pdf)

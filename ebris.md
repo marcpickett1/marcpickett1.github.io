@@ -1,14 +1,18 @@
 ---
 layout: default
+title: Marc's Debris
 ---
-
-# Debris
 
 ### Posts
 
-<ul> {% for post in site.posts %} <li>
+<ul> {% for post in site.posts %}
+{% if post.secondary != null %}
+{% else %}
+<li>
 <a href="{{ post.url }}">{{ post.title }}</a>
-</li> {% endfor %} </ul>
+</li>
+{% endif %}
+{% endfor %} </ul>
 
 ***
 
@@ -21,3 +25,4 @@ A simple [chrome extension](https://chrome.google.com/webstore/detail/hnmgemoihk
 [A Memex on The Meaning of Life](./debris/meaning.pdf)
 
 Some [help for Marc](marchelp) and [my other page](index).
+
