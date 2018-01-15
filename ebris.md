@@ -25,4 +25,3 @@ A simple [chrome extension](https://chrome.google.com/webstore/detail/hnmgemoihk
 [A Memex on The Meaning of Life](./debris/meaning.pdf)
 
 Some [help for Marc](marchelp) and [my other page](index).
-
