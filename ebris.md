@@ -9,7 +9,7 @@ title: Marc's Debris
 {% if post.secondary != null %}
 {% else %}
 <li>
-<a href="{{ post.url }}">{{ post.title }}</a>
+{{post.date| date: "%Y/%m/%d"}}: <a href="{{ post.url }}">{{ post.title }}</a>
 </li>
 {% endif %}
 {% endfor %} </ul>
