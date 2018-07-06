@@ -16,6 +16,8 @@ title: Marc's Debris
 
 ***
 
+[WeightedDict](https://github.com/google/weighted-dict/) a python library for logarithmic time sampling of keys according to a dynamic probability distribution defined by the keys' (normalized) values.
+
 A simple [chrome extension](https://chrome.google.com/webstore/detail/hnmgemoihkmeokbbnfjackbolifealma?utm_source=chrome-app-launcher-info-dialog) I wrote to help ration my web browsing.
 
 [Montezuma's Revenge in under 5KB](montezuma): A hand-crafted script that achieves infinite score in Atari 2600 Montezuma's Revenge.
