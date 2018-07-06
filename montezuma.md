@@ -1,8 +1,7 @@
 ---
 layout: default
+title: "Montezuma's Revenge in under 5KB"
 ---
-
-## Montezuma's Revenge in under 5KB
 
 This is a handcrafted open-loop controller for Atari 2600 Montezuma's Revenge.  As shown below,
 the score resets every million points.

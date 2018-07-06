@@ -391,7 +391,7 @@ as half-court).  In modern America, a star basketball player is envied by many.
 ***
 
 Although our rabbits are really just processes, interactions of molecules, it's useful to
-create abstractions to describe these processes.
+create abstractions to describe these processes.  This is what we'll do below.
 
 ***
 
@@ -474,7 +474,7 @@ Dr. Pavlov plays a mean trick and decides not to give his conditioned dogs their
 ringing the bell, the dogs will have a dopamine spike when hearing the bell, but they'll have a
 marked *decrease* in dopamine when the food doesn't arrive at the expected time.  The dogs'
 dopamine levels will momentarily drop well below their baseline level, indicating the dogs feel
-"pain" or discomfort when they don't get the food.  [#]: In this case, pain works the same way
+"pain" or discomfort when they don't get the food.  In this case, pain works the same way
 as pleasure, but in reverse.  Instead of associating recently active brain areas with "good",
 these areas are associated with "bad".  If Pavlov continues his cruel joke several times, the
 dogs will eventually extinguish the original "pleasure" association they had with the bell.
