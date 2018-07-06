@@ -130,8 +130,6 @@ everything he knew was really important.
 
 # immortal
 #### 2017/04/06/22:17, Thursday
-#### From: [Marc Pickett]
-#### To: [Rhuark Pickett], [Petra Pickett]
 
 There is no such thing as a brain transplant.  By this, I don't mean that the technology
 doesn't exist to transplant a person's brain to another person, though I don't think our
@@ -331,10 +329,7 @@ I had to monitor the files a little.  I was surprised at how much "cruft" had bu
 old computer.  I didn't copy most of this to the new computer.
 
 
-
 # Test foo
 #### 2018/06/09/22:13, Saturday
-#### From: [Marc Pickett]
-#### To: [Rhuark Pickett], [Petra Pickett]
 
 test
