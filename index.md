@@ -13,6 +13,8 @@ I'm at [Google AI](https://ai.google/) in Mountain View, CA and Washington, DC
 
 myfirstname (no dot) mylastname thenumeral1 at gmail dot com
 
+# [NIPS Workshop on Continual Learning](https://sites.google.com/corp/view/continual2018/)
+
 # [Debris](ebris)
 
 # Publications
