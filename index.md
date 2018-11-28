@@ -19,7 +19,7 @@ myfirstname (no dot) mylastname thenumeral1 at gmail dot com
 
 # Publications
 
-I am also on [Google Scholar](http://scholar.google.com/citations?user=TJaFa1oAAAAJ&amp;hl=en&amp;oi=ao).
+I am also on [Google Scholar](https://scholar.google.com/citations?user=enzaBikAAAAJ&hl=en&oi=ao)
 
 [Pickett, M.]: http://marcpickett1.github.io
 [Pickett, Marc]: http://marcpickett1.github.io
