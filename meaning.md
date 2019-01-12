@@ -33,6 +33,8 @@ Conclusions
 
 [#]: )))))(((((
 
+TL;DR: [FIXME]
+
 # Introduction
 [#]: ))))((((
 
@@ -51,8 +53,13 @@ single word, "reproduction", can answer such a often-pondered question as "What 
 of life?".  The complexity of the meaning of life lies in describing the intricacies that are
 entailed by the term "reproduction".
 
-# Happiness of Rabbits
+# Happiness of Rabbits: A Thought Experiment about Evolution
 [#]: ))))((((
+
+TL;DR: We can gain some insights by looking at life from a "designer's" point of view.  The
+  notion of *happiness* or a will might be useful from this point of view.
+
+***
 
 To help us get a handle on what the meaning of life might be, I'll propose an intuition-pump
 that involves rabbits in Australia.  Rabbits are not native to Australia, but today there are
@@ -146,6 +153,14 @@ reproduce.
 
 # Walking = Falling + Catching
 [#]: ))))((((
+
+TL;DR: Permanent happiness can never be achieved, or at least that it'd be a bad from a
+  designer's point of view.  This chapter goes more into some mechanisms a designer might want
+  to put into an organism.  This is then used to explain why we can never have enough *Closet
+  Space*.
+
+***
+
 
 > If I ever say to the moment: <br>
 > Stay! You are so beautiful! <br>
@@ -251,6 +266,10 @@ intake of bacon.
 # Enter Complexity: The Peacock's Tail
 [#]: ))))((((
 
+TL;DR: Life isn't so straightforward for some evolutionary organisms.  This is due to a
+  recursive hall-of-mirrors that produces virtually boundless complexity.
+
+***
 
 We might say that the meaning of life is to eat, survive, and reproduce.  Actually, we could
 just say the meaning of life is to reproduce, since eating and surviving are really just means
@@ -377,7 +396,11 @@ as half-court).  In modern America, a star basketball player is envied by many.
 # Will: Interaction of Cognitive System and Reward System
 [#]: ))))((((
 
-> Zwei Seelen wohnen, ach!  in meiner Brust, <br>
+TL;DR: We have two systems in our head, which might result in two different fundamental
+  meanings of life.
+
+***
+
 > Alas, two souls dwell in my breast, <br>
 > --Johann Wolfgang von Goethe (from Faust, 1808)
 
@@ -391,22 +414,27 @@ as half-court).  In modern America, a star basketball player is envied by many.
 ***
 
 Although our rabbits are really just processes, interactions of molecules, it's useful to
-create abstractions to describe these processes.  This is what we'll do below.
+create abstractions to describe these processes.  Otherwise, it'd take years of describing
+things on the atomic level that might be expressed as "That rabbit is hungry.".  In particular,
+it's sometimes useful (both from a physiological and psychological point of view) to describe
+the rabbits as each having a "mind" that consists of submodules including the "cognitive" and
+"limbic" systems.
 
 ***
 
 Each of us has a world-model in their heads, or a conceptual structure that I'll call a
-*Weltanschauung*.  At the most basic level, a Weltanschauung is how we categorize The World.
-We throw "dogs" into the "animate beings" category, "icebergs" into the "huge objects" and
-"floating things" categories, but there's more to a Weltanschauung than that.  A Weltanschauung
-also contains ideas about how hang-gliders behave, associations, generalized abstractions, and
-"gists" of concepts.  Much of a person's Weltanschauung is tacit knowledge, meaning that it's
-hard to put some views or concepts into words.  For example, given a photo of an adult's face,
-we can easily tell the if the picture's of a man or a woman, but it's incredibly difficult to
-write a set of rules so precise that a computer could follow them and make the distinction.
-Tacit knowledge also includes concepts that are so deep or ever-present that the person doesn't
-even realize that they're there.  For example, you might not be immediately aware that gravity
-is pulling down on you or that you're breathing and blinking.
+*worldview* (or sometimes called a *Weltanschauung* in Psychology, which is German for
+Worldview).  At the most basic level, a worldview is how we categorize The World.  We throw
+"dogs" into the "animate beings" category, "icebergs" into the "huge objects" and "floating
+things" categories, but there's more to a worldview than that.  A worldview also contains ideas
+about how hang-gliders behave, associations, generalized abstractions, and "gists" of concepts.
+Much of a person's worldview is tacit knowledge, meaning that it's hard to put some views or
+concepts into words.  For example, given a photo of an adult's face, we can easily tell the if
+the picture's of a man or a woman, but it's incredibly difficult to write a set of rules so
+precise that a computer could follow them and make the distinction.  Tacit knowledge also
+includes concepts that are so deep or ever-present that the person doesn't even realize that
+they're there.  For example, you might not be immediately aware that gravity is pulling down on
+you or that you're breathing and blinking.
 
 ***
 
@@ -428,9 +456,9 @@ might be a useful initial approximation.  At any rate, our rabbit will have some
 deciding which actions to do.  These criteria can be described as "desire" or "wanting".  I'll
 follow Schopenhauer's lead and call it *Will*  CITE{schopenhauer:1844}.
 
-The rabbit would also have a *Weltanschauung* or model of The World, and a *cognitive system*.
-The rabbit's cognitive system does 2 things: it *builds* the Weltanschauung by learning from
-its experience, and it *uses* the Weltanschauung to do things like make predictions, draw
+The rabbit would also have a *worldview* or model of The World, and a *cognitive system*.
+The rabbit's cognitive system does 2 things: it *builds* the worldview by learning from
+its experience, and it *uses* the worldview to do things like make predictions, draw
 inferences, and create plans to get reward.  Here, I'm using the term "prediction" loosely.
 For example, if a rabbit sees a dingo's head, it will probably "predict" that it will soon see
 the dingo's body.  The predictions aren't necessarily temporal either.  For example, we can
@@ -576,6 +604,11 @@ consider to be our inner selves is actually the combination of both these system
 # Squiggly Lines
 [#]: ))))((((
 
+TL;DR: Perception is non-trivial, and this means that the designer's meaning of life doesn't
+  always agree with the organism's.
+
+***
+
 From my work in robotics, I can say that perception is a tricky computational problem.  Like
 gravity, our perception is so omnipresent that it's easy to assume that it takes little effort.
 It's not until working with a robot's perceptual system or image processing that one develops
@@ -635,6 +668,16 @@ least seems plausible to me.)
 
 # Taste
 [#]: ))))((((
+
+TL;DR: Learning can affect our preferences.  Also, *Specifying Reward*: The Bulldog Hugging
+  Robot} expands on the Squiggly Lines idea and that specifying an innate Will is tricky and
+  hacked.  Perhaps one of the most impoortant sections to understanding happiness is *Hill
+  Climbing on the Cingulate Cortex*, which further expands on the Bulldog Hugging Robot idea to
+  show that finding what makes us happy is essentially a "hillclimbing" search. *Some
+  Strategies for Maximizing Reward* further details how that search might work.
+
+***
+
 
 Until he retired, my godfather worked as an engineer at the Ford Motor Company in Detroit.  He
 had bought one of their new models, and said that although Ford's model was more aerodynamic,
@@ -792,6 +835,11 @@ desires could be redundant or even contradictory.
 ## Specifying Reward: The Bulldog Hugging Robot
 [#]: )))(((
 
+TL;DR: [FIXME]
+
+***
+
+
 A problem with innate rewards for people or rabbits is that we have to be born with them.
 There are people (and presumably rabbits) that are born blind or deaf, yet are still attracted
 to members of the opposite sex.  This means that our fundamental rewards probably aren't tied
@@ -814,7 +862,7 @@ point, the robot will have grounded this concept.
 
 ***
 
-To get an idea of how much is in our innate Weltanschauung, consider testosterone.  Since
+To get an idea of how much is in our innate worldview, consider testosterone.  Since
 testosterone innately makes a person aggressive, we must have an innate model of aggression.  I
 think it's interesting that testosterone serves a similar function in bull sharks and hyenas as
 it does in people, since this hormone is only a symbol.  (Unlike glucose (where the molecule
@@ -856,6 +904,8 @@ positive reward for moving.  After this, the robot learned to simply spin in cir
 
 ## Hill Climbing on the Cingulate Cortex
 [#]: )))(((
+
+TL;DR: [FIXME]
 
 ***
 
@@ -910,6 +960,10 @@ power, for example.
 ## Some Strategies for Maximizing Reward
 [#]: )))(((
 
+TL;DR: [FIXME]
+
+***
+
 Some sort of reinforcement mechanism is still at play in the human brain.  It might be an
 obsolete relic from the time before people evolved their higher cognitive capacity, but this
 mechanism is so basic, and has been with us so long (since before we were mammals), that it's
@@ -961,6 +1015,10 @@ rewarding windfalls.
 
 # Artificial Sweetener, Drugs, and Virtual Reality
 [#]: ))))((((
+
+TL;DR: [FIXME]
+
+***
 
 [#]: cognitive "hacks"
 
@@ -1111,6 +1169,10 @@ been better spent.
 ## Habits and Pain
 [#]: )))(((
 
+TL;DR: [FIXME]
+
+***
+
 Pain killers can be a form of artificial sweetener.  Pain has an evolutionary purpose.
 Physical pain can be a way of knocking a person out of a damaging rut or habit.  For example,
 if you're right handed and break your right index finger, pain will serve as a "reminder" to
@@ -1151,7 +1213,7 @@ emotional pain might also cause "adjustments" at a more cognitive level.
 With physical pain, such as a broken bone, the pain also prevents you from messing with the
 bone so that it can heal.  But maybe there's something more to a period of depression.  Perhaps
 you use the period as a cognitive restructure, or to "reprogram" to adapt to the change and
-modify the parts of your Weltanschauung that are no longer valid as a result of the tragedy.
+modify the parts of your worldview that are no longer valid as a result of the tragedy.
 For example, suppose a close confidant dies.  Confidants are useful for giving an outside
 perspective on problems, and now a person has to either find a new confidant or get into the
 habit of providing their own counsel.  Similarly, if a person has a powerful friend who dies,
@@ -1168,6 +1230,10 @@ pain is a way to break habits, both cognitive and behavioral.
 
 ## Hedonism
 [#]: )))(((
+
+TL;DR: [FIXME]
+
+***
 
 > Junkies are not interested in sex and they have no interest in other people except as
 > suppliers of junk.
@@ -1235,6 +1301,10 @@ rabbits that tried to maximize their legacies would have more legacy than those 
 
 # Economics and Ethics
 [#]: ))))((((
+
+TL;DR: [FIXME]
+
+***
 
 As I mentioned at the beginning of **Enter Complexity: The Peacock's Tail**, the mantra "Eat.
 Survive.  Reproduce." sounds too trivial to be the answer of the meaning of life.  But hidden
@@ -1353,6 +1423,10 @@ reputation for this, which is good for you.
 
 # Atomic Waves and Platonic Forms
 [#]: ))))((((
+
+TL;DR: [FIXME]
+
+***
 
 [#]: A couple notes:
 
@@ -1476,6 +1550,10 @@ feel as real as I feel because everything it interacted with would be as "real" 
 # Designing your Successor
 [#]: ))))((((
 
+TL;DR: [FIXME]
+
+***
+
 > What, then, when an agent can best bear The Will be steering the creation of a new agent?
 > The Will is to reach ultimate existence.
 >
@@ -1548,6 +1626,10 @@ hosts and how different hosts have different effects.
 
 # Entropy: A Petri Dish Falling into a Volcano
 [#]: ))))((((
+
+TL;DR: [FIXME]
+
+***
 
 A rabbit's success is not measured by how many children it has, but better by how many
 grandchildren it has, even better yet by how many great-great-great-...grandchildren.  This is
@@ -1650,6 +1732,10 @@ lava-bound petri dish.
 ## Nihilism
 [#]: )))(((
 
+TL;DR: [FIXME]
+
+***
+
 In one sense, the universe is dead.  That is, the universe is a collection of matter that is
 simply following the laws of physics, coldly carrying out calculations.  For example, my brain,
 *the machinery for my soul*, is simply a collection of atoms, each of which is obeying the laws
@@ -1709,6 +1795,10 @@ there is a meaning of life, and if there is, it will help us fulfill it.
 # Consciousness and Death (How a person never dies)
 [#]: ))))((((
 
+TL;DR: [FIXME]
+
+***
+
 Any discussion on the meaning of life would be incomplete without a mention of death.  Death is
 the cessation of consciousness or sentience.  Consciousness, sentience, and self awareness are
 related, but different.  We can say that a patient is conscious if they respond to their
@@ -1735,7 +1825,7 @@ understanding of sentience.
 > --Heinrich Heine (1797-1856)
 
 What a tragedy when someone dies.  All that knowledge acquired over a lifetime, the entire
-tacit Weltanschauung, all gone to rot.  A million secrets taken to the grave, synapses
+tacit worldview, all gone to rot.  A million secrets taken to the grave, synapses
 destroyed.
 
 --
@@ -2000,6 +2090,10 @@ is carefully crafted to have *specific* things like self-preservation.
 # Free Will
 [#]: )))(((
 
+TL;DR: [FIXME]
+
+***
+
 Discussions on consciousness usually include some mention of free will, which is why I'm
 including this here.
 
@@ -2057,6 +2151,10 @@ punished for doing something goes into your own process for determining your act
 
 # Conclusions
 [#]: ))))((((
+
+TL;DR: [FIXME]
+
+***
 
 Although, these memes may have raised more questions than they answered, I hope they've at
 least given some tools for thinking about the bigger questions such as "What should I do with

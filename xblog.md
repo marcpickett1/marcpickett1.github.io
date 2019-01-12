@@ -329,14 +329,13 @@ I had to monitor the files a little.  I was surprised at how much "cruft" had bu
 old computer.  I didn't copy most of this to the new computer.
 
 
-# test foo
-#### 2018/07/04/12:36, Thursday
+<!-- # test foo -->
+<!-- #### 2018/07/04/12:36, Thursday -->
 
-test
-
-
-# bar
-#### 2018/07/06/12:39, Friday
+<!-- test -->
 
 
-test2
+<!-- # bar -->
+<!-- #### 2018/07/06/12:39, Friday -->
+
+<!-- test2 -->
