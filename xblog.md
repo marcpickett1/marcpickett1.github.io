@@ -329,13 +329,15 @@ I had to monitor the files a little.  I was surprised at how much "cruft" had bu
 old computer.  I didn't copy most of this to the new computer.
 
 
-<!-- # test foo -->
-<!-- #### 2018/07/04/12:36, Thursday -->
+# Some Artwork
+#### 2019/01/27/09:46, Sunday
 
-<!-- test -->
+A composite Night/Day picture of Toronto.
+![]({{ site.url }}/assets/toronto.jpg "A composite Night/Day picture of Toronto."){:width="600"}
+
+Here's a popup pyramid I made some years ago.
+![]({{ site.url }}/assets/marcitlan.jpg "A popout pyramid."){:width="600"}
+![]({{ site.url }}/assets/marcitlanpens.jpg "The making of."){:width="600"}
 
 
-<!-- # bar -->
-<!-- #### 2018/07/06/12:39, Friday -->
-
-<!-- test2 -->
+![]({{ site.url }}/assets/penescher.jpg "A mixture of Penrose and Escher."){:width="600"}
