@@ -340,4 +340,5 @@ Here's a popup pyramid I made some years ago.
 ![]({{ site.url }}/assets/marcitlanpens.jpg "The making of."){:width="600"}
 
 
+Escher with Penrose tiling.
 ![]({{ site.url }}/assets/penescher.jpg "A mixture of Penrose and Escher."){:width="600"}
