@@ -3,7 +3,7 @@ layout: default
 title: "Marc's Page"
 ---
 
-![](./assets/marc3.jpg "Marc with a sideways door."){:width="140"}
+![](./assets/marc4.jpg "Marc with no sideways door."){:width="140"}
 
 # Marc Pickett
 
