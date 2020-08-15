@@ -13,8 +13,6 @@ I'm at [Google AI](https://ai.google/) in Mountain View, CA and Washington, DC
 
 myfirstname (no dot) mylastname thenumeral1 at gmail dot com
 
-# [NIPS Workshop on Continual Learning](https://sites.google.com/corp/view/continual2018/)
-
 # [Debris](ebris)
 
 # Publications
@@ -121,6 +119,8 @@ I am also on [Google Scholar](https://scholar.google.com/citations?user=enzaBikA
   * **[Pickett, M.]** and **[Barto, A.G.]**
   * In *Proceedings of the International Conference on Machine Learning*,
   2002
+
+# [2018 NeurIPS Workshop on Continual Learning](https://sites.google.com/corp/view/continual2018/)
 
 # RepLearn 2013
 
