@@ -254,6 +254,8 @@ old computer.  I didn't copy most of this to the new computer.
 # Some Artwork
 #### 2019/01/27/09:46, Sunday
 
+test
+
 A composite Night/Day picture of Toronto.
 ![]({{ site.url }}/assets/toronto.jpg "A composite Night/Day picture of Toronto."){:width="600"}
 
