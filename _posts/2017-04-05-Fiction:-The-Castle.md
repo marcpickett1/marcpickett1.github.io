@@ -1,9 +1,10 @@
 ---
 layout: post
-title: "the castle"
+title: "Fiction: The Castle"
 ---
 
-
+[#]: ))))((((
+[^1]: Recognizing that permanent fulfillment of desire is impossible, Buddhism teaches that a person should seek to free themselves from desire.
 
 
 In a story called The Library of Babel, Jorge Luis Borges describes an endless library filled with books with seemingly random contents.  I view

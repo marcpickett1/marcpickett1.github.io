@@ -7,7 +7,7 @@ title: "The X Blog"
 <!-- Then: cd blog -->
 <!-- Then: git add --all && git commit -m "Foo." && git push -u origin master -->
 
-# the castle
+# Fiction: The Castle
 #### 2017/04/05/22:15, Wednesday
 
 In a story called The Library of Babel, Jorge Luis Borges describes an endless library filled with books with seemingly random contents.  I view
@@ -105,7 +105,7 @@ becomes almost impossible.
 [2] Bill Holstein once said that he can't remember anything new because, to do so, he'd have to forget something he already knew, and, at his
 age (through a Darwinian process), almost everything he knew was really important.
 
-# immortal
+# Essay: Immortal
 #### 2017/04/06/22:17, Thursday
 
 There is no such thing as a brain transplant.  By this, I don't mean that the technology doesn't exist to transplant a person's brain to another
@@ -255,12 +255,523 @@ old computer.  I didn't copy most of this to the new computer.
 #### 2019/01/27/09:46, Sunday
 
 A composite Night/Day picture of Toronto.
+
 ![]({{ site.url }}/assets/toronto.jpg "A composite Night/Day picture of Toronto."){:width="600"}
 
+***
+
 Here's a popup pyramid I made some years ago.
+
 ![]({{ site.url }}/assets/marcitlan.jpg "A popout pyramid."){:width="600"}
 ![]({{ site.url }}/assets/marcitlanpens.jpg "The making of."){:width="600"}
 
+***
 
 Escher with Penrose tiling.
+
 ![]({{ site.url }}/assets/penescher.jpg "A mixture of Penrose and Escher."){:width="600"}
+
+# Essay: Time, Money, Love, Life, and Cycles
+#### 2020/08/18/09:44, Tuesday
+
+This is an exploration of the connection between Life, Time, Love, and Money.  Some of my basic assumptions about these topics, especially
+money, have shifted in the past several years, and I am reexamining these topics for the first time in several decades.
+
+I was brought up with the attitude best summarized by the biblical phrase that "the love of money is the root of all evil".  The pursuit of
+money was considered greedy and even discussing personal wealth was distasteful.  During graduate school, I lived comfortably on a $24,000
+annual stipend, and wondered what people who made 5 to 10 times that amount did with all their money.  Time, not money, was the main thing
+preventing me from accomplishing my goals, I claimed.  I now earn considerably more now, and I've had a few key realizations about money that
+has challenged my earlier attitudes:
+
+* The first is along the lines of thought given by [Ayn Rand](https://atlassociety.org/commentary/commentary-blog/3988-the-morality-of-money) or
+  [Paul Graham](http://www.paulgraham.com/gap.html): that money *can* be a result of value that one adds to society.  It's not a zero-sum game,
+  where to make money, someone else needs to lose that same amount.
+* The second realization is that the adage that "time is money" can also work the other way around: "money is time".  That is, the normal
+  meaning is that time spent horsing around is time that could be spent making money.  But the reverse can also be true, where money can be used
+  to help free up time.  For example, one can order groceries to be delivered instead of spending an hour at the grocery store.  Assuming the
+  delivery-person also makes a dozen other deliveries in your area, this is perhaps 3 hours of his or her time, but saving 12 hours of people's
+  time altogether (in addition the gas needed for 11 trips to the market).  Not only can one save time by paying other people to (more
+  efficiently) do tasks, but one can save time by buying tools.  A riding lawnmower being a simple example.
+* Finally, I remember feeling sorry for CEOs or other high-income earners, each spending his or her precious one-and-only life in the pursuit of
+  money.  "Who wants to look back on their life as an old man and remember only hours of grind?  All for a fortune you can't take with you?" I
+  asked.  The key realization that dispelled this attitude was that work itself can be rewarding.  I have hours playing the video game
+  [Civilization II](https://en.wikipedia.org/wiki/Civilization_II), managing the growth of my virtual empire, attending to each of my digital
+  cities, and optimizing.  I've since learned that one's work can be even more rewarding: One's work can easily have deeper complexity than a
+  video game, you are often working in the camaraderie of a team who also care deeply about the project (as opposed to the isolation in which I
+  often played Civilization), and the "empire" you build actually helps people, thereby making the world a better place.  And it is because of
+  this point that you get paid.
+
+### Life is Cycles, Cycles can Affect Our Environment, Cycles are Limited, Love grounds out in Cycles
+
+A person born today in America has a life expectancy of 78.9 years, or roughly 700,000 hours.  A person's life is what happens during those
+700,000 hours.  But not all those hours are equal.  In terms of capabilities, an hour when you're sick or underslept isn't the same as an hour
+when you're well and refreshed.  So it might be more accurate to say that one's life is a sum of their *cycles*.  This is a term borrowed from
+Computer Science.  Originally, this meant CPU clock cycles, and was the basic unit of computation.  An instruction might take so many cycles.
+In [hacker jargon](https://www.eps.mcgill.ca/jargon/jargon.html#cycle), this became a metaphor for a person's thinking and, more generally, to
+one's *productive* time.  For example, a teammate of mine might say "I can't commit to that project yet because I won't have the cycles for it
+until the summer."  Of the 700,000 hours, somewhere between a quarter and a third will be spent sleeping, so, in very round numbers, an average
+American's life consists of 500,000 productive hours.  If a person dies at a young age, they have no more productive cycles.  The person --the
+process that *is* the person-- stops.  That person will never write another email, listen to another symphony, or pay another phone bill.  The
+same is true for a person who is in a car accident and is in a coma on life support for 30 years before the plug is pulled.  Death means the end
+of cycles.  Whatever the number is, *the supply of cycles a person has is limited*.
+
+Now, what do we do with our cycles?  A person can use their cycles to affect their world.  He or she can take actions to cause a house to be
+built.  A person can also spend cycles to cause internal changes, such as by reading, thinking, or meditating.  In any case, being is doing.  At
+any moment you're alive and awake, you're causing change either internally or externally.  Even if you're watching mindless TV, you're making
+changes.  Unless you're an amnesiac, a day after you've watched a show, you can tell me what the show was about, which is something you couldn't
+have done before watching the show.  Some people (myself included) enjoy sitting on the beach watching waves.  I don't know what internal
+changes this makes, but presumably it's doing something, because eventually I'll have my fill of wave watching, and I'll want to do something
+else.  If there were no internal changes, then I'd never become "full".
+
+Ideally, we would use our cycles to mold our world in a direction that suits us.  If I'm hungry, I can use cycles to eat.  I can also use cycles
+to feed my kids.  The question of which direction to mold the world is non-trivial.  I might have contradictory goals, such as wanting to eat a
+pint of ice-cream and also wanting to lose weight.  What direction we actually want to push the world aren't necessarily conscious goals, any
+more than a rabbit consciously understands why he mounts other rabbits.  What these goals are is outside the scope of this essay, but I suspect
+they ultimately ground out in "Do things that will pass on genes that are like yours.".
+
+Cycles are the things that make up life, they're finite, and we can use them to cause changes in the world, to mold the world to our liking.  A
+person's life is the sum of their actions, where I'm defining "action" broadly enough that things like thinking and watching TV are also
+"actions".  These actions cause changes in their world, and, ideally, would change the world in some way that's desirable for them.
+
+So what is life, and how can we make the most of our life?  Benjamin Franklin (1706-1790) might say that life is time.  He wrote "Dost thou love
+life? Then do not squander time, for that is the stuff life is made of.".  That is, a human lifetime is made of the moments that comprise it.
+But I'm coming to the conclusion that life, however much time we have, isn't about time exactly, but *action*.  By this, I mean how we can
+causally affect the world (or ourselves).  In this sense, in addition to physical actions like harvesting wheat, building a table, or digging a
+ditch, action also includes seemingly sedentary activities like reading, thinking, writing, and talking.  The effect of some actions is greater
+than others.  For example, playing video games probably doesn't cause as big a ripple as publishing a paper.
+
+A person's life is the sum of their actions.  During life, we have a finite amount of actions we can take.  Death is an end of our actions.  If
+someone is killed or dies early, it means that they can no longer affect the world through their actions.  All of these effects are behind them,
+and there will never be any more.
+
+Life is our ability to causally affect things in this world.  After we die, we are no longer able to directly affect things.  The amount of
+action we have is finite.  We can apply actions to our own goals or for the goals of others.  We can increase our actions by finding and using
+force multipliers.  This includes both getting other people to help us with their actions (and sometimes the goals are aligned), but it also
+includes using machines as a lever.
+
+This is one way to think about money.  For a long time, I thought of money as a certificate for goods.  I give you a dollar and you give me a
+doughnut (or whatever).  I later watched a documentary called The Crash Course, which amended this view to be that money is "a contract on human
+labor".  For example, you're not really paying for the doughnut, you're paying for all the labor that went into harvesting the wheat, cutting
+the sugarcane, baking the doughnut, delivery, etc. that caused the doughnut to come into existence (and in my hand).  This also makes more sense
+when you consider paying someone to change the oil in your car or review a legal contract.
+
+But the idea of life as a finite set of actions modifies this slightly to money being a contract on action.  And not necessarily *human*
+actions, if someone figures out a way to automate actions, then money can pay for those actions (though presumably at a much cheaper rate
+abiding by laws of supply and demand).  If money is a contract on action, and action is the stuff that life is made of, does more money mean
+more life?  Can money be thought of as a force-multiplier?  Maybe..  One issue is that, if we assume that someone's incentive to do what we ask
+is getting paid, then we need to be careful about what criteria we use to evaluate whether they've done their job.  As a trivial example,
+suppose we ask someone to make paperclips for us.  If we pay them solely by the number of paperclips they produce, and their only motivation is
+getting paid, they're eventually going to figure out that the same amount of their action can produce more low-quality paperclips than high
+quality ones.  So, you need to frame the incentive to take quality into account, but any system you come up with will probably have some way to
+game it, unless you're careful.  It's a little like the story of The Monkey's Paw, where a magical monkey paw grants wishes, but abiding by the
+literal meaning of what you ask it.  You might ask the paw for a million dollars, but it might grant it by causing a loved one to die so you can
+cash out on the insurance policy.
+
+This is where "love" comes in.  I think love is an overloaded term with nearly disjoint meanings.  The Greeks discussed this over 2,000 years
+ago, so I won't delve too deeply there, but the kind of love I mean here might be called "agape" or the kind of love a father has for his
+children.  I view this kind of love as grounding out --that is, its actual manifestation in the physical world-- in the dedication of action,
+but different from money because you don't have to worry about incentives.  That is, a father will do what he thinks is in his kids best
+interest (which might not always agree with what his children believe is in their best interest, and people might not always agree with
+themselves what is in their best interest, as I discussed in "The Marshmallow Test and Three Versions of You").  If we view things this way,
+then loving someone is literally giving part of your life to them.
+
+Mozart is quoted as saying that love is that heart of genius.  I'm paraphrasing, and who knows if he actually said this, but the point is that
+love, as in "dedication of action", is what makes great works.  If you spend time in the shower thinking about your project, chances are it'll
+be better than one you aren't as passionate about.
+
+### Money is Cycles too
+
+Money is a contract on (others') cycles.  Ideally, a trade of cycles would be "fair".  This is a basic principle of economics, that I can
+exchange some of my cycles for some of your cycles.  If I'm more effective than you at making arrows, and you're better than me at hunting game,
+I can trade some of my cycles making arrows for some of your cycles hunting game.  In practice, I give you the product of my arrow-making cycles
+(the arrows themselves), and you give me the product of your hunting cycles (the meat).
+
+In practice, income inequality still doesn't make complete sense to me.  In a free market, of course, we'll expect significant inequalities in
+wealth distribution.  On the other hand, I've worked both as a laborer making minimum wage and as a researcher at a top tech company making
+"doctor money".  Money aside, the tech job is much, much easier.  The labor jobs was humping lumber for carpenters to frame a house.  A typical
+day was where I'd wake up at 6:30, drive 45 minutes to be at the construction site by 7:30, spend 10 hours there (which included two 15 minute
+breaks and a half-hour lunch), then drive home, eat, sleep for 9 or 10 hours (I was pretty exhausted), then wake up and do it again, five days a
+week.  If you're keeping track, I got home around 18:30 and went to bed around 21:00, leaving about 2 and a half hours to eat dinner, shower,
+and do other things.  The work was in the hot sun, and included me carrying planks, boards, and other heavy objects to two carpenters who nailed
+them in.  I never actually hammered anything in, which would have been a little more interesting.  I just carried wood.  In contrast the tech
+job involved me doing interesting work in an air-conditioned office, in a comfortable chair, with unlimited drinks, coffee, and snacks.
+
+The Economic difference is that any able-bodied person can hump lumber, while there's a limited supply of people who know how to do my tech job.
+But is it?  Anyone with the right mindset and a high-school diploma could learn to do my job in 6 years.  Give them a full ride to Stanford with
+plenty of guidance, and they'll be at least as able as me.  (Though that would take years, and my skills are in demand *now*.)
+
+The inequality becomes even more extreme.  For example, when they were destroyed, the World Trade towers in Manhattan were largely owned by one
+person, Larry Silverstein.  These buildings were over 1,000 feet tall, and measured 150 by 150 feet, for a total combined volume of over 5
+million cubic yards.  If a single person were to construct and finish a building at the absurdly fast rate of a 50 cubic yard room every week
+(including plumbing, drywall, electrical, etc.), this would take 7 million days or 112 million hours, or over 200 lifetimes worth of cycles,
+
+Again, it makes sense economically, but it's still hard to reconcile the reality that one person can effectively leverage the cycles of over 200
+other people.
+
+And what is life like for the construction workers building the towers, and risking *their* lives --not Larry Silverstein's-- at high altitude.
+I assume that many of them enjoyed their work and may have gone to work on freezing windy days even if they were financially independent.  But I
+suspect a larger number merely "put in the hours" and watched the clock, waiting for their shift to be over, so they could go home and do use
+their cycles more directly on what they wanted to do.
+
+### Cycles Well Spent
+
+In his essay on the Shortness of Life, Seneca (c. 4 BC – 65 AD) wrote "Life is not short, but we make it so...  The amount of time we really
+live is small.  The rest of our days is spent just existing.".  From this, I ask myself "What is time spent living vs. time spent existing?" or
+more pointedly, "What is time well spent?"
+
+That is the question: What is time well-spent?  What is living vs. merely existing?  I haven't yet come up with a satisfactory answer.  Though I
+have lots of examples of time that's *not* well spent (for me, at least): spending hours online (YouTube in particular), too many video games,
+being stuck in traffic.  I think running my workshop was time well spent.  Well spent time also tends to be things outside my comfort zone too.
+I don't have a general answer though.  I'd guess that, if money weren't involved, spending time in drudgery falls in this category.  It's just
+cycles of your life that you're giving up.
+
+For what it's worth, Seneca gives an answer for what is time well spent.  In short, cycles should be spent *understanding* life and the world:
+
+> "Of all people, they alone who give their time to philosophy are at leisure, they alone really live. For it's not just their own lifetime that
+> they watch over carefully, but they annex every age to their own.  All the years that have gone before are added to their own.  Unless we
+> prove most ungrateful, those most distinguished founders of hallowed thoughts came into being for us, and for us they prepared a way of
+> living.  We are led by the work of others into the presence of the most beautiful treasures, which have been pulled from darkness and brought
+> to light. From no age are we debarred, we have access to all, and if we want to transcend the narrow limitations of human weakness by our
+> expansiveness of mind, there is a great span of time for us to range over.  We can debate with Socrates, entertain doubt with Carneades, be at
+> peace with Epicurus, overcome human nature with the Stoics, and go beyond it with the Cynics. Since nature allows us shared possession of any
+> age, why not turn from this short and fleeting passage of time and give ourselves over completely to the past, which is measureless and
+> eternal and shared with our betters?"
+
+I can also list things I did ten years ago that I'm glad I did.  Activities like traveling, having new experiences, and *connecting* with
+people.  Additionally, there's some work I'm not as glad I did.  This includes most busywork.  But there's also work I'm glad I did.  Writing,
+creating things, and developing new algorithms generally fall into the latter category.  The general trend is that staying in my comfort zone
+(watching TV, playing video games) is generally not time well-spent, while branching out of it is.  Again, this heuristic tells me what *isn't*
+time well-spent, but isn't so good for deciding what *is* time well-spent.  Sitting on a hot stove would definitely be outside my comfort zone,
+but not time well-spent.
+
+Paul Graham gives [a heuristic](http://www.paulgraham.com/procrastination.html) for deciding on what is "small stuff" as "work that has zero
+chance of being mentioned in your obituary".  This might be too stringent for deciding what is time well-spent.  I consider traveling in Asia
+for several weeks to be time well-spent if one has never done it before, but this trip is unlikely to be engraved on my tombstone.
+
+From her work in end-of-life hospice care, Bronnie Ware lists [the top five regrets of the dying](https://bronnieware.com/regrets-of-the-dying/)
+as:
+
+1. I wish I'd had the courage to live a life true to myself, not the life others expected of me.
+2. I wish I hadn't worked so much.
+3. I wish I'd had the courage to express my feelings.
+4. I wish I had stayed in touch with my friends.
+5. I wish that I had let myself be happier.
+
+Again, the message I take from these is to avoid being caught in ruts, but that's also saying what *not* to do, not what *to* do.  One heuristic
+I've found for what to do is to consider what things of value I did 10 or 20 years ago, then extrapolate to today.  If I were forced to describe
+what *to* do based on this, I'd say branch out, be creative, learn, go on big new adventures, connect with people, and ultimately create
+something of value for people.
+
+Another is by looking to examples of other people.  Richard Branson's autobiographies have been inspiring.  At least it matches my idea of what
+makes a full life (and of course, he's the one telling the story): he has had greater impact on the world through his work, adventure, and also
+a loving family life.  One could do worse.
+
+### Cycle Leverage
+
+Whether or not we adopt Seneca's definition of living, I see a few ways around the problem of spending precious cycles on drudgery when they
+could be spent on "living":
+
+1. One way around the problem of needing to spend cycles on drudgery is to find a way to get paid to do what you would spend your cycles on if
+   money weren't a concern.  I consider myself fortunate that my current job is very close to this.  My only issue is that I don't know how long
+   the job will last.  The economy could tank or any number of other factors could cause me to lose my job.  I view virtually anyone who has
+   been at Google over 10 years and still working there to be in the category of people who are working because that's what they love doing.
+   After ten years at Google one generally acquires enough investment savings to retire.  Being a CEO can seem like a stressful job, with
+   straining schedules.  But I suspect that most Fortune 500 CEOs could easily retire if they wanted and instead continue working for "love of
+   the game".
+2. Another way is through leveraging *other people's* cycles.  This is basically what getting rich and living off passive income is doing.  The
+   same for running a company with employees.  If you acquire $20 million, then you can reasonably expect to withdraw at least $200,000 every
+   year from passive (investment) income for the remainder of your days, even accounting for slow markets, taxes, and inflation.  Depending on
+   estate taxes, with prudence this could last through the remainder of your kids' days too.  I've seen estimates for the amount needed to
+   achieve "retire and live-off-the-interest" income as low as $650,000, certainly more attainable than $20M.
+3. The last way I see is through automation, leveraging cycles of *machines*.
+
+I'll dive more deeply into 2 and 3 in the next two sections.
+
+### Drudgery
+
+The idea of living off of capital raises some issues.  One is the question of how a person acquires the capital in the first place.  How does
+one acquire $650,000 to $20M?  Of course, one can gain this money by gambling or speculating, but the most effective way today seems to be
+either to start a business or to work in a high salary job (doctor, lawyer, and increasingly tech).
+
+Ideally, if I acquire $10M over a decade working as a lawyer, this means I've added over $10M in value to society.  In terms of cycles, this
+means that I've accomplished, in net, what would take over $10M worth of *other people's* cycles to accomplish, compared to if I had just sat
+idle during that time.
+
+I still find this hard to grok.  Minimum wage in Bangladesh is just under 25 cents per hour.  (Before adjusting for purchasing power parity,
+Bangladeshi minimum wage is just under 10 cents per hour.)  Conceptually, this means that my cycles over the 10 years accomplished more than 100
+million hours of Bangladeshi laborers.  Even if I assume I worked long 80 hour weeks with no vacation, this still means I was able to accomplish
+more over 10 years than 2,000 Bangladeshi laborers working the same period.  In theory, I can see this working through leverage.  A much
+simplified example might be if I were the sole inventor and producer of combine harvesters.  (In reality, the invention and manufacture of these
+machines is an entire industry.)  Now, I, as a single person with one combine, can harvest and thresh as much wheat --150 acres-- as previously
+required at least 150 serfs.  I can further multiply this effect by building 1,000 combines and employing as many drivers to do the work of
+150,000 serfs.  In this much simplified scenario, 150,000 times as much wheat had been harvested as it would have been had I not existed.  In
+this last case, is it really true that one person could invent something that 150,000 serfs could not?
+
+I don't know how often the ideal case pans out.  That is, one could arguably find instances where a person *legally* earned a large sum of money
+without a proportionally net positive effect on society.  For example, some lawyers and Wall Street investors are sometimes targeted as
+examples.  However, I'll assume the market has some degree of efficiency, so with broad strokes, a person's earnings are proportional to their
+net contributions.
+
+Another issue with living off of capital is that *someone else* still has to do the drudgery.  Drudgery can range from being unpleasant, such as
+hard labor, to boring, such as factory work, to dangerous, such as a worker on an oil rig in Siberia or a front-line trench soldier in the First
+World War.  (My grandfather, Michael Samuel Pickett, was shot twice in this last unenviable position.  He survived with a metal plate in his
+head.  We still have his helmet with the bullet hole in it.)
+
+This might be what Karl Marx was getting at by questioning why the owners of machines (capital) should reap the benefits, when it's the workers
+who are spending *their* cycles to produce goods.  Of course, we now know many of the problems that Marxism produces, including that Marxism
+removes much of the incentive for people to create the machines in the first place.
+
+An extreme version of leveraging others' cycles is serfdom or slavery.  Of course, slavery has been outlawed in all recognized countries (though
+there remain an estimated 40 million people who are effectively slaves through human trafficking).  Even if we focus on *legally* leveraging
+others' cycles, there still exists common situations, "wage slavery", where one is coerced to spend their cycles for someone else, often at high
+exchange rates (as in one cycle for one person might be exchanged for ten cycles of another person).  For example, a head-of-household earning
+minimum wage in Maryland, $10 per hour, would have to work 100 hours to pay for a modest monthly rent of $1000.  For 40 hour work-weeks, this
+would leave less than 80 work hours per month for other necessities, such as child care.  Chances are, the person would need to supplement their
+income by working more hours (also at low-skilled jobs).  If they're raising a family, this would leave little extra time for their own
+education to move to higher-skilled jobs.  It's not impossible to break out of this cycle, but it's not easy either.  As it is, the person has
+little choice about how they might spend their cycles, and their situation is nearly tantamount to slavery or serfdom.
+
+This is at one level in the United States, but it can be more extreme elsewhere in the world.  For example, Bangladeshis in Saudi Arabia are
+often paid pennies for an hour of menial labor.
+
+As I see it, the worst part of drudgery isn't that it can be boring, unpleasant, or dangerous, but that drudgery has an *opportunity cost* for
+the one doing it.  Cycles that we spend in drudgery are cycles that we aren't spending in other activities.  These are cycles we're not spending
+with our loved ones or directly forging the world in the direction of our liking.  This wouldn't matter as much if our cycles were unbounded,
+but we only have so many cycles in life, it seems counter to one's interest to spend them advancing someone else's agenda.
+
+### Leveraging Cycles through Automation
+
+It has long been a dream to automate away tedious labor, and especially in Computer Science related fields such as Artificial Intelligence.
+There's a saying in Computer Science that goes "Never work yourself if you can get a computer to do the work for you.".  It's not a coincidence
+that the term "Robotics" stems from the Czech word "robota" meaning drudgery.  The term originated from a story about the technological creation
+of artificial workers.
+
+Automation is a force multiplier.  It can multiply the effects of a person's cycles manyfold.  In the US in the early 1800s it took 56
+person-hours to grow and harvest one acre of wheat.  By the 1950s, that number had dropped to 4.6 hours, and by the 1960s, it was down to 2.9
+hours, and by the 1990s had decreased to 1.6 for large-scale operation.  Of course, this trend has been due to advances in tractors and other
+automation.  In addition, advancements in fertilizer and weed and pest control have nearly tripled the yield per acre between 1950 and 2011.  I
+can only assume corresponding advancements in factory automation has drastically decreased the number of (person) cycles needed to manufacture
+any given product.
+
+Today, many jobs can be done with only a laptop and an internet connection.  Only around
+[13%](https://www.bls.gov/opub/ted/2017/physical-strength-required-for-jobs-in-different-occupations-in-2016.htm) of jobs in America require
+"heavy" physical labor, and this percentage [has decreased over
+time](https://www.bls.gov/opub/ted/2016/employment-by-industry-1910-and-2015.htm).  In information technology, automation is improving [at an
+exponential rate](https://en.wikipedia.org/wiki/Accelerating_change#Kurzweil's_The_Law_of_Accelerating_Returns).  This means the possibility to
+leverage one's cycles is increasing at an exponential rate.  I view automation as the ultimate solution to cycle leverage.  Not only is it less
+ethically questionable than exploiting other people's cycles, it's ultimately more scalable, following the [Law of Accelerating
+Returns](https://www.kurzweilai.net/the-law-of-accelerating-returns).
+
+# Essay: A Life Cut Short
+#### 2020/08/19/09:57
+
+Another way to approach the question of what cycles makes cycles well spent is to ask what makes a full life.  What would be a complete life?
+Is it sensible to ask what it would mean to fulfill one's destiny?
+
+Long before he wrote The Lord of The Rings, J.R.R. Tolkien fought in the Battle of the Somme during the First World War.  That same battle cut
+short the lives of over 300,000 people, most of them young men.  Likewise, Ernest Hemingway, Roald Dahl, Kurt Vonnegut, and many others all
+faced firsthand combat before writing any of their great works.  Between the two world wars, roughly 100 million lives were cut short.  How many
+of these were potential Hemingways?
+
+So what would be a life *not* cut short?  This might include not only doing the "right" thing during the time we have, but being allotted enough
+time.  We accept that 90 healthy years is a fortunate amount.  It's more than most people get.  So, let's suppose we get this..  What would be
+the end after 90 years?  Who might be an example?
+
+John Horton Conway passed away recently at the age of 82.  He is most remembered for inventing a cellular automaton called "Life".  It's
+noteworthy that this work was popularized in 1970, when Conway was 32.  Had he died before his 33rd birthday, had all his accomplishments after
+1970 been "erased", I would speculate that wouldn't change much proportionally regarding his contributions to the popular culture.  I knew
+almost nothing about his life outside of Life.  Of course, he didn't just sit on his hands for the next 60 years.  He continued making
+accomplishments both professionally and personally, but 90% of his worldwide "impact" had already been accomplished.  Inventing Conway's Life is
+a more significant contribution to world culture than most people make, including myself.
+
+Tolkien went on to write The Hobbit (1937, age 45), The Lord of the Rings (last volume published 1955, age 63), then several other works before
+his death in 1973 at the age of 81.  These are only the things we read about in Wikipedia pages.  Tolkien was a father to four children.  He
+wrote illustrated letters to them, and this is in his Wikipedia page because these letters were published.  It's only a fraction of what goes
+into being a loving father.
+
+Can we say Tolkien's "point" was to produce The Lord of The Rings and be a great father to his four children?  Can we say that Conway's "point"
+was to give the world his Life automaton?  This might all be resting on a tacit assumption that a life is best when it looks like a classic
+story arc from a high-school creative writing class, with a beginning, crisis, rising action, climax, resolution, and finally "The End" with
+curtains drawn.
+
+What's an alternate view?  We can view a person's life as an aimless process?  Jupiter's Great Red Spot doesn't have a "goal" as far as I can
+tell.  It's the conflux of surrounding processes, like a maelstrom in the ocean.  It just *is*.  But people are willful creatures.  Any decision
+a person makes is based on some criteria.  There are grey areas to be sure, but a person can look at two outcomes for their life and have an
+opinion about the *value* of them, often preferring one (winning a Nobel prize in Physics) over another (getting Mad Cow disease).
+
+I think the best I can do at this point, is through examples.  You might not agree with his business ethics, but Bill Gates created the
+Microsoft empire, then did much to make the world better through his foundation.  Carnegie, Vanderbilt, and Rockefeller among others had similar
+stories.  Did each of these suck every ounce from their time on Earth?  Of course not, but you could do worse.
+
+The obvious cases of examples might be the greats: Dali, Newton, Churchill, and so on.  What these all had in common is they had some sort of
+worldwide impact.  What about Mozart, who died at age 35, still composing his Requiem?  One can only speculate what symphonies would have been
+written had he lived his "three score and ten".  In Mozart's case, had radical life extension been available, would there be any point where we
+would say the "Mozart process" had finished its goal?  What about Huschle?  You've probably never heard of Mary Magdalene Huschle (1896-1971)
+because she is my grandmother.  She's not famous, but at age 55, she took on the brunt of raising my mother from an infant to an eight-year-old.
+She passed away in her mid-70s having lived a "complete" life in my view.
+
+What can we induce from these examples?  One conclusion might be that we *expect* our journey to take 70 to 80 years and plan accordingly.  For
+example, Andrew Carnegie did this explicitly in his [dictum](https://en.wikipedia.org/wiki/Andrew_Carnegie#Andrew_Carnegie_Dictum), which stated
+that a person should spend the first third of their life on education, the second third acquiring wealth, and the last third on philanthropy.
+In his own 83 years, he started philanthropy at age 46.  Presumably, if he had expected to live to be 150, he would have started philanthropy at
+age 100.
+
+When Oliver Sacks was in his early 80s, he wrote a collection of reflections on his impending death from cancer.  In my view, he seems to be at
+peace that the world is in a good place and that his work is finished here.  He is comfortable with the competence of the next generation of
+physicians and ready to pass the torch.
+
+# Essay: Happiness of Rabbits: A Thought Experiment about Evolution
+#### 2020/08/20/10:04
+
+TL;DR: We can gain some insights by looking at life from a "designer's" point of view.  The notion of *happiness* and *desires* might be useful
+from this point of view.
+
+***
+
+To help us get a handle on what the meaning of life might be, I'll propose an intuition-pump that involves rabbits in Australia.  Rabbits are
+not native to Australia, but today there are millions of rabbits there, all descended from a few dozen brought over from Europe.  Suppose we
+were able to go back in time before rabbits were introduced to that continent, and suppose we played a game, that I'll call *hare wars* similar
+to [core wars](https://wikipedia.com/core_wars), where competing players design artificial rabbits, then we drop a small population of each
+player's rabbits in pre-colonial Australia and see which player's rabbit population is higher after a few centuries.  To constrain things, we'll
+make it so that the players are given identical rabbit *body* designs, and they're only allowed to design the *brains* of the rabbits.  The
+players can make the rabbits' brains as powerful as they want, but a bigger brain will consume more energy than a smaller brain, energy that
+could be used for other activities like running away from predators.  Note that a big brain might not always be selected by evolution.  For one,
+big brains require a lot of energy to run.  Our brains consume around 20% of our body's energy, despite being only about 2% of our body weight.
+(Also, because of our big brains, childbirth has been especially treacherous for humans.  Thus, the width of women's hips has been a somewhat
+literal bottleneck for our intelligence.)
+
+Once the rabbits are dropped in Australia, the players won't be allowed to change the rabbits' design.  The players' rabbits should be adaptable
+because Australia has a diverse environment, and no rabbit design will be optimal for all environments.  Because of the rabbits' computational
+limitations, there will be rabbits that are "buggy" or suboptimal.  For example, from a computational-perception point of view, telling the
+front end of a rabbit from the back is non-trivial, and we might end up having rabbits trying to mate with other rabbits by mounting the wrong
+end.  (I've seen this happen, the rabbits were so eager to mate, they didn't seem to pay attention to the gender of the other rabbit, whether
+the other rabbit was a close relative, or whether they were even mounting the back end of the other rabbit.)  But this is OK from an
+evolutionary standpoint, because the extra computation might not be worth the brain matter needed to do it, and these bunnies will be at the
+correct end half the time, which is good enough to reproduce.
+
+***
+
+To answer questions such as "What makes me happy?" or "Why does *x* make me happy?", we can gain some insight by stepping outside the humanities
+and going down to biology, economics, and cognitive science.  A lot of what makes people happy can be explained in terms of these fields: e.g.,
+men might enjoy sex with lots of different women because the type of people who did so had more kids and are more likely to be around.
+
+I'm sure there are plenty of rabbits who mate like bunnies "because it feels good", and that rabbits have almost no concept of paternity.
+Despite the short gestation period, they probably don't even realize that sex causes babies.
+
+We can design our rabbits and talk about optimality from *the game's* point of view without looking at the rabbits' point of view at all.
+Looking at the rabbits' point of view might lend insight onto the meaning of life: The rabbit's goal in life isn't necessarily *our* goal in the
+game.  Imagine if I had a rational rabbit.  I'd tell my rabbit "Be fruitful and multiply!  That's why I created you.".  To which the rational
+rabbit might respond, "No way!  I (actually, the routines that *you* wrote) want to go mate with hedgehogs!".  One other thing to note, this
+rabbit's defiance (which causes its very desire for freedom and "free will") was programmed by me too because it was successful evolutionarily.
+
+***
+
+There are important differences in the process we'd use to design our rabbits and the process of evolution.  For example, evolution lacks
+foresight.  For example, in male mammals, the vas deferens loops around the bladder, when a direct line would probably have been slightly more
+advantageous.  As mammals became warm-blooded and their testes descended, the vas deferens had to follow the testes, resulting in the current
+design.  Evolution is also slow and has "inertia", for example the myriad of evolutionary relics such as the hip bones of snakes.
+
+Despite these differences, evolution often arrives at what might be called optimal solutions to problems.  For example, the process of evolution
+arrived at the lens of our eyes, and, independently, the lens of the eyes of octopuses, which both have the same basic parabolic shape of lenses
+that people have designed for cameras and other optics.  Therefore, some insights can be gained by considering what designs are successful even
+if we ignore the design process itself.
+
+There's also the principle of [The Selfish Gene](https://en.wikipedia.org/wiki/The_Selfish_Gene): our goal isn't really to make our rabbits take
+over the island, but to make our rabbits' *genes* take over the island.  Thus, we'd want to design our rabbits such that their behaviour
+sometimes might be bad for the reproductive success of an individual, but good for the individual's genes.  A classic example would be where a
+rabbit sacrifices itself to a predator in order to save its offspring.
+
+The reason that the goal of our game is to take over the island is that, in evolution, those beings that had a design that caused them to
+reproduce were the ones that did reproduce.  So any animals living today (including humans) are here because their "designs" are likely to cause
+them to reproduce (at least in the environment where they evolved).
+
+An important point here is that, in general, *every* part of our innate being, both physically and mentally, is "designed" as it is because that
+design traditionally helped our ancestors reproduce.
+
+# Walking = Falling + Catching
+[#]: ))))((((
+
+TL;DR: Permanent happiness can never be achieved, or at least that it'd be a bad from a designer's point of view.  This chapter goes more into
+some mechanisms a designer might want to put into an organism.  This is then used to explain why we can never have enough *Closet Space*.
+
+***
+
+
+> If I ever say to the moment: <br>
+> Stay! You are so beautiful! <br>
+> Then you may throw me into chains, <br>
+> and I'll happily go to the abyss! <br>
+>     --Johann Wolfgang von Goethe (from Faust, 1808)
+
+
+> How much money is enough?  Just a little bit more. <br>
+> --John D. Rockefeller (1839-1937)
+
+The player with the most successful rabbits probably won't have the happiest rabbits.  We'd want our rabbits to be constantly moving forward.
+We'd want them to only have enough glimpses of happiness or contentment that they don't give up completely.  This is how it is with human
+nature, and it's this way for a good evolutionary reason.
+
+An analogy might be made to walking.  When roboticists first began to make robots that could walk, they focused on stability.  If a walking
+robot froze in its tracks it would be stable in the sense that it wouldn't fall down.  Because of this stability, it could walk as slowly as you
+wanted it to.  This is contrasted to the gallop of a horse.  When a horse runs, there are instances when all 4 hooves are in the air at the same
+time.  Thus, a horse can't gallop in "slow motion" because it can't be suspended with all its feet in the air at the same time.  The normal
+walking gait of people isn't stable either.  During each step, our center of mass moves to its highest point when it is in front of the foot
+that's on the ground.  So, we begin to *fall* forward, but our other foot rushes forward to *catch* us.  We then raise our center of mass and
+"reset" the system for the next step.  So walking is falling and catching (or "controlled falling"), and you're never in a permanent stable
+state.
+
+Likewise, one way of getting our rabbits to reproduce is to have them built such that they're always on the edge: that they always feel like if
+they do just this next goal, they'll be happy.  When they do accomplish the next goal, they get some reward, but not permanent happiness.  We
+don't want our rabbits ever to be content because content rabbits don't reproduce as much as those that are constantly striving.  So our rabbits
+will never actually attain fulfillment.  To do so would mean that the rabbits stop striving for more and stop reproducing.  On the other hand,
+the rabbits' reward structure should be such that they don't give up either, because that would mean an end of reproduction too.
+
+If I were designing people to reproduce (or gain power or help their offspring to reproduce), I'd also structure their reward system such that
+they're always trying to attain something.  Like a moving carrot, I might also make them believe that if they only achieve this or that goal,
+they'll be happy.  When they finally catch the carrot, I'll give them momentary happiness, but I'd structure them such that this happiness would
+fade after some time and they'd devise a new goal.
+
+So, it's possible that we can only distract ourselves from the feeling that might be described as emptiness or disquiet, that the emptiness
+can't be banished, only put off.  For example, in Anna Karenina, the character Levin is happiest when he's mowing hay with a scythe.  It's a
+simple action, but he's making "progress" on something.
+
+***
+
+In some video games "cheat codes" or "god" mode (where your character is invincible) makes the game boring quickly.  Likewise, suppose you found
+a genie who would grant as many wishes as you wanted.  The wishes couldn't be contradictory or too poorly specified.  For example, the wish for
+"permanent happiness" wouldn't be granted on the grounds that it's too vague.  With this genie you could make it such that the world was at
+peace, famine and disease were gone, you had eternal life, money was virtually meaningless, you had all the women you could imagine, and your
+friends, family and power were limitless.  But, would you ever be happy?  Can you imagine a situation where you don't have any more wishes to
+make?
+
+I suspect that there'd never be a *permanent* situation where a person was satisfied.  I suspect that (via evolution) the human reward system is
+structured such that permanent happiness is impossible.  For people (or any evolutionary being), it'd make more sense if happiness was the
+*event* of going to a better situation[^1].
+
+[^1]: Recognizing that permanent fulfillment of desire is impossible, Buddhism teaches that a person should seek to free themselves from desire.
+    On the face of it, this is a self-contradiction: a desire to have no desire.  If the tendency to become Buddhist were inheritable, these
+    tendencies would become weeded out of our rabbits.  That is, a rabbit that had no desire to eat would soon starve.
+
+***
+
+If we want to win at Hare Wars, we'd also want our rabbits to use up all of their resources.  We'd want them to be greedy and lazy.  Laziness
+encourages efficiency.  There should be some drive for our rabbits to try to find more efficient ways of accomplishing things, or ways of
+reducing their own effort.  Because if they can do something with half the effort, they can do twice as much.
+
+***
+
+Why would we want our rabbits to exhaust their resources?  Consider what happens if a single pair of mice get into a stocked granary and go
+unchecked.  They'll reproduce until there are thousands and thousands of mice and all the grain is gone... at which point almost all of the mice
+will starve to death.  But any mouse with a long view who exercised some constraint in converting the grain into more mice would soon find
+himself outnumbered by mice who don't have this constraint.  The *unconstrained* mouse would find himself *locally* successful.  By this, I mean
+the mouse will outperform (i.e., out-reproduce) any other single mouse that doesn't use all of its resources.  The problem is that a *group* of
+mice that exercises some constraint in managing their resources can do better in the long run than a group of short-sited mice.
+
+There's almost always some bottleneck resource in nature though.  Nature is an arms race, in a sense.  For example, plants develop mechanisms,
+such as poisons, to prevent themselves from being eaten by animals, and animals develop means (such as enzymes) to get around those mechanisms.
+Usually, each party is just barely in front or behind the other, and this prevents either from completely dominating the other, unlike the mice
+in the granary.
+
+For most of our evolution, it was a rare thing to have a virtually unlimited supply of fatty foods.  Thus, because there was an *external*
+constraint on the amount of bacon we could eat (i.e., its limited supply) there was no need to have an internal mechanism that limited our
+intake of bacon.
