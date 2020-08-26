@@ -9,7 +9,9 @@ title: "Marc's Page"
 
 Artificial Intelligence/Machine Learning
 
-I'm at [Google AI](https://ai.google/) in Mountain View, CA and Washington, DC
+I'm at [Google AI](https://ai.google/) in Mountain View, CA and Washington, DC under [Ray Kurzweil](https://www.kurzweilai.net/)
+
+I also help run the [DC/Bethesda AI Meetup Group](https://www.meetup.com/Bethesda-Artificial-Intelligence-Meetup/)
 
 myfirstname (no dot) mylastname thenumeral1 at gmail dot com
 
