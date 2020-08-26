@@ -5,13 +5,10 @@ title: "Marc's Page"
 
 ![](./assets/marc4.jpg "Marc with no sideways door."){:width="140"}
 
-# Marc Pickett
+# Marc Pickett: AI and Machine Learning
 
-Artificial Intelligence/Machine Learning
-
-I'm at [Google AI](https://ai.google/) in Mountain View, CA and Washington, DC under [Ray Kurzweil](https://www.kurzweilai.net/)
-
-I also help run the [DC/Bethesda AI Meetup Group](https://www.meetup.com/Bethesda-Artificial-Intelligence-Meetup/)
+I'm at [Google AI](https://ai.google/) in Mountain View, CA and Washington, DC under [Ray Kurzweil](https://www.kurzweilai.net/).  I also help
+run the [DC/Bethesda AI Meetup Group](https://www.meetup.com/Bethesda-Artificial-Intelligence-Meetup/)
 
 myfirstname (no dot) mylastname thenumeral1 at gmail dot com
 
@@ -122,9 +119,9 @@ I am also on [Google Scholar](https://scholar.google.com/citations?user=enzaBikA
   * In *Proceedings of the International Conference on Machine Learning*,
   2002
 
+# [2020 ICML Workshop on Continual Learning](https://sites.google.com/view/cl-icml/)
+
 # [2018 NeurIPS Workshop on Continual Learning](https://sites.google.com/corp/view/continual2018/)
 
-# RepLearn 2013
+# [RepLearn 2013: Learning Rich Representations from Low-Level Sensors](RepLearn2013/index.html)
 
-I was the main contact on the organizing committee for the AAAI 2013 Workshop on
-[Learning Rich Representations from Low-Level Sensors](RepLearn2013/index.html).
