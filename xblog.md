@@ -691,7 +691,7 @@ design traditionally helped our ancestors reproduce.
 # Walking = Falling + Catching
 [#]: ))))((((
 
-TL;DR: Permanent happiness can never be achieved, or at least that it'd be a bad from a designer's point of view.  This chapter goes more into
+TL;DR: Permanent happiness can never be achieved, or at least that it'd be a bad from a designer's point of view.  This section goes more into
 some mechanisms a designer might want to put into an organism.  This is then used to explain why we can never have enough *Closet Space*.
 
 ***
