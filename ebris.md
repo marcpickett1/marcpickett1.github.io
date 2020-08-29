@@ -16,6 +16,8 @@ title: Marc's Debris
 
 ***
 
+[Maze Maker](https://github.com/marcpickett1/maze/) ![](./assets/hello_world.gif "hello world."){:width="400"}
+
 [WeightedDict](https://github.com/google/weighted-dict/) a python library for logarithmic time sampling of keys according to a dynamic probability distribution defined by the keys' (normalized) values.
 
 A simple [chrome extension](https://chrome.google.com/webstore/detail/hnmgemoihkmeokbbnfjackbolifealma?utm_source=chrome-app-launcher-info-dialog) I wrote to help ration my web browsing.
