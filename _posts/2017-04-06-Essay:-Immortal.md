@@ -3,7 +3,6 @@ layout: post
 title: "Essay: Immortal"
 ---
 
-[#]: ))))((((
 [^1]: Recognizing that permanent fulfillment of desire is impossible, Buddhism teaches that a person should seek to free themselves from desire.
 
 

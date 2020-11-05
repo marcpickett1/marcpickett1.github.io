@@ -3,7 +3,6 @@ layout: post
 title: "Fiction: The Castle"
 ---
 
-[#]: ))))((((
 [^1]: Recognizing that permanent fulfillment of desire is impossible, Buddhism teaches that a person should seek to free themselves from desire.
 
 
@@ -93,7 +92,7 @@ remember his entire life, rather he'd keep living the same period over and over 
 Chimpanzees (or dogs) are like this too.  After a certain point, they simply relive the same days over and over again, they get in a rut and
 become a (many-state) automaton.
 
-![]({{ site.url }}/assets/coronaRadiata.gif "The Castle"){:width="600"}
+![]({{site.url}}/assets/coronaRadiata.gif "The Castle"){:width="600"}
 
 [1] It's unlikely that there is another crew of caretakers during the day.  Though the likelihood of two crews running into each other on any
 given day is similar to that for winning a low-stakes lottery, after several centuries, the probability that they *won't* run into each other
