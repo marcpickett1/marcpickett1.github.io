@@ -66,3 +66,5 @@ eyespots are so prevalent on peacock tails partially because of their special pl
 <!-- Another (not incompatible) reason is that eyespots were originally useful for the peafowl (as -->
 <!-- they are for the Buckeye Butterflies), and the genes got "recycled".  (The former reason at -->
 <!-- least seems plausible to me.) -->
+
+

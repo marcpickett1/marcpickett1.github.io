@@ -6,8 +6,7 @@ title: "Essay: Walking = Falling + Catching"
 [^1]: Recognizing that permanent fulfillment of desire is impossible, Buddhism teaches that a person should seek to free themselves from desire.
 
 
-TL;DR: Permanent happiness can never be achieved, or at least that it'd be a bad from a designer's point of view.  This chapter goes more into
-TL;DR: Permanent happiness can never be achieved, or at least that it'd be a bad idea from a designer's point of view.  This section goes more
+TL;DR: Permanent happiness can never be achieved, or at least that it'd be a bad from a designer's point of view.  This section goes more
 into some mechanisms a designer might want to put into an organism.  This is then used to explain why we can never have enough *Closet Space*.
 
 ***
