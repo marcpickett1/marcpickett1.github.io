@@ -18,6 +18,9 @@ Until he retired, my uncle worked as an engineer at Ford in Detroit.  He had bou
 although Ford's model was more aerodynamic, Chevrolet's competing model had higher sales because people "didn't like the way the Ford model
 *looked*".  And the next model (the 2000 Taurus) ended up being redesigned with a more traditional --and less aerodynamic-- shape.
 
+![]({{site.url}}/assets/buckeyebutterfly.jpg "A Buckeye Butterfly, showing eye spots"){:width="600"}
+
+
 Why wouldn't people prefer the more aerodynamic model?  Isn't the goal to have the most "functional" car?  If not, what else might
 people be trying to optimize?
 

@@ -7,6 +7,26 @@ title: "The X Blog"
 <!-- Then: cd blog -->
 <!-- Then: git add --all && git commit -m "Foo." && git push -u origin master -->
 
+<!-- post on medium # Atomic Waves and Platonic Forms -->
+<!-- post on medium # Artificial Sweetener, Drugs, and Virtual Reality -->
+<!-- post on medium ## Habits and Pain -->
+<!-- post on medium ## Hedonism -->
+<!-- post on medium # The Peacock's Tail -->
+<!-- post on medium # Economics and Ethics -->
+<!-- post on medium ## Hill Climbing on the Cingulate Cortex -->
+<!-- post on medium ## Some Strategies for Maximizing Reward -->
+<!-- post on medium # Walking = Falling + Catching -->
+<!-- post on medium # Happiness of Rabbits: A Thought Experiment about Evolution -->
+<!-- post on medium # Will: Interaction of Cognitive System and Reward System -->
+<!-- post on medium # Taste -->
+<!-- post on medium ## Specifying Reward: The Bulldog Hugging Robot -->
+<!-- post on medium # Designing your Successor -->
+<!-- post on medium # Entropy: A Petri Dish Falling into a Volcano -->
+<!-- post on medium ## Nihilism -->
+<!-- post on medium # Consciousness and Death (How a person never dies) -->
+<!-- post on medium # Free Will -->
+<!-- post on medium # Conclusions -->
+
 # Fiction: The Castle
 #### 2017/04/05/22:15, Wednesday
 
