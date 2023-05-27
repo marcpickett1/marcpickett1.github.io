@@ -294,3 +294,90 @@ leverage one's cycles is increasing at an exponential rate.  I view automation a
 ethically questionable than exploiting other people's cycles, it's ultimately more scalable, following the [Law of Accelerating
 Returns](https://www.kurzweilai.net/the-law-of-accelerating-returns).
 
+### Addendum 2023/03/22
+
+I've now asked many people this question: What is time well spent?
+
+Most answers are some variant of either "Time spent with loved ones." or "Time spent learning." (Seneca's answer falls into this category).
+Other answers might be "Time spent building or creating." or "Time spent helping others (e.g., volunteering).".  Each of these answers might
+also raise further questions.  Time spent with loved ones doing what?  Watching TV or engaging in deep conversations?  Time spent learning
+*what*?  Memorizing the phone book, how to play an instrument, learning chess, a practical skill like home improvement, or career skills?
+
+Is it possible to *algorithmically* answer "What is time well spent?"?  By this, I mean is it possible to create some sort of formula that we
+can plug information about some activity and get back a number that tells us how well spent some time is?  It sounds pretty far-fetched.  For
+starters, I'm suspicious of anything so cut and dried.  Any abstraction that allows us to say anything mathematically rigorous is likely making
+simplifying assumptions that are easily broken in real-world scenarios.  As Boris Pasternak wrote, "What is laid down, ordered, factual is never
+enough to embrace the whole truth: life always spills over the rim of every cup.".  That being said, George Box might reply "all models are
+wrong, but some are useful".  So is there a *useful* algorithmic approach?
+
+Reinforcement Learning and Economics both normally assume an external reward or utility metric for determining actions.  For example, we usually
+get a burst of dopamine for eating something sweet.  Is time well spent about maximizing (long-term) dopamine?  Maybe.  But even if, suppose
+this external utility metric is sparse or non-existent.  What then?  This is where the idea of *empowerment* comes in.
+
+What is empowerment?  In Reinforcement Learning, [Empowerment](https://towardsdatascience.com/empowerment-as-intrinsic-motivation-b84af36d5616)
+is a formal measure of "keeping your options open".  When all else is equal, maximize how easily you can access other states.  For example, it's
+easier to go from the state of "having lots of cash" to the state of "having no cash" than vice versa.  It's also easier to go from a perfectly
+stacked house of cards to a random pile of cards than vice versa.  But, unlike a house of cards, if you have lots of cash, you can also do
+things, like make purchases, that are harder to do without cash.
+
+Although the meaning of life is reproduction, a proxy heuristic for time well spent is activities that result in empowerment.  Empowerment is
+more general, and is useful for a broad range of possible utility functions.  A robot that had no innate driver to reproduce would still benefit
+from empowerment.  If the robot was later reprogrammed with a new goal, say to make paperclips, then empowerment is likely to help satisfy this.
+This idea isn't new.  In his concept of Will to Power ("Wille zur Macht") Nietzsche claimed that power was the main driving force in humans.
+
+Empowerment can take many different forms.  When I was around 10 years old, I occasionally picked up magazines from the grocery store.  The
+magazines were editions of either "Muscle and Fitness" or "Coin Prices".  When I read the muscle magazine, I dreamed of being physically strong
+like the bodybuilders there, but when I read Coin Prices, I dreamed of owning the rare old (and valuable) coins showcased there.  I didn't
+consciously know why I wanted these things, but I power explains it.  People admire people who are physically impressive.  Not so much for their
+greater physical strength, but for the signal it gives: that a person can *achieve* this strength.  This might also be why someone might admire
+a champion chess player.  Playing chess itself has little practical value outside of chess tournaments.  (A second-rate ability to remodel a
+kitchen is arguably more practical than a top-notch ability to play chess.)
+
+Also, although chess may have little *immediate* practical value, there may be some practical reasons to learn.  First, by learning chess (or
+just about any skill that people dedicate lots of time to) a person *learns to learn*.  There are habits --such as consistency, dedication, and
+space repetition-- that are useful for learning just about anything.  Second, even an abstract skill like chess has "lessons" (or concepts) that
+apply to other parts of life.  For example, chess has concepts like "defense", "aggression", or a "fork" (where a piece threatens two or more
+other pieces simultaneously).  In learning chess, a person learns to both make use of and defend against forks, and some of the general
+strategies can also be used in other adversarial situations.
+
+Other forms that empowerment can take are physical attractiveness (the beauty industry generates over $100 billion annually worldwide), social
+capital, which includes cultivating relations, and accumulating wealth, which is a form of social contract.  Knowledge is also a form of
+empowerment.  I don't know of many cases where someone with more knowledge is limited compared to someone with more limited knowledge, all else
+being equal.  The list also includes empowerment through capital, such as access to tools, machinery, and land.
+
+The desire for empowerment might also explain why some video games can be so addicting: Leveling up and acquiring new items or abilities are all
+forms of empowerment.  They all let you do things that you couldn't before, albeit in an artificial world.  If we ignore that last part (which
+my brain seems ready to do), then playing video games *feels* like time well spent, at least while you're playing them.  If I spend several
+hours playing video games, my higher brain will see that the gain of empowerment was artificial.
+
+How does this guide time well spent?  Does this give us an *algorithmic* heuristic to determine which of two activities is time better spent?
+
+#### Comfort Zones
+
+Why do I make such an emphasis on time well-spent being outside your comfort zone?  Would a suitably advanced artificial RL agent also develop a
+"comfort zone"?  (Probably.)  And to maximize its time well-spent, should that agent take deliberate steps to escape its comfort zone?  (Maybe
+not.)  It seems our comfort zone is misaligned with our actual utility function.  If being bold --asking someone on a date, taking strategic
+risks-- is useful for our ultimate utility, then why can it feel so scary?  My only answer is that our innate wiring for this is tuned to a
+different environment.  One in which failure had worse consequences.  Maybe.  If my tribe was small enough that everyone knew each other, and I
+got rejected for asking someone out, the whole village would know about it, and my reputation (and future prospects) might be damaged.  A modern
+city allows our failures to be much more anonymous.  I'm not sure I buy that argument 100% myself, but I don't know a better theory.  Suffice it
+to say that I've found that my own comfort zone is a lousy heuristic for what I've later considered to be time well spent.
+
+Note that the source of this inertia could be both biological and *cultural*.  Although culture adapts faster than biological evolution, it's
+still beholden to inertia.  Take our spelling system, for example.  The initial "k" in the English word "know" dates at least back to 14th
+Century Chaucer, who spelled the word "knowe".  At that time, people pronounced the initial "k" and the final "e".  At some point, these letters
+were dropped from the spoken pronunciation, but although the final "e" was dropped, the "obsolete" letter "k" is still with us.  Other cultural
+norms regarding risk could also be entrenched.
+
+#### Rejuvenation
+
+I would also like to to figure out how to address "rejuvenation".  One reading of time well spent might be that you run at 100% capacity toward
+your goals.  But it is often useful to spend time sharpening your proverbial axe instead of just chopping down trees.  Or more pedestrianly, you
+need to take time to do you laundry.
+
+So, I want to introduce the idea of "deliberate rejuvenation".  When I'm tired at the end of a long day, I will often default to binging on
+YouTube or playing video games.  A very low energy, high dopamine activity, but it doesn't do much to refresh my energy.  I want to explore
+strategies for other things to do to rejuvenate.
+
+Rejuvenation: Reading, Brain dump, Drawing, Phone roulette, Going for walk/hike
+
