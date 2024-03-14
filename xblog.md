@@ -1083,3 +1083,132 @@ rabbits' cognitive systems, causes them to survive and reproduce.  Some rewards 
 fundamental rewards.  For example, it might make sense to install in our rabbits an innate desire to not fall from high places (as a form of
 bootstrapping), even though this desire is a "corollary" of the more fundamental desire to not break bones.  So, some of our rabbits' desires
 could be redundant or even contradictory.
+
+# Morals as Algebra
+#### 2024/03/10/18:58
+
+I wouldn't call someone evil simply because he made a mistake in solving an algebra problem and derived the wrong solution for x.
+
+Could the same be said about political opinions?  Or more extremely of actions.
+
+Take the Rosenbergs, for example, the spies who leaked secrets about nuclear weapons to the Soviet Union.  They didn't benefit substantially
+personally from their espionage.  Rather, their motivation was ideological: Somewhere, the Rosenbergs calculated that the greatest good would
+result from leaking secrets.  This calculus presumably also included the possibility that they could get tried for treason.
+
+At this level, is this moral calculus any different from the algebra problem.  Yes, it's a more nuanced problem, but is it fundamentally
+different from a moral standpoint?  The Rosenbergs both perished in the electric chair.
+
+For the sake of argument, let's assume that The Rosenbergs' actions harmed others, even if indirectly.  Kaufman, the judge handling their case
+thought so.  He wrote "[Y]our conduct ... has already caused ... the Communist aggression in Korea, with the resultant casualties
+exceeding 50,000. ... Indeed, by your betrayal you undoubtedly have altered the course of history to the disadvantage of our country."
+
+Take another case: The Quebec Bridge Collapse of 1907, which resulted in the deaths of 75 workers.  The collapse was caused by a
+misunderstanding of the bridge's load-bearing capacity.  The consulting engineer for this project, Theodore Cooper, was "roundly criticized in
+post-accident reports for his poor judgement and lack of teamwork in the run-up to the disaster".  However, aside from criticism and an
+irrecoverable blow to his career, Cooper never faced jailtime, much less execution.
+
+So, is there a difference between the mis-calculus of Cooper and that of the Rosenbergs?
+
+What about the "calculus" of people like Pol Pot, whose "derivation" ultimately resulted in the deliberate murders of over 1.5 million people?
+Pol Pot's ideology, essentially a line of (flawed) reasoning, led him to believe that this genocide would be "the best choice".  Similarly with
+Stalin's reforms that led to the Holodomor.
+
+# The Top .01%
+#### 2024/03/11/13:06
+
+What is the actual consumption of top .01%?
+
+Together, Larry Page and Sergey Brin own about 6% of Alphabet's stock, worth around $100B.  Their stocks are structured such that this ownership
+grants them final say on any decision Alphabet makes.  However, the day-to-day running of the company is left to Sundar Pichai.  Larry and
+Sergey sit on the board of the company, and can, of course, veto any decision Sundar makes.  Sundar's net worth, while still high, is "only"
+around $1.6B, a fraction of the founders'.
+
+What is the difference between Larry and Sundar?
+
+In one sense, Page's lifestyle could be considered expensive.  He bought a superyacht for $45M.  He also has various properties, and his Palo
+Alto estate is thought to be worth $15M.  Yet, it seems unlikely that that more than a $1B of his $113B net worth is spent for personal use.
+Even if we assume he has a private jet or two and a few more estates.
+
+
+Most of Page's net worth isn't spent on personal consumption.
+
+This seems different from owning 10,000 ten-million dollar mansions, all for Page's own private use.
+
+The President of the United States also has certain executive powers.  For example, he can veto 
+
+
+The President shall be Commander in Chief of the Army and Navy of the United States, and of the Militia of the several States, when called into
+the actual Service of the United States
+
+# Fnordnet: The fnord only thing they fear is fnord.
+#### 2024/03/13/20:47
+
+## A Puzzle: How can we allow general learning *and* innate instincts?
+
+Both biological and artificial systems benefit from general learning, since adaptability is a key to robust success.  For mammalian brains, the
+Mountcastle hypothesis proposes that the neocortex is a general learning system. The same cortical circuitry that does high-level planning also
+does seeing and hearing.  Sur and Rubenstein even suggest that a newborn ferret's auditory cortex can learn to "see".  Artificial systems, such
+as Transformers, have shown that the same neural circuitry can be used for language, vision, and other modalities, with the only differentiator
+being the data fed to these systems.
+
+On the other hand, innate instincts are also essential for some species survival.  An anecdotal example is a beaver raised in human captivity
+since infancy that builds a "dam" inside its human owners' home using household items.  Presumably, this beaver had never been instructed on how
+to build a dam, yet it had a drive to do so.
+
+One possibility for how this drive is genetically encoded is that a special module in the beaver's brain is dedicated to dam building.  This
+module "hard codes" the neural structure all the way from grounding in visual and auditory signals to motor control.  Essentially saying "When
+you see these patterns, take these actions".  The problem with this module is it would break if we were to reroute a baby beaver's optic nerve
+to its auditory cortex.  Or if we were to permute the baby beaver's retinotopic mapping, essentially changing the "pixels" that travel along the
+optic nerve.
+
+Of course, biology is never so simple, but this raises the question of *Is it conceivable that the baby beaver's brain has a "dam building"
+circuit that is innate, but at the same time is plastic enough so that it's vision and other modalities are as flexible as that of a ferret?*
+
+## Making the problem concrete
+
+To approach this, I've made some assumptions that hopefully simplify the problem while still attacking the core.
+1. The baby beaver's experience is completely unsupervised.  At no point should the process rely on explicit labels.
+2. There are invariants that all "dam building" processes share: E.g., stacking objects, moving objects, etc..  Of course, words like "stack"
+   and "move" ultimately need to be grounded in the beaver's sensory experience, but we can encode "floating" abstractions.
+3. Solving a classification problem *without relying on labels available during learning or assuming a specific sensory configuration* is
+   sufficient to address the core problem, which is how concepts can be innately encoded without explicit grounding or labels.  If a beaver
+   learns concepts like "move", "stack", and "object", I hope it's not too far a stretch to imagine that it can be rewarded for "stacking
+   objects".
+
+Given these assumptions, I propose a Baby version of The Baby Beaver Problem: (The Baby Baby-Beaver-Problem.)
+
+## The Baby Baby-Beaver-Problem: Fear the FNORDs!
+
+In this setup, we assume a passive unsupervised learning system.  There are no labels or actions.  The system is given a stream of fixed-length
+vectors representing 26 English "letters" plus a space/other.  The sequences are from common English texts.  We assume that the sequence
+distribution is fixed for all Beaver worlds.  The system is given no other information from the environment.  We consider our system a success
+if after "training" there is a node that is active if and only if the system has just seen the letter sequence "F-N-O-R-D".  (Note that this
+sequence is extremely rare outside the writings of Shea and Wilson.  We may reasonably assume that the system never sees this sequence during
+training.)  If we succeed, we can hook up the "FNORD detector" to a large negative reward in a control system, and, with some liberties, claim
+that our system has an innate fear of FNORDs.
+
+The "letters" that the vectors represent have a 1:1 correspondence with the English alphabet, but the system isn't given labels or any explicit
+knowledge whether two vectors represent the same letter.  (If we assume we're told whether two vectors represent the same letter, then the
+problem is a fairly trivial cipher decoding: We simply find a permutation that matches the unigram and bigram frequency of English letters.)
+Each letter vector is a fixed dimensionality (D x 1), but we don't know what this is beforehand.  Concretely, the letters could be color or
+grayscale images, but the images might be permuted or otherwise transformed.  (If English phonemes had a 1:1 correspondence with spelling, we
+could even consider short audio clips of individual phonemes.)
+
+## A solution attempt
+
+The core idea is to exploit the N-gram distribution of English letters.
+
+This is non-trivial because the system needs to simultaneously learn which letter map to which and which letters are the same as others.
+
+My approach: Exploit an innately encoded N-gram distribution for the characters.  (I assume that this distribution is relatively stable.)
+
+I created an objective that is forced to use the ngram distribution to predict next characters.  It then uses KL to see if its two predictions
+match (its prediction using an encoder vs. using the ngram model from its encoding of other characters).  I also add a "self prediction" loss to
+prevent encoding collapse.
+
+I can show that this objective is optimized if I cheat and pretrain an encoder using labels.  But when training end-to-end without cheating, the
+optimizer rarely finds this and gets a loss substantially higher.
+
+
+
+[We should mention all the things that didn't work.  E.g., Character frequency matching.  Just using bigrams.]
