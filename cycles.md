@@ -1,1 +1,0 @@
-/home/pickett/cycles.md

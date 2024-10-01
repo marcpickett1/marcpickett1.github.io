@@ -33,35 +33,61 @@ Rabbits.  What behaviors will be around?
   Behavior is interaction of genes and environment
   Caveat: evolution isn't "optimal" (Now that we have a "fitness function", evolution is greedy and doesn't have infinite search bandwidth)
 Rabbits.  Limited computational budget.
+
+core idea: want to program minds of successful rabbits subject to biological and computational constraints
 ```
 
 ```
-Setup: Happiness of Rabbits
-Designing a brain:
-  Consideration
-	Walking = Falling + Catching
-	Enter Complexity: The Peacock's Tail
-	Will: Interaction of Cognitive System and Reward System
-	Squiggly Lines
-	Taste
-	  Specifying Reward: The Bulldog Hugging Robot
-	  Hill Climbing on the Cingulate Cortex
-	  Some Strategies for Maximizing Reward
-  Bugs
-	Artificial Sweetener, Drugs, and Virtual Reality
-	  Habits and Pain
-	  Hedonism
-Forays:
+x Setup: Happiness of Rabbits
+  Designing a brain:
+    Consideration
+x     Walking = Falling + Catching
+      Squiggly Lines
+      Enter Complexity: The Peacock's Tail
+      Will: Interaction of Cognitive System and Reward System
+      Taste
+        Specifying Reward: The Bulldog Hugging Robot
+        Hill Climbing on the Cingulate Cortex
+        Some Strategies for Maximizing Reward
+    Bugs
+      Artificial Sweetener, Drugs, and Virtual Reality
+        Habits and Pain
+        Hedonism
+  Forays:
+    Economics and Ethics
+    Atomic Waves and Platonic Forms
+      # Point is that creating concepts (beyond atoms) serves a *cognitive* purpose, and can be decided by information theory
+    Designing your Successor
+    Entropy: A Petri Dish Falling into a Volcano
+      Nihilism
+  Consciousness and Death (How a person never dies)
+  Free Will
+  Conclusions
+    Also, implications for robots maliciously taking over (unaided by people) (but also Bostrom paper clip bot)
+
+x Geld
+***
+x Happiness of Rabbits
+x Walking = Falling + Catching
+  Squiggly Lines
+  Specifying Reward: The Bulldog Hugging Robot
+  Interaction of Cognitive System and Reward System
+  The Peacock's Tail
+  Hill Climbing on the Cingulate Cortex
+  Some Strategies for Maximizing Reward
+  Artificial Sweetener, Drugs, and Virtual Reality
+  Habits and Pain
+  Hedonism
   Economics and Ethics
   Atomic Waves and Platonic Forms
-    # Point is that creating concepts (beyond atoms) serves a *cognitive* purpose, and can be decided by information theory
   Designing your Successor
-  Entropy: A Petri Dish Falling into a Volcano
-	Nihilism
-Consciousness and Death (How a person never dies)
-Free Will
-Conclusions
-  Also, implications for robots maliciously taking over (unaided by people) (but also Bostrom paper clip bot)
+  A Petri Dish Falling into a Volcano
+  Nihilism
+  How a Person Never Dies
+  Free Will
+  Conclusions
+    Also, implications for robots maliciously taking over (unaided by people) (but also Bostrom paper clip bot)
+
 ```
 [Boundless Will](boundless)<br>
 [Religion](religion)<br>
@@ -102,266 +128,12 @@ tendency to reproduce.  But you'd be right to be skeptical that a single word, "
 # Happiness of Rabbits: A Thought Experiment about Evolution
 [#]: ))))((((
 
-TL;DR: We can gain some insights by looking at life from a "designer's" point of view.  The notion of *happiness* and *desires* might be useful
-from this point of view.
-
-***
-
-To help us get a handle on what the meaning of life might be, I'll propose an intuition-pump that involves rabbits in Australia.  Rabbits are
-not native to Australia, but today there are millions of rabbits there, all descended from a few dozen brought over from Europe.  Suppose we
-were able to go back in time before rabbits were introduced to that continent, and suppose we played a game, that I'll call *hare wars* similar
-to [core wars](https://wikipedia.com/core_wars), where competing players design artificial rabbits, then we drop a small population of each
-player's rabbits in pre-colonial Australia and see which player's rabbit population is higher after a few centuries.  To constrain things, we'll
-make it so that the players are given identical rabbit *body* designs, and they're only allowed to design the *brains* of the rabbits.  The
-players can make the rabbits' brains as powerful as they want, but a bigger brain will consume more energy than a smaller brain, energy that
-could be used for other activities like running away from predators.  Note that a big brain might not always be selected by evolution.  For one,
-big brains require a lot of energy to run.  Our brains consume around 20% of our body's energy, despite being only about 2% of our body weight.
-(Also, because of our big brains, childbirth has been especially treacherous for humans.  Thus, the width of women's hips has been a somewhat
-literal bottleneck for our intelligence.)
-
-Once the rabbits are dropped in Australia, the players won't be allowed to change the rabbits' design.  The players' rabbits should be adaptable
-because Australia has a diverse environment, and no rabbit design will be optimal for all environments.  Because of the rabbits' computational
-limitations, there will be rabbits that are "buggy" or suboptimal.  For example, from a computational-perception point of view, telling the
-front end of a rabbit from the back is non-trivial, and we might end up having rabbits trying to mate with other rabbits by mounting the wrong
-end.  (I've seen this happen, the rabbits were so eager to mate, they didn't seem to pay attention to the gender of the other rabbit, whether
-the other rabbit was a close relative, or whether they were even mounting the back end of the other rabbit.)  But this is OK from an
-evolutionary standpoint, because the extra computation might not be worth the brain matter needed to do it, and these bunnies will be at the
-correct end half the time, which is good enough to reproduce.
-
-***
-
-To answer questions such as "What makes me happy?" or "Why does *x* make me happy?", we can gain some insight by stepping outside the humanities
-and going down to biology, economics, and cognitive science.  A lot of what makes people happy can be explained in terms of these fields: e.g.,
-men might enjoy sex with lots of different women because the type of people who did so had more kids and are more likely to be around.
-
-I'm sure there are plenty of rabbits who mate like bunnies "because it feels good", and that rabbits have almost no concept of paternity.
-Despite the short gestation period, they probably don't even realize that sex causes babies.
-
-We can design our rabbits and talk about optimality from *the game's* point of view without looking at the rabbits' point of view at all.
-Looking at the rabbits' point of view might lend insight onto the meaning of life: The rabbit's goal in life isn't necessarily *our* goal in the
-game.  Imagine if I had a rational rabbit.  I'd tell my rabbit "Be fruitful and multiply!  That's why I created you.".  To which the rational
-rabbit might respond, "No way!  I (actually, the routines that *you* wrote) want to go mate with hedgehogs!".  One other thing to note, this
-rabbit's defiance (which causes its very desire for freedom and "free will") was programmed by me too because it was successful evolutionarily.
-
-***
-
-There are important differences in the process we'd use to design our rabbits and the process of evolution.  For example, evolution lacks
-foresight.  For example, in male mammals, the vas deferens loops around the bladder, when a direct line would probably have been slightly more
-advantageous.  As mammals became warm-blooded and their testes descended, the vas deferens had to follow the testes, resulting in the current
-design.  Evolution is also slow and has "inertia", for example the myriad of evolutionary relics such as the hip bones of snakes.
-
-Despite these differences, evolution often arrives at what might be called optimal solutions to problems.  For example, the process of evolution
-arrived at the lens of our eyes, and, independently, the lens of the eyes of octopuses, which both have the same basic parabolic shape of lenses
-that people have designed for cameras and other optics.  Therefore, some insights can be gained by considering what designs are successful even
-if we ignore the design process itself.
-
-There's also the principle of [The Selfish Gene](https://en.wikipedia.org/wiki/The_Selfish_Gene): our goal isn't really to make our rabbits take
-over the island, but to make our rabbits' *genes* take over the island.  Thus, we'd want to design our rabbits such that their behaviour
-sometimes might be bad for the reproductive success of an individual, but good for the individual's genes.  A classic example would be where a
-rabbit sacrifices itself to a predator in order to save its offspring.
-
-The reason that the goal of our game is to take over the island is that, in evolution, those beings that had a design that caused them to
-reproduce were the ones that did reproduce.  So any animals living today (including humans) are here because their "designs" are likely to cause
-them to reproduce (at least in the environment where they evolved).
-
-An important point here is that, in general, *every* part of our innate being, both physically and mentally, is "designed" as it is because that
-design traditionally helped our ancestors reproduce.
-
-<!-- Likewise, *every* aspect of a plant is that way for a reason.  The reason is evolution.  Even -->
-<!-- the designs of the flowers, and the shape of the leaves have been constrained to be the way -->
-<!-- they are by some ruthless evolutionary process.  For example, the designs on some flowers -->
-<!-- radiate inward, which acts, in effect, as guidance for insects coming, which come to pollinate -->
-<!-- the flowers in exchange for a bit of nectar. -->
+(See Happiness of Rabbits in xblog.md)
 
 # Walking = Falling + Catching
 [#]: ))))((((
 
-TL;DR: Permanent happiness can never be achieved, or at least that it'd be a bad from a designer's point of view.  This chapter goes more into
-some mechanisms a designer might want to put into an organism.  This is then used to explain why we can never have enough *Closet Space*.
-
-***
-
-
-> If I ever say to the moment: <br>
-> Stay! You are so beautiful! <br>
-> Then you may throw me into chains, <br>
-> and I'll happily go to the abyss! <br>
->     --Johann Wolfgang von Goethe (from Faust, 1808)
-
-
-> How much money is enough?  Just a little bit more. <br>
-> --John D. Rockefeller (1839-1937)
-
-The player with the most successful rabbits probably won't have the happiest rabbits.  We'd want our rabbits to be constantly moving forward.
-We'd want them to only have enough glimpses of happiness or contentment that they don't give up completely.  This is how it is with human
-nature, and it's this way for a good evolutionary reason.
-
-An analogy might be made to walking.  When roboticists first began to make robots that could walk, they focused on stability.  If a walking
-robot froze in its tracks it would be stable in the sense that it wouldn't fall down.  Because of this stability, it could walk as slowly as you
-wanted it to.  This is contrasted to the gallop of a horse.  When a horse runs, there are instances when all 4 hooves are in the air at the same
-time.  Thus, a horse can't gallop in "slow motion" because it can't be suspended with all its feet in the air at the same time.  The normal
-walking gait of people isn't stable either.  During each step, our center of mass moves to its highest point when it is in front of the foot
-that's on the ground.  So, we begin to *fall* forward, but our other foot rushes forward to *catch* us.  We then raise our center of mass and
-"reset" the system for the next step.  So walking is falling and catching (or "controlled falling"), and you're never in a permanent stable
-state.
-
-Likewise, one way of getting our rabbits to reproduce is to have them built such that they're always on the edge: that they always feel like if
-they do just this next goal, they'll be happy.  When they do accomplish the next goal, they get some reward, but not permanent happiness.  We
-don't want our rabbits ever to be content because content rabbits don't reproduce as much as those that are constantly striving.  So our rabbits
-will never actually attain fulfillment.  To do so would mean that the rabbits stop striving for more and stop reproducing.  On the other hand,
-the rabbits' reward structure should be such that they don't give up either, because that would mean an end of reproduction too.
-
-If I were designing people to reproduce (or gain power or help their offspring to reproduce), I'd also structure their reward system such that
-they're always trying to attain something.  Like a moving carrot, I might also make them believe that if they only achieve this or that goal,
-they'll be happy.  When they finally catch the carrot, I'll give them momentary happiness, but I'd structure them such that this happiness would
-fade after some time and they'd devise a new goal.
-
-So, it's possible that we can only distract ourselves from the feeling that might be described as emptiness or disquiet, that the emptiness
-can't be banished, only put off.  For example, in Anna Karenina, the character Levin is happiest when he's mowing hay with a scythe.  It's a
-simple action, but he's making "progress" on something.
-
-***
-
-In some video games "cheat codes" or "god" mode (where your character is invincible) makes the game boring quickly.  Likewise, suppose you found
-a genie who would grant as many wishes as you wanted.  The wishes couldn't be contradictory or too poorly specified.  For example, the wish for
-"permanent happiness" wouldn't be granted on the grounds that it's too vague.  With this genie you could make it such that the world was at
-peace, famine and disease were gone, you had eternal life, money was virtually meaningless, you had all the women you could imagine, and your
-friends, family and power were limitless.  But, would you ever be happy?  Can you imagine a situation where you don't have any more wishes to
-make?
-
-I suspect that there'd never be a *permanent* situation where a person was satisfied.  I suspect that (via evolution) the human reward system is
-structured such that permanent happiness is impossible.  For people (or any evolutionary being), it'd make more sense if happiness was the
-*event* of going to a better situation[^1].
-
-[^1]: Recognizing that permanent fulfillment of desire is impossible, Buddhism teaches that a person should seek to free themselves from desire.
-    On the face of it, this is a self-contradiction: a desire to have no desire.  If the tendency to become Buddhist were inheritable, these
-    tendencies would become weeded out of our rabbits.  That is, a rabbit that had no desire to eat would soon starve.
-
-***
-
-If we want to win at Hare Wars, we'd also want our rabbits to use up all of their resources.  We'd want them to be greedy and lazy.  Laziness
-encourages efficiency.  There should be some drive for our rabbits to try to find more efficient ways of accomplishing things, or ways of
-reducing their own effort.  Because if they can do something with half the effort, they can do twice as much.
-
-***
-
-Why would we want our rabbits to exhaust their resources?  Consider what happens if a single pair of mice get into a stocked granary and go
-unchecked.  They'll reproduce until there are thousands and thousands of mice and all the grain is gone... at which point almost all of the mice
-will starve to death.  But any mouse with a long view who exercised some constraint in converting the grain into more mice would soon find
-himself outnumbered by mice who don't have this constraint.  The *unconstrained* mouse would find himself *locally* successful.  By this, I mean
-the mouse will outperform (i.e., out-reproduce) any other single mouse that doesn't use all of its resources.  The problem is that a *group* of
-mice that exercises some constraint in managing their resources can do better in the long run than a group of short-sited mice.
-
-There's almost always some bottleneck resource in nature though.  Nature is an arms race, in a sense.  For example, plants develop mechanisms,
-such as poisons, to prevent themselves from being eaten by animals, and animals develop means (such as enzymes) to get around those mechanisms.
-Usually, each party is just barely in front or behind the other, and this prevents either from completely dominating the other, unlike the mice
-in the granary.
-
-For most of our evolution, it was a rare thing to have a virtually unlimited supply of fatty foods.  Thus, because there was an *external*
-constraint on the amount of bacon we could eat (i.e., its limited supply) there was no need to have an internal mechanism that limited our
-intake of bacon.
-
-# Enter Complexity: The Peacock's Tail
-[#]: ))))((((
-
-TL;DR: Life isn't so straightforward for some evolutionary organisms.  This is due to a recursive hall-of-mirrors that produces virtually
-boundless complexity.
-
-***
-
-We might say that the meaning of life is to eat, survive, and reproduce.  Actually, we could just say the meaning of life is to reproduce, since
-eating and surviving are really just means to this end.  If the meaning of life can be summed up in one simple word, then why is life so
-complicated?  Part of the answer lies in the peacock's tail.
-
-***
-
-When selecting which male to mate with, a female peacock, or pea*hen*, will choose to mate with the peacock with the "best" tail.  The
-definition of "best" is a little tricky.  Certainly, size and shine play a roll, but style also plays a part.  The best tail isn't necessarily
-the biggest or brightest tail.  A shorter, dimmer, symmetrical tail might be preferable to a longer, brighter, asymmetrical tail.  The "design"
-of the tail is certainly an issue also.  The peacock tail's design is an emergent property of the process of the cognitive systems of peahens,
-and how it affects what they decide the "best" tail is.  I doubt that peacock tails' eyespots are there by accident.  I'm also willing to bet
-that a long, shiny, symmetrical tail with a very unconventional color-scheme wouldn't yield its owner very good reproductive results.  So any
-tail that was markedly different from the status quo would be unlikely to be successful.  On the other hand, a tail that was exactly the status
-quo would likely be outdone by a slightly longer or "better" designed tail.  Countless pea-generations ago, this was grounded in fundamental
-fitness: going for a male with a longer or shinier tail made sense.  A longer tail was a sign of being well fed, and a longer tail may have even
-had a functional use.  But this process has resulted in a tail that's so long that not only is it not functional, but it's rather cumbersome for
-its owner.  Although I'm sure that she's not conscious of this fact, a peahen chooses the tail that she thinks will most likely appeal to future
-generations of peahens, so that her male offspring will inherit this trait and then can also attract mates.
-
-There are two points to keep in mind:
-* The peacock must spend significant resources on his tail, which has little (or even negative) survival value.
-* The design of the peacock's tail is generated by a "hall of mirrors", which can yield virtually limitless complexity.  That is, at some level
-  a peahen is trying to predict other peahens, which are trying to predict other peahens, etc..  This complexity is limited by the brains of
-  peahens.  So the design of the "best" peacock's tail isn't the optimization of a simple formula.  This is in contrast to something "objective"
-  like the optimal shape for the cross-section of the wing of an aircraft, which is a design fully based on function: to maximize lift while
-  minimizing weight and cost.
-
-***
-
-Primates, including people, also have a peacock's tail of sorts.  For most people (and even most chimpanzees) throughout history, surviving is
-almost a given once one achieved adulthood.  Or, the "survive" problem is more or less solved for people.  In Chimpanzee Politics, Frans De Waal
-writes that "in order to get enough to eat, wild chimpanzees have to spend more than half their time foraging".  Much of the rest of the chimps'
-time is spent "politicizing".  So even chimps spend a good percentage of their conscious efforts on the non-surviving "reproduce" part of the
-meaning of life.  With people, I'd guess it's much more so.  For example, according to the Center For Disease Control, of the top 10 causes of
-death in the U.S. in 2006, all were "natural" causes save "Accidents", which ranked 5th.  Murder and malnutrition ("war and famine") were
-responsible for only 21,129 or 0.87% of the 2,426,264 American deaths that year.  The top 10 causes in 2006 are shown in the table below.
-
-If life were just about survival and asexual reproduction (as it is for amoebas), then it'd be pretty straightforward.  The "flower" of
-complexity comes from *sexual* reproduction and producing a peacock's tail.  This is what people spend most of their efforts on.  This is why
-the "Eat, Survive, Reproduce" seems so empty.  Eating and survival are simple compared to the last.  The potential complexity of Politics,
-Economics (which includes the unbounded complexity of human relations), and Game Theory is limitless because each consists of people trying to
-model other people, who are also trying to model other people.
-
-| **Top 10 deaths by cause in U.S. in 2006** |
---:|--:|
-Heart disease | 631,636
-Cancer | 559,888
-Stroke | 137,119
-Chronic lower respiratory diseases | 124,583
-Accidents | 121,599
-Diabetes | 72,449
-Alzheimer's disease | 72,432
-Influenza and Pneumonia | 56,326
-Nephritis, nephrotic syndrome, and nephrosi | 45,344
-Septicemi | 34,234
-
-***
-
-As Matt Ridley argues in The Red Queen, people happen to be in a *cognitive niche*, meaning there is evolutionary pressure for us to be smart,
-which may account for our brain mass to body weight ratio, which is ridiculously high from the perspective of the animal kingdom at large.
-
-So what kind of innate will or reward system would we give our rabbits if we knew they would be in a cognitive niche?  What if we knew they were
-social and their reproductive success was correlated with their social success?  We might start by giving them a will to power, and a will to
-being socially successful.
-
-For the rabbits, suppose we don't worry about "happiness" the rabbits just have a signal ("reward") that they try to maximize.  When the signal
-is high, there are mechanisms that cause the rabbit to take those sorts of actions again.  It turns out that this signal (and behavior)
-correspond to happiness.
-
-***
-
-A peacock tail is the ultimate resource sink.  An animal's tendency is to fill its extra "[closet space](closet)" with its peacock tail.  Any of
-our rabbits that fails to do this won't be as successful as a rabbit who does do it (at least locally).
-
-A nice peacock tail is expensive (in terms of what the peacock has to devote to it as far as food and preening).  A large peacock tail is also
-cumbersome.  The analog of peacock tails for people also has a cost associated with it.  So fashionable clothes tend to be *expensive*.  There's
-some time investment you need to make to learn the hip slang (or jargon even) for a particular group.
-
-In Victorian England, being able to quote in Greek would get you respect, despite the fact that Greek's practical "survival" value was low.
-Greek did have survival uses on occasion, however.  Initially, learning Greek was useful because it allowed one to read ancient texts.  But as
-translations became plentiful, reading Plato took a back seat to *appearing* educated.  In fact, a peacock's tail gets the peacock peahens
-*because* it has a negative fundamental survival value.  It shows the peahens that the peacock has resources to spare.  A twist here is that an
-extreme peacock tail could theoretically lead to the extinction of a species.  If a peacock spends all its resources on its tail, it spends less
-on "survival" value.  It might be forced to spend more on its tail than what's valuable for it because of how much *other* peacocks are spending
-on their tail (another arms race).
-
-Some modern "peacock tails" might include being good at basketball, being a good RISK player (in some circles), being well traveled (which also
-has some practical uses), buying expensive tulip bulbs (in Holland in 1636), and wearing mink coats.  Neither basketball nor RISK have value in
-and of themselves.  Up to a certain point, skills and general lessons learned from these games transfer to "real" tasks, but after that point,
-the skills become pretty specific.  It's a rare occasion outside of basketball where it'd be a useful skill to be able to consistently throw a
-sphere into a foot-wide ring 16 yards away, but teams in the National Basketball Association would pay millions of dollars to hire such a person
-(the distance for a 3 point shot is just under 8 yards, and such a person would be able to shoot from as far back as half-court).  In modern
-America, a star basketball player is envied by many.
+(See Walking = Falling + Catching in xblog.md)
 
 # Will: Interaction of Cognitive System and Reward System
 [#]: ))))((((
@@ -538,192 +310,17 @@ combination of both these systems.
 # Squiggly Lines
 [#]: ))))((((
 
-TL;DR: Perception is non-trivial, and this means that the designer's meaning of life doesn't always agree with the organism's.
+(See Squiggly Lines in xblog.md)
 
-***
-
-From my work in robotics, I can say that perception is a tricky computational problem.  Like gravity, our perception is so omnipresent that it's
-easy to assume that it takes little effort.  It's not until working with a robot's perceptual system or image processing that one develops an
-idea of how difficult perception is.  The task of simply taking an image and identifying the objects in it can be tricky (and, to date, no one
-has figured out a foolproof way to do this autonomously as well as a person's perceptual system can).  This is because, fundamentally,
-perception is a problem of "Squiggly Lines".
-
-To illustrate what's meant by a problem of "squiggly lines", suppose we wanted to create a robotic bumblebee.  Further suppose, by some miracle,
-we were given the entire bee and we just had to program its "brain".  The bee's compound eye is really just a set of light-sensors.  Basically,
-each "surface" reports a value proportional to how much light is striking it (and different surfaces might be sensitive to different colors).
-Unless we explicitly "tell" it, our robot doesn't know what its sensors mean.  It just has the sensor readings over time, which look like a
-bunch of *squiggly lines* if you plot them out.  Suppose I gave you plots of these sensors' readings, but I didn't tell you which sensor was
-which.  Suppose I didn't even tell you that these are light sensors from a robotic bumblebee's eye.  As far as you would know, these could even
-be readings from (a simulation of) a mobile robot in a 5 Dimensional world.  From this perspective, it's very difficult to tell the difference
-between the squiggles produced by a flower and the squiggles produced by a female bumblebee.  The bumblebee's perceptual system has two limiting
-factors: The first is that its compound eye isn't sophisticated enough to tell the difference, which is essentially the problem that Plato
-discussed in his Allegory of The Cave.  The second limiting factor is that a significant amount of computation is needed to tell the difference.
-Although it'd look silly, we could give the bumblebee human eyes, but there would still be the problem of processing all that data.  The bee's
-tiny brain couldn't do it.  It's worth noting that our own visual processing system, the visual cortex, is many times the mass of a bee.
-
-<!-- FIXME: make link to Ophrys bombyliflora -->
-
-The Bumblebee Orchid takes advantage of the limited perceptual systems of male bumblebees.  Its flowers "look" and smell like fertile female
-bumblebees.  That is, the flowers have the rough shape and coloring of female bumblebees, but other than that, they don't actually look very
-much like female bumblebees.  (I can't say how similar they *smell* like them.)  With a glance, a person can easily tell the difference between
-a bumblebee and a bumblebee orchid (though I have trouble telling males from females because of *my* limited olfactory perceptual system).
-However, they're good enough to trick the "low resolution" compound eyes and tiny brains of the randy males, and the male bumblebees attempt to
-copulate with the flower, picking up and dropping off the flower's pollen so that *the flower* can mate successfully.
-
-***
-
-<!-- (*Callosamia Promethea*) -->
-
-The perceptual system and brain of a peacock (or a peahen, the female version) are much more sophisticated than that of a male bumblebee, but
-these systems are still limited (as are ours!).  Bird's perceptual systems are particularly good at finding eyes.  A number of butterflies and
-moths such as the Common Buckeye Butterfly, and the Promethea Silkmoth take advantage of this by having eyespots (because eyes are a giveaway
-that something is animate).  These spots look a lot more like owls' eyes than the bumblebee orchids looks like bumblebees, but a person can
-still easily tell the difference between one of these moths and an owl.  (Birds might actually be able to tell the difference if they look hard,
-but they might not stick around long enough to do that.  Just in case.)  So, I assume that, like other birds and even some insects, peahen's
-brains are good at recognizing eyespots.  That is, eyespots have a special place in the perceptual system of peahens.  So I'm guessing that
-eyespots are so prevalent on peacock tails partially because of their special place in the perceptual systems of peahens.
-
-<!-- Another (not incompatible) reason is that eyespots were originally useful for the peafowl (as -->
-<!-- they are for the Buckeye Butterflies), and the genes got "recycled".  (The former reason at -->
-<!-- least seems plausible to me.) -->
-
-# Taste
+# Heuristics
 [#]: ))))((((
 
-TL;DR:
-* Taste is a learned heuristic.  Why do we like the things we like?  This falls out of a combination of "innate" heuristics and learning, mostly
-   classical conditioning.
-* Tastes can be heuristics for our ultimate goal, reproduction.  And tastes or heuristics can be developed for goals based on lower-level
-  heuristics, so tastes can become "ungrounded" and arbitrarily complex.
-* The Bulldog Hugging Robot expands on the Squiggly Lines idea and that specifying innate goals is tricky and hacked.
-* One of the most important sections to understanding happiness is *Hill Climbing on the Cingulate Cortex*, which further expands on the Bulldog
-  Hugging Robot idea to show that finding what makes us happy is essentially a "hillclimbing" search.
-* *Some Strategies for Maximizing Reward* further details how that search might work.
-
-***
-
-Until he retired, my uncle worked as an engineer at the Ford Motor Company in Detroit.  He had bought one of their new models, and said that
-although Ford's model was more aerodynamic, Chevrolet's competing model had higher sales because people "didn't like the way the Ford model
-*looked*".
-
-Why wouldn't people prefer the more aerodynamic model?  Isn't the goal to have the most "functional" car?  If not, what else might people be
-trying to optimize?
-
-One thing to note is that no one has a perfect wind tunnel simulator in their head.  Instead, people have to rely on heuristics or *tastes*.
-There's a way that people develop their tastes in cars.  People see both the designs and the performance of fish, jet fighters, and cars.  After
-many such examples, people develop an intuition for the kinds of features, such as sleekness, that make for a high performance
-thing-traveling-through-medium.  People then associate these features with their performance.  So, without ever having taken a course on
-aerodynamics, people can eyeball a car's body design and tell you (with better than random accuracy) whether it will outperform some other body
-design.  This is in contrast to the more *analytical* conceptual system of car design which is what the designers at Ford use when they apply
-equations and principles of aerodynamics to come up with a more exact answer for how aerodynamic the car is.  In reality, most systems in our
-heads (and in the heads of the designers at Ford) are both intuitive and analytical.
-
-This is the basic principle of how tastes are developed in general.  Like peahens, our perceptual abilities are limited (where we can't tell a
-car's drag coefficient just by looking at it).  So, we have to develop associations of features to "value" (speed or performance in the case of
-cars) so that we have an intuition to give us some idea of the value.
-
-***
-
-In stock market analysis, one can take a *technical* approach or a *fundamental* approach.  A purely technical analysis of a company's stock
-looks only at the "trends" in the stock's selling price.  Books are written about how to "predict" what a stock will do given *only the history
-of the stock's price*.  Generally, if a technical investor predicts that the stock's price will raise, he'll buy, and sell if the technical
-analysis predicts the stock will drop.  In its most extreme form, a technical analysis wouldn't even look at what the company *does*.  A
-fundamental analysis is at the opposite extreme: it will ignore the history of the stock's price, then make a prediction of the company's
-earnings (and dividends) based on factors such as what capital the company owns, the "quality" of the people working for the company, and
-whether the current economic situation means that people will want to buy the company's goods.  You can then assign the stock a fundamental
-value based on the expected dividends and interest and inflation rates.  (For example, if you expect a share of Bifislurf Inc. to yield $5 in
-dividends over the next year, and the inflation-adjusted interest rate is 5% per year, then a share of Bifislurf Inc. would have a fundamental
-value of about $100, because that's how much money you'd need to put in the bank to get $5 of interest in a year.)  Generally, a pure
-fundamental trader will buy if the stock's current price is (significantly) less than its fundamental value and sell if its price is higher.  An
-interesting thing is that if everyone invested solely on fundamentals, the plot of the Dow Jones Industrial Average would be much smoother,
-practically flat because it'd only reflect "real" changes in the companies' values.  (Tulip Mania also would've never happened if the tulip
-traders used only fundamental analysis.  Tulips have little intrinsic value.) In reality, most traders use results from both fundamental and
-technical analyses.
-
---
-
-<!-- fff -->
-
-Another example of fundamentals and technicals: Flugtag is a contest/event sponsored by the Red Bull company in which teams build non-motorized
-flying contraptions and launch them (carrying one of their members who is the "pilot") off a 30 ft. high ramp into a pool of water.  The teams
-are judged primarily by 2 criteria: 1. the distance flown before landing in the water, and 2. the "creativity" of the contraption's design.  If
-it weren't for the 2nd rule (which I'll call the "technical" rule), Flugtag would be a much more boring event.  What would happen, I predict, is
-what happens with a myriad of other "purely fundamental" pursuits.  Initially, there'd be a broad range of designs, but eventually one of the
-designs (or its basic principles, at least) would emerge as the "optimum", and most entrants would be minor variations on this optimum.  Take
-airplanes, for example.  After the Wright Brothers' success, there was a blossoming of all sorts of crazy designs.  Take the Langley Flyer, for
-example.  It actually predated the Wright Brothers' Flyer by several years.  Its full scale model was never fully capable of sustained flight,
-but the smaller models had some success.  The interesting thing is that it looks completely unlike any airplane I've ever seen.  By World War
-II, the basic body of the airplane (with a single aerofoil wing) converged to what's still used by commercial jets.  A similar process happened
-with locomotives, automobiles, and computers.  Thus, Red Bull's 2nd rule explicitly puts a limit on the kind of convergence that would otherwise
-happen.
-
-***
-
-Suppose I want to evaluate a piece of clothing.  For instance, I have *fundamental* criteria such as how comfortable a shirt will be, whether
-it'll keep me warm on chilly days, and how difficult it'll be to wash it.  I also might be concerned with how I'll *look* in it, and I won't be
-looking at myself much.  So I'm really concerned with associations other people will make of me when I'm wearing the shirt.
-
-Now, there's one more factor of taste: associations made of people based on their appearance.  One can take a Holmesian approach and use logical
-reasoning to deduce things about a person from their appearance, but we don't have enough time/brainpower to do this with every person we meet,
-so we have to rely on our intuitions (or associations developed through experiences), just as we might in determining how "functional" a car
-will be just from eyeballing it.
-
-Some associations are formed from fundamentals.  If I see a picture of a person wearing a heavy coat and hat, I'll "guess" that the person's
-somewhere cold.  This is because a heavy coat keeps you warm regardless of the coat's social context.  If a person's wearing glasses, they
-probably don't have perfect vision without them.  Fundamentals are pretty easy, at least compared to technicals.  These don't have to do so much
-with the intrinsic properties of things, but more with what the thing means for other people.  With clothes, technicals would be
-"ornamentation", such as printed designs, the particulars of the cut of the fabric, and "flair".
-
-I'd guess fashion designers spend 99% of their thought on technicals.  Ornamentation has its own abstract (and often intuitive) "rule system" as
-well.  Like the peacock, you can't stray too far from the status quo.  The "fundamental" problems of clothing are pretty straightforward.  Like
-the stock market, if clothes were designed only by fundamentals, fashions would hardly change at all.  (Changes would only be with innovations
-such as with materials and manufacturing techniques, and with changes in what people use the clothes for.  For example, a much lower percentage
-of Americans farm than was the case a century ago, so the average American doesn't need clothes designed for farm work.)
-
-So, how do technicals and intuitions formed about technicals work to influence fashions?  Take bell bottom pants, for example.  The theory is
-that attractive people originally started wearing bell bottoms.  (The reason for doing so may have been to distinguish themselves from "the
-masses", or perhaps for the same reason very fit gazelles will flaunt their fitness in the face of approaching lions as if to say "Don't waste
-your time chasing me, look how fit I am.".)  Then people began to associate bell bottoms with being attractive.  Then, (knowing about this
-association (or having the association themselves), and maybe it's not explicit) less attractive people began wearing the bell bottoms so the
-association would be transferred to *them*.  Eventually, so many unattractive people started wearing them, that *after a lag*, the association
-became extinguished, and there was little reason to wear bell bottoms.
-
---
-
-The book Freakonomics talks about similar trends with babies' names: people of high socio-economic status start naming their kids with a
-particular group of names.  Then, the trend catches on because other people see that "The Beautiful People" are called by these names.  Thus,
-people (from lower classes) form the association from the name (a nearly arbitrary symbol, practically) to the person's status, and name their
-own kids with that name.  Eventually, the name becomes "common", the association is extinguished, and the upper classes find new names.
-
-***
-
-This association from technicals to fundamentals might be why people have certain tastes in food.  Oncologists have long known that you can
-cause people to develop a strong aversion for almost any kind of food simply by putting their chemotherapy medicine in it a number of times.  My
-theory is that you can similarly cause people to like just about any flavor by creating a fatty food with that flavor: I remember the first time
-I had the Greek candy *halvah*.  My friend, Charles's mom, Zabia (who's father was Greek), offered it to me.  Despite its taste, which I
-would've described as awkward but not *bad*, I ate it out of curiosity and politeness.  I had halvah several times after that, and soon
-developed a taste for it.  Once, I found some commercially packaged halvah, and I read the label: halvah's made from crushed sesame seeds, and
-is about 20% fat and 60% sugars by weight.  My theory is that fundamental "yumminess" is mostly fat and sugar, and that eventually we (or our
-taste buds and the associated brain areas, to be precise) associate the flavor with the fat and sugar content.
-
-***
-
-I'd hazard to guess that virtually anyone can be conditioned to like almost anything.  (Well, anything that a large group of people also enjoy.
-There are probably few people who could be conditioned to enjoy having their toenails removed.)  Through conditioning, almost anyone could
-probably be made to enjoy the flavor of chocolate and dislike the flavor of vanilla, or vice versa.  Similarly, barring physical disability,
-associations and reinforcement could be used to cause almost anyone to be made to enjoy mountain climbing, painting, or knitting.  To do this,
-we'd just need to cause the association of the features of these activities with more fundamental rewards.
-
-This raises the question of what the *fundamental* rewards for people are?  For our rabbits, they should be those that, when coupled with the
-rabbits' cognitive systems, causes them to survive and reproduce.  Some rewards might be innate even though they could be learned from more
-fundamental rewards.  For example, it might make sense to install in our rabbits an innate desire to not fall from high places (as a form of
-bootstrapping), even though this desire is a "corollary" of the more fundamental desire to not break bones.  So, some of our rabbits' desires
-could be redundant or even contradictory.
+(See Heuristics in xblog.md)
 
 ## Specifying Reward: The Bulldog Hugging Robot
 [#]: )))(((
 
-TL;DR: [FIXME]
+TL;DR: The Bulldog Hugging Robot expands on the Squiggly Lines idea and that specifying innate goals is tricky and hacked.
 
 ***
 
@@ -779,7 +376,8 @@ simply spin in circles.
 ## Hill Climbing on the Cingulate Cortex
 [#]: )))(((
 
-TL;DR: [FIXME]
+TL;DR: This is one of the most important sections to understanding happiness is, and further expands on the Bulldog Hugging Robot idea to show
+  that finding what makes us happy is essentially a "hillclimbing" search.
 
 ***
 
@@ -818,7 +416,7 @@ hypothalamus itself has the necessary structure to encode an innate representati
 ## Some Strategies for Maximizing Reward
 [#]: )))(((
 
-TL;DR: [FIXME]
+TL;DR: This further details how the hill climbing search might work.
 
 ***
 
@@ -854,7 +452,7 @@ also explain why surfers will spend entire summers on the beach waiting for "the
 card-game Pinochle waiting for the perfect "1,000 Aces" hand, or why sport-fishermen will spend all day with their lines in the water waiting
 for "the big one", or any number of analogous activities waiting for a *Holy Moment*, those rare, but immensely rewarding windfalls.
 
-# Artificial Sweetener, Drugs, and Virtual Reality
+# Shortcutting Heuristics: Artificial Sweetener, Drugs, and Virtual Reality
 [#]: ))))((((
 
 TL;DR: [FIXME]
