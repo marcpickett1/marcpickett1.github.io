@@ -18,6 +18,7 @@ title: Marc's Debris
 
 ### Other Debris
 
+* [Marcbot](./debris/marcbot.mp3) by Bill Krueger and Gabe Chaddock.
 * [A Spiral Calendar](./debris/uzumakal.html) This is how I visualize the year.
 * [Maze Maker](https://github.com/marcpickett1/maze/) ![](./assets/hello_world.gif "hello world."){:width="400"}
 * [WeightedDict](https://github.com/google/weighted-dict/) a python library for logarithmic time sampling of keys according to a dynamic probability distribution defined by the keys' (normalized) values.
