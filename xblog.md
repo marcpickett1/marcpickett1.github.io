@@ -1271,7 +1271,7 @@ Barring extreme situations, no matter what activity is, you can *choose* to do i
 
 One other way to find out what is living vs. existing is to find examples to inspire you.  I'd recommend the autobiographies of Richard Branson, for example.  He seems to have done significant things and had fun along the way.
 
-# We'll all be Super Duper Lizards!
+# We'll all become Super Duper Lizards!
 #### 2025/05/20/18:11
 
 Mammals and reptiles diverged around 300 million years ago.  Mammals kept the "lizard brain" --the ancient core that drives instincts like
@@ -1280,18 +1280,18 @@ hunger, fear, and aggression-- but added a powerful new layer above it: the cort
 The cortex gave mammals an edge.  It could store memories, recognize patterns, and make predictions, skills the lizard brain was not as good at.
 Primates added more cortex.  Humans added even more, until the cortex became vastly larger and smarter than the reptilian machinery it sat atop.
 
-But here's the twist: the lizard brain is still in charge.  The cortex might tell us "Don't eat that marshmallow!", but the final decision often
-comes from deeper down.  Sometimes we (our lizard brain) listen.  Sometimes we don't.
+All along the lizard brain has been in charge.  The cortex might tell us "Don't eat that marshmallow!", but the final decision comes from deeper
+down.  Sometimes we (our lizard brain) listen.  Sometimes we don't.
 
 In this sense, mammals are "super lizards", capable of cognitive feats no alligator creature could dream of.
 
-But we didn't stop there.  At least since the invention of writing, we have been extending the cortex's powers using external tools.  A clay
-tablet can remember that Darius's father was named Hystaspes-- for millennia.  Our phones can quickly recall hundreds of phone numbers.
-Calculators multiply faster and more accurately than most people ever could.
+But we didn't stop there.  At least since the invention of writing, we have been extending our "mind" using external tools.  A clay tablet can
+remember that Darius's father was named Hystaspes-- for millennia.  Our phones can quickly recall hundreds of phone numbers.  Calculators
+multiply faster and more accurately than most people ever could.
 
-These tools augment our mental powers.  And though each is better than us at some narrow task, none (yet) outperform us across the board.
+These tools augment our mental powers.  And though each is better than us at some narrow task, none yet outperform us across the board.
 
-But it seems immanent that this will change soon.
+But it is immanent that this will change soon.
 
 Our AI assistants will become superior to us at all cognitive tasks.
 
@@ -1299,6 +1299,6 @@ Note that the cortex doesn't want anything aside from to model the world and mak
 the bulk of the training is merely prediction, such as the next word in this ________.
 
 Soon, our tools --our artificial super-cortices-- will advise us in ways far beyond what even our own cortex can do.  And just like with our
-internal cortex, it'll be up to us whether to take their advice or not.
+internal cortex, it'll be up to us, our lizard brain, whether to take their advice or not.
 
 Our tools won't replace us.   They'll augment us.  We'll become "super duper lizards".
