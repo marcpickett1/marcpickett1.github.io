@@ -7,8 +7,11 @@ title: "Marc's Page"
 
 # Marc Pickett: AI and Machine Learning
 
-I'm at [Google AI](https://ai.google/) in Mountain View, CA and Washington, DC under [Ray Kurzweil](https://www.kurzweilai.net/).  I also help
-run the [DC/Bethesda AI Meetup Group](https://www.meetup.com/Bethesda-Artificial-Intelligence-Meetup/)
+I'm currently Principal AI Research Scientist at [Emergence AI](https://www.emergence.ai/).
+
+From 2014-2023 I was at [Google AI](https://ai.google/) in Mountain View, CA and Washington, DC under [Ray Kurzweil](https://www.kurzweilai.net/).
+
+I also run the [DC/MD/VA AI Meetup Group](https://www.meetup.com/dmvaigroup).
 
 myfirstname (no dot) mylastname thenumeral1 at gmail dot com
 
@@ -16,7 +19,7 @@ myfirstname (no dot) mylastname thenumeral1 at gmail dot com
 
 # Publications
 
-I am also on [Google Scholar](https://scholar.google.com/citations?user=enzaBikAAAAJ&hl=en&oi=ao)
+I am also on [Google Scholar](https://scholar.google.com/citations?user=F51o9nEAAAAJ&hl=en&oi=ao)
 
 [Pickett, M.]: http://marcpickett1.github.io
 [Pickett, Marc]: http://marcpickett1.github.io
