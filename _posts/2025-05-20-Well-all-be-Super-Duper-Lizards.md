@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "We'll all become Super Duper Lizards!"
+title: "We'll all be Super Duper Lizards!"
 ---
 
 [^1]: Recognizing that permanent fulfillment of desire is impossible, Buddhism teaches that a person should seek to free themselves from desire.

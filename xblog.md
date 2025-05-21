@@ -1271,7 +1271,7 @@ Barring extreme situations, no matter what activity is, you can *choose* to do i
 
 One other way to find out what is living vs. existing is to find examples to inspire you.  I'd recommend the autobiographies of Richard Branson, for example.  He seems to have done significant things and had fun along the way.
 
-# We'll all become Super Duper Lizards!
+# We'll all be Super Duper Lizards!
 #### 2025/05/20/18:11
 
 Mammals and reptiles diverged around 300 million years ago.  Mammals kept the "lizard brain" --the ancient core that drives instincts like
