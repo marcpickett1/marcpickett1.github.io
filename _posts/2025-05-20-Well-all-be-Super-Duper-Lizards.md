@@ -12,8 +12,8 @@ hunger, fear, and aggression-- but added a powerful new layer above it: the cort
 The cortex gave mammals an edge.  It could store memories, recognize patterns, and make predictions, skills the lizard brain was not as good at.
 Primates added more cortex.  Humans added even more, until the cortex became vastly larger and smarter than the reptilian machinery it sat atop.
 
-All along, the lizard brain has been in charge.  The cortex might tell us "Don't eat that marshmallow!", but the final decision comes from deeper
-down.  Sometimes we (our lizard brain) listen.  Sometimes we don't.
+All along, the lizard brain has been in charge.  The cortex might tell us "Don't eat that marshmallow!", but the final decision comes from
+deeper down.  Sometimes we (our lizard brain) listen.  Sometimes we don't.
 
 In this sense, mammals are "super lizards", capable of cognitive feats no alligator could dream of.
 
