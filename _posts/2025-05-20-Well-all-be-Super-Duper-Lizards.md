@@ -32,3 +32,4 @@ Soon, our tools --our artificial super-cortices-- will advise us in ways far bey
 internal cortex, it'll be up to us, our lizard brain, whether to take their advice or not.
 
 Our tools won't replace us.   They'll augment us.  We'll become "super duper lizards".
+
