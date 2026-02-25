@@ -22,9 +22,9 @@ Here's a simple hypothesis:
 This isn't meant as a literal claim about neurons or language.
 It's a toy model. But it turns out to line up surprisingly well with lived experience.
 
----
 
-## A simple model of "registered time"
+
+### A simple model of "registered time"
 
 Imagine your mind maintains a growing *vocabulary* of concepts.
 
@@ -40,9 +40,9 @@ If *registered time* corresponds to moments when your internal vocabulary grows,
 
 We can test this idea with text.
 
----
 
-## The experiment
+
+### The experiment
 
 Treat **words** as "concepts."
 
@@ -55,9 +55,9 @@ This is a classic result in quantitative linguistics: vocabulary growth is **sub
 
 That's exactly what we want.
 
----
 
-## What the curve looks like
+
+### What the curve looks like
 
 ![Vocabulary Growth Over a Lifetime]({{site.url}}/assets/curriculum/vocab_growth.png)
 
@@ -65,9 +65,9 @@ The shape is unmistakable: steep early growth that gradually flattens. By "age 1
 
 This is Heaps' law in action. And it already looks a lot like the subjective experience of aging.
 
----
 
-## The growth rate tells the real story
+
+### The growth rate tells the real story
 
 The vocabulary curve is suggestive, but the derivative is the key quantity. If time perception tracks novelty, what matters is *how many new words you learn per day*.
 
@@ -77,9 +77,9 @@ You start life learning ~270 new words per day. By age 10, it's dropped to ~70. 
 
 Notice the **lumps**. The growth rate isn't a smooth decay. There are bursts—sudden spikes where vocabulary shoots up. Those correspond to encountering a new author, genre, or domain. In other words: **out-of-distribution inputs**. We'll come back to this.
 
----
 
-## What does a year feel like?
+
+### What does a year feel like?
 
 Here's the punchline. If it takes you N days to learn 100 new concepts, and those learning events are what you *remember*, then N is a rough measure of how compressed time has become. It's how many calendar days it takes to accumulate what used to be a single day's worth of novelty.
 
@@ -95,9 +95,9 @@ By "age 60," it takes 4–5 days. A month has maybe six memorable days.
 
 Remember what a school quarter felt like at age 10? About three months, crammed with events. That's roughly what a *year* feels like at 60—the same number of learning events, stretched over four times as many calendar days.
 
----
 
-## China vs. your normal life
+
+### China vs. your normal life
 
 The lumps in the growth rate curve make a striking real-world prediction.
 
@@ -122,9 +122,8 @@ That's why:
 
 > **7 days in a radically different place can feel like a month of normal life.**
 
----
 
-## Aging through this lens
+### Aging through this lens
 
 This model suggests a simple picture:
 
@@ -135,9 +134,9 @@ This model suggests a simple picture:
 Time doesn't feel fast because "nothing happens."
 It feels fast because **nothing new is learned**.
 
----
 
-## What this is (and isn't)
+
+### What this is (and isn't)
 
 This is not a claim that:
 
@@ -153,9 +152,9 @@ It *is*:
 
 No metaphysics required.
 
----
 
-## The takeaway
+
+### The takeaway
 
 > **You experience time in proportion to how much you learn.**
 
