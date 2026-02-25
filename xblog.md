@@ -1301,7 +1301,7 @@ internal cortex, it'll be up to us, our lizard brain, whether to take their advi
 
 Our tools won't replace us.   They'll augment us.  We'll become "super duper lizards".
 
-# Why Time Speeds Up as You Get Older
+# How fast will a year go by when I'm 80?
 #### 2026/02/25/08:38
 
 *A toy model based on learning new "words"*

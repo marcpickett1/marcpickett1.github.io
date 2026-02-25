@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Why Time Speeds Up as You Get Older"
+title: "How fast will a year go by when I'm 80?"
 ---
 
 [^1]: Recognizing that permanent fulfillment of desire is impossible, Buddhism teaches that a person should seek to free themselves from desire.
