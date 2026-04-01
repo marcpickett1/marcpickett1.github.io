@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+"""Split rhuarkpetra/kids.md into posts, build, encrypt, and deploy."""
+import os, re, subprocess, sys
+from os.path import expanduser
+
+BLOG_DIR  = expanduser('~/blog')
+SOURCE    = os.path.join(BLOG_DIR, 'rhuarkpetra', 'kids.md')
+POSTS_DIR = os.path.join(BLOG_DIR, 'rhuarkpetra', '_posts')
+SITE_DIR  = os.path.join(BLOG_DIR, '_site')
+
+KEY_CHARS = set('1234567890abcdefghijklmnopqrstuvwxyz'
+                'ABCDEFGHIJKLMNOPQRSTUVWXYZ@#%^-=,.~_+:')
+
+def is_header(lines, i):
+    return lines[i].startswith('# ') and lines[i+1].startswith('#### ')
+
+def post_filename(title_line, date_line):
+    date = '-'.join(date_line.split()[1].split('/')[:3])
+    slug = ''.join(c for c in '-'.join(title_line[2:].split()) if c in KEY_CHARS)
+    return f'{date}-{slug}.md'
+
+def is_ref_def(line):
+    return re.match(r'^\[.*\]: ', line) is not None
+
+def split_posts():
+    lines = open(SOURCE).read().splitlines()
+    fnames, titles, bodies, defs = [], [], [], []
+    lasthead = 0
+    i = 0
+    while i < len(lines) - 4:
+        if is_header(lines, i):
+            fname = post_filename(lines[i], lines[i+1])
+            assert fname not in fnames, f'Duplicate post: {fname}'
+            fnames.append(fname)
+            bodies.append(lines[lasthead:i])
+            titles.append(''.join(c for c in lines[i][2:] if c != '"'))
+            lasthead = i
+        elif is_ref_def(lines[i]):
+            defs.append(lines[i])
+        i += 1
+    bodies.append(lines[lasthead:])
+    bodies.pop(0)  # drop preamble before first post
+
+    for idx, fname in enumerate(fnames):
+        path = os.path.join(POSTS_DIR, fname)
+        with open(path, 'w') as f:
+            f.write(f'---\nlayout: post\ntitle: "{titles[idx]}"\n'
+                    f'secondary: secondary\n---\n\n')
+            if defs:
+                f.write('\n'.join(defs) + '\n\n')
+            for line in bodies[idx][2:]:  # skip '# Title' and '#### date' lines
+                f.write(line + '\n')
+
+    stale = set(os.listdir(POSTS_DIR)) - set(fnames)
+    for name in sorted(stale):
+        print(f'Removing stale post: {name}')
+        os.remove(os.path.join(POSTS_DIR, name))
+
+    print(f'Split into {len(fnames)} posts.')
+
+def run(args):
+    print('+', ' '.join(args))
+    subprocess.run(args, check=True, cwd=BLOG_DIR)
+
+def encrypt_kids():
+    password = os.environ.get('KIDS_PASSWORD')
+    if not password:
+        sys.exit('KIDS_PASSWORD environment variable is not set.')
+    kids_site = os.path.join(SITE_DIR, 'rhuarkpetra')
+    for root, _, files in os.walk(kids_site):
+        for fname in files:
+            if fname.endswith('.html'):
+                fpath = os.path.join(root, fname)
+                run(['staticrypt', fpath, '--password', password, '-d', root])
+
+if __name__ == '__main__':
+    split_posts()
+    run(['bundle', 'exec', 'jekyll', 'build'])
+    encrypt_kids()
+    run(['ghp-import', '-n', '-p', '-f', '_site'])
+    print('Deployed.')
