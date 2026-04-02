@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <meta name="description" content="Montezuma's Revenge in under 5KB : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=">
+
+    <title>Montezuma's Revenge in under 5KB</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+      <header class="inner">
+        <!-- <a id="forkme_banner" href="">View on GitHub</a> -->
+        <h1 id="project_title"><a href="https://marcpickett1.github.io/feed.xml"><img src="/assets/feed.svg" height="32" title="RSS Feed"></a> Montezuma's Revenge in under 5KB</h1>
+        <h2 id="project_tagline"></h2>
+        
+      </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>This is a handcrafted open-loop controller for Atari 2600 Montezuma’s Revenge.  As shown below,
+the score resets every million points.</p>
+
+<p><img src="/assets/montezuma1.gif" alt="" title="Just before the score flips back to zero." width="300" />
+<img src="/assets/montezuma2.gif" alt="" title="Just after the score flips back to zero." width="300" /></p>
+
+<p><a href="montezuma.py">Raw source</a>.  This runs on Python 2.7 and requires pygame, numpy, and OpenAI gym
+with Atari enabled.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python
+# Handcrafted, open-loop controller for Montezuma's Revenge.
+# Written by Marc Pickett
+</span><span class="kn">import</span> <span class="n">base64</span><span class="p">,</span> <span class="n">zlib</span><span class="p">,</span> <span class="n">re</span><span class="p">,</span> <span class="n">pygame</span><span class="p">,</span> <span class="n">gym</span><span class="p">,</span> <span class="n">numpy</span><span class="p">,</span> <span class="n">time</span>
+
+<span class="k">def</span> <span class="nf">getSequence</span><span class="p">(</span><span class="n">seqStr</span><span class="p">):</span>
+  <span class="n">cmap</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="sh">'</span><span class="s">b</span><span class="sh">'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="sh">'</span><span class="s">c</span><span class="sh">'</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="sh">'</span><span class="s">d</span><span class="sh">'</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="sh">'</span><span class="s">e</span><span class="sh">'</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="sh">'</span><span class="s">f</span><span class="sh">'</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="sh">'</span><span class="s">g</span><span class="sh">'</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span> <span class="sh">'</span><span class="s">h</span><span class="sh">'</span><span class="p">:</span><span class="mi">15</span><span class="p">}</span>
+  <span class="n">l</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="sh">'</span><span class="s">([0-9]+)([a-z]+)</span><span class="sh">'</span><span class="p">).</span><span class="nf">split</span><span class="p">(</span><span class="n">seqStr</span><span class="p">)</span>
+  <span class="n">pairs</span><span class="p">,</span> <span class="n">seq</span> <span class="o">=</span> <span class="p">[(</span><span class="nf">int</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]),</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">times</span><span class="p">,</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span> <span class="n">seq</span> <span class="o">+=</span> <span class="p">([</span><span class="n">cmap</span><span class="p">[</span><span class="n">act</span><span class="p">]]</span> <span class="o">*</span> <span class="n">times</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">seq</span>
+
+<span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
+  <span class="n">pygame</span><span class="p">.</span><span class="n">surfarray</span><span class="p">.</span><span class="nf">blit_array</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">numpy</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+  <span class="n">pygame</span><span class="p">.</span><span class="n">display</span><span class="p">.</span><span class="nf">flip</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">runSequence</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">screen</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">:</span>
+    <span class="n">lives</span> <span class="o">=</span> <span class="n">env</span><span class="p">.</span><span class="nf">step</span><span class="p">(</span><span class="n">act</span><span class="p">)[</span><span class="mi">3</span><span class="p">][</span><span class="sh">'</span><span class="s">ale.lives</span><span class="sh">'</span><span class="p">]</span>
+    <span class="nf">display</span><span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="nf">render</span><span class="p">(</span><span class="sh">'</span><span class="s">rgb_array</span><span class="sh">'</span><span class="p">),</span> <span class="n">screen</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(.</span><span class="mi">001</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">lives</span>
+
+<span class="c1"># Racks up points ad infinitum.  The score flips at 1M points.
+</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+  <span class="c1"># This is the compressed action sequence.
+</span>  <span class="n">astring</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="sh">'</span><span class="s">eJztW1uW27gO3JKIB0kthy2RyRJm+bdAgrLkdneSOZPc5EQfLdsSHyBYKBRoN8tOVMMXiiV8Ca</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">mslXWXpYWvFIoujddNWngjKVq5cNp1tdahsFSO24qGgQtaryU2zluYXUOjJRVpqYTctHBbtUhu</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">IfAe4mgTZLxyslc87q+xcK4h0C7sQ1kzweRxDzWZNbDTLykXerOhTveuF7NWYANeBUMve8Kt54</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">YYgcblo2F81YLOIW2Zxscg/ppwO+50WtgbFjJdtVTe4CBGgyJ7sMFyk1x12Rg9vwTMLBu6LoX6</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">opcSgnmWCoVNxyiEljaoNWA1sz79wzy2cOoWYjy7aNjhYyaYUAVbZ44upLYkMzIMT/aLwBS63O</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">kXXkuwIUPclO0xF2pPrRR3sH1hcZ9jfej1NWjRhLuVeZcG2GVAJcWqapskWmhta01FGxaqfbmY</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">qxKAVCM+uy8JAN1kQXd3/RInfI9L34OPLqIdig3rNmdjMdSEn1tpC/Z8I7hsLWp2hwTLGHObbx</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">vaTfzaK4cNzyXtcQsZVm7AAu1ranTxHwGvCIIFbqdGZNOcngYxz5fQInal8dX1AJAFCJdk/s2w</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">iACg0p2g9MDhF0QSvdsUXBa/9OUlN33xNWAzItle2ofokSdiKMQep6U6mrybEYKo31xH+PaZOY</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">4YFvHAo9kjhvIP8EDDYrBHBpc4AVBj2ZLZrCUaA0UPLOwyWAaNxBC0lrXJsmXnBcSQ9KUu0ZwC</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">IJlvbQy+IhfmxLqCPoAr3mPLBSyU2rr6hhtBKZyO1eHVNgCTJdtXlhIB0wAAqC9k+sY+w//CW/</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">dGXHfz0jN3qH7CTey7Nl8BaVrAt1ypu46qGO/2h0D5koxAdGfE5k7THjh862tEsAB6Aw8eHJOs</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">KcDdG1ukmAuWwTWszjVfQUC6xcEUFljdZYNn1HiEjQy4ZW8xhhE41PadQCkB1MyeSWArHBEWmx</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">WIlrqGTkOEtzl1vlnglb5qLAXOBiZajwWwHVomdSPkCuBUErZ87Rz5NmLU44YNX0ZPeGP71bsK</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">V0UgcTUOMvhJ6nkldNaGZwcxGjFFhGqV8CCVsSVxYHp4NyoyWkUAjxBxEGbHN1ZupK3bunZUwk</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">RLelkHbkHnvJTnmOworrnxuycG4uypFAzYkwsfzo0e9iF4uE8A1b5XwC2VNCNcsmdVbslpbsad</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">qMd3oNFTlzFgDzih8TB7mAd3SfQ+W6d/YZ90xKi9s0ESYcKdDbyhuxFaYNnZE6SC3XTzYIXkiH</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">tMR8BLD3gejsOGhyPgtSlaWDyKUVVwqtdoBE6uUy7pSvuSsOlz5kDJzTefJKw7yK4eCH3F2D0g</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">oesMzgczH3FrLPmpVOCe9rBcjOvb8rhwjen9mJq/U350ZZSQWy4Dm0xYvMGAOPkGm4own6R6sQ</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">FcCwcgYCEDQGzLgxwwUvc+mq1tpAvnCHPbWtIWj30a3kZncLKP3ztaSwvEsI8Am5hydArSP3Lj</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">upMZsFxkhw2S36sO266PHp27ptfPJyV1uwFXZGejgDePoDNezgM9QWl5LSmeonkyk8rpbsJtgW</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">qhI1RGBl7gBFDKft3PWHtfFw60vFBhfMZUMGo1XcoPjohDeiF2ZCwl6o5UGnYTcOloNwEk5Rmo</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">54t+j6zqGRNJSfR8c8a7w1Fn8L2aSAa2p8TwQWW8mzJiafpi/904zBZfo8Oeri800cVYSoeQAT</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">dS92ioIPR42rOxLMwEbrN9ACaR1EbwhWtVAAkL/RAStE66OlPmhfWbbrUNkxYdfnRKCl/7aqHO</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">Zhr/fCDL4pnHEqMeUESa0vp+g+UQ1OwR+MnIOpcXoX1fVpRTNaX3FWWc0j58XlGmptzXv8hRSe</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">bJ6i4k40HuT0HKvcA5VZVW/3xV0wt7OtTylcjXPXzOyu5DI2erTxUj1Xyk+UdbE5qvB1GX7DAd</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">o0D+5BmZJ0Vvyd8XKmP7LvELB6PmQKrcg91HFcK9sjSzTIWlQehEAybdwZhXZmHJI7/bffBf2g</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">FXmuUj4L26ThpqjbCXiOYd7gGZwLamJvKwJ/WRLPGuutBDoo7VtGZNq6lA6tUNokq7vkUhs2nn</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">4KM36itdrGwKy47VW7VkFkouKJGPUhJ8hlVCtcGgZFIaeWw9a7ZuvdUvRqSo8LAo02+wu02o2x</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">3a8t5BgGm7wKXJNGoCA+gD4LbsPcyYjwkmt/XFQ0dj+rQrmbgsJjps1afKLnsqctTGMHkwPeq2</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">PNlRERZ0CuxRtnn8psVrOY/2JAcXc6eAnxi67w6DANf7MOgvPQxK92HQTzkMkvXPOQxKS/nnZp</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">ubbW62udnmF7GNnUfRPKwyHRkvX3Wx8Y2OEymr7C5fdGV70o+E+6lRE9q8pFVMirhIFuctQZc2</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">cxZfycbbjvNWWC9ONgZ/6Nj1TDZQyemjigQ7lCdlfIN0DJm6jLEupMPpWyPkR0GCIgEDbvmpsA</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">3DcLzZB2mIHxfJpfYFw7zxzpgJKJ5BE7nGDvDGHf52xr2x9QK+uFNRHBQ0T51Q5UKmTypaBxWZ</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">K1GmrE41fFAN2emdUQ3CvJLsaeNxqIUm/ZDaAGsEVCG5AQGrX5qF9rMuB9fIO8XO4eURE72+zc</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">YmvcwxLk1VBrzm1tJwuNqBJmzrbKJ0HEvbEwv+M+PQmXGQ5RpIYbXqhx3HcWIOoU7LBg8jmzXe</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">19yDLNmx9MsVxEvYsp3/o1qLzyRyiWnzY6dbqeonHPOLmw6GWZ0nD4AUrTyxWgwpyE5rnBKOpD</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">9O1R/nQ5eTojeS84Ono4dXRxRvj4OJw/AvJLMJKtJfKEJWvkXIbytC8jsRwi5COv6Pi3196SLE</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">SPDtOBy7XjjfAuX/LVCU/hyBEvMtUH5jgZJ/T4GS6vTVfyJQxndh7+TJ4yLxWcHov1Uw+UcUjP</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">6well/UL3ML9R/TL3Q36Re7l/v/b7q5T5C+TMVyh/0671fe2D7a9mG9Saa7yMadqI5svDP+Zmw</span><span class="sh">'</span>
+    <span class="sh">'</span><span class="s">3kTz1xKN3rLmZpv7nxJutvklbGP/lPCabfyHNkDk/S9QN9vcbHOzzX/CNv8D3E+NIQ==</span><span class="sh">'</span><span class="p">)</span>
+  <span class="n">leadInSeq</span><span class="p">,</span> <span class="n">loopSeq</span> <span class="o">=</span> <span class="sh">'</span><span class="s">12223422256788888989</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">08888880880888880088</span><span class="sh">'</span>
+  <span class="c1"># Decompress
+</span>  <span class="n">seqStrs</span> <span class="o">=</span> <span class="n">zlib</span><span class="p">.</span><span class="nf">decompress</span><span class="p">(</span><span class="n">base64</span><span class="p">.</span><span class="nf">b64decode</span><span class="p">(</span><span class="n">astring</span><span class="p">)).</span><span class="nf">split</span><span class="p">(</span><span class="sh">'</span><span class="s">x</span><span class="sh">'</span><span class="p">)</span>
+  <span class="n">sequences</span> <span class="o">=</span> <span class="p">[</span><span class="nf">getSequence</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">seqStrs</span><span class="p">]</span>
+  <span class="c1"># Initialize
+</span>  <span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="p">.</span><span class="n">display</span><span class="p">.</span><span class="nf">set_mode</span><span class="p">((</span><span class="mi">160</span><span class="p">,</span><span class="mi">210</span><span class="p">))</span>
+  <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="p">.</span><span class="nf">make</span><span class="p">(</span><span class="sh">'</span><span class="s">MontezumaRevenge-ramNoFrameskip-v4</span><span class="sh">'</span><span class="p">).</span><span class="n">env</span>
+  <span class="n">env</span><span class="p">.</span><span class="nf">reset</span><span class="p">()</span>
+  <span class="c1"># Run the first levels, then eternal return...
+</span>  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">leadInSeq</span><span class="p">:</span> <span class="n">lives</span> <span class="o">=</span> <span class="nf">runSequence</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="nf">int</span><span class="p">(</span><span class="n">i</span><span class="p">)],</span> <span class="n">screen</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+  <span class="k">while</span> <span class="n">lives</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">loopSeq</span><span class="p">:</span> <span class="n">lives</span> <span class="o">=</span> <span class="nf">runSequence</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="nf">int</span><span class="p">(</span><span class="n">i</span><span class="p">)],</span> <span class="n">screen</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+  <span class="k">print</span> <span class="sh">'</span><span class="s">Dead!</span><span class="sh">'</span>
+
+<span class="nf">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+      </footer>
+    </div>
+
+    
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-97053603-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>

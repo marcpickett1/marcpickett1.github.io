@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <meta name="description" content="Fnordnet: The fnord only thing they fear is fnord. : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css?v=">
+
+    <title>Fnordnet: The fnord only thing they fear is fnord.</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+      <header class="inner">
+        <!-- <a id="forkme_banner" href="">View on GitHub</a> -->
+        <h1 id="project_title"><a href="https://marcpickett1.github.io/feed.xml"><img src="/assets/feed.svg" height="32" title="RSS Feed"></a> Fnordnet: The fnord only thing they fear is fnord.</h1>
+        <h2 id="project_tagline"></h2>
+        
+      </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <div id="post">
+  <!--  <h1> Fnordnet: The fnord only thing they fear is fnord. </h1> -->
+  <h1> 2024-03-13 </h1>
+  <!--  <p class="meta"> 2024-03-13 </p> -->
+
+  
+<h2 id="a-puzzle-how-can-we-allow-general-learning-and-innate-instincts">A Puzzle: How can we allow general learning <em>and</em> innate instincts?</h2>
+
+<p>Both biological and artificial systems benefit from general learning, since adaptability is a key to robust success.  For mammalian brains, the
+Mountcastle hypothesis proposes that the neocortex is a general learning system. The same cortical circuitry that does high-level planning also
+does seeing and hearing.  Sur and Rubenstein even suggest that a newborn ferret’s auditory cortex can learn to “see”.  Artificial systems, such
+as Transformers, have shown that the same neural circuitry can be used for language, vision, and other modalities, with the only differentiator
+being the data fed to these systems.</p>
+
+<p>On the other hand, innate instincts are also essential for some species survival.  An anecdotal example is a beaver raised in human captivity
+since infancy that builds a “dam” inside its human owners’ home using household items.  Presumably, this beaver had never been instructed on how
+to build a dam, yet it had a drive to do so.</p>
+
+<p>One possibility for how this drive is genetically encoded is that a special module in the beaver’s brain is dedicated to dam building.  This
+module “hard codes” the neural structure all the way from grounding in visual and auditory signals to motor control.  Essentially saying “When
+you see these patterns, take these actions”.  The problem with this module is it would break if we were to reroute a baby beaver’s optic nerve
+to its auditory cortex.  Or if we were to permute the baby beaver’s retinotopic mapping, essentially changing the “pixels” that travel along the
+optic nerve.</p>
+
+<p>Of course, biology is never so simple, but this raises the question of <em>Is it conceivable that the baby beaver’s brain has a “dam building”
+circuit that is innate, but at the same time is plastic enough so that it’s vision and other modalities are as flexible as that of a ferret?</em></p>
+
+<h2 id="making-the-problem-concrete">Making the problem concrete</h2>
+
+<p>To approach this, I’ve made some assumptions that hopefully simplify the problem while still attacking the core.</p>
+<ol>
+  <li>The baby beaver’s experience is completely unsupervised.  At no point should the process rely on explicit labels.</li>
+  <li>There are invariants that all “dam building” processes share: E.g., stacking objects, moving objects, etc..  Of course, words like “stack”
+and “move” ultimately need to be grounded in the beaver’s sensory experience, but we can encode “floating” abstractions.</li>
+  <li>Solving a classification problem <em>without relying on labels available during learning or assuming a specific sensory configuration</em> is
+sufficient to address the core problem, which is how concepts can be innately encoded without explicit grounding or labels.  If a beaver
+learns concepts like “move”, “stack”, and “object”, I hope it’s not too far a stretch to imagine that it can be rewarded for “stacking
+objects”.</li>
+</ol>
+
+<p>Given these assumptions, I propose a Baby version of The Baby Beaver Problem: (The Baby Baby-Beaver-Problem.)</p>
+
+<h2 id="the-baby-baby-beaver-problem-fear-the-fnords">The Baby Baby-Beaver-Problem: Fear the FNORDs!</h2>
+
+<p>In this setup, we assume a passive unsupervised learning system.  There are no labels or actions.  The system is given a stream of fixed-length
+vectors representing 26 English “letters” plus a space/other.  The sequences are from common English texts.  We assume that the sequence
+distribution is fixed for all Beaver worlds.  The system is given no other information from the environment.  We consider our system a success
+if after “training” there is a node that is active if and only if the system has just seen the letter sequence “F-N-O-R-D”.  (Note that this
+sequence is extremely rare outside the writings of Shea and Wilson.  We may reasonably assume that the system never sees this sequence during
+training.)  If we succeed, we can hook up the “FNORD detector” to a large negative reward in a control system, and, with some liberties, claim
+that our system has an innate fear of FNORDs.</p>
+
+<p>The “letters” that the vectors represent have a 1:1 correspondence with the English alphabet, but the system isn’t given labels or any explicit
+knowledge whether two vectors represent the same letter.  (If we assume we’re told whether two vectors represent the same letter, then the
+problem is a fairly trivial cipher decoding: We simply find a permutation that matches the unigram and bigram frequency of English letters.)
+Each letter vector is a fixed dimensionality (D x 1), but we don’t know what this is beforehand.  Concretely, the letters could be color or
+grayscale images, but the images might be permuted or otherwise transformed.  (If English phonemes had a 1:1 correspondence with spelling, we
+could even consider short audio clips of individual phonemes.)</p>
+
+<h2 id="a-solution-attempt">A solution attempt</h2>
+
+<p>The core idea is to exploit the N-gram distribution of English letters.</p>
+
+<p>This is non-trivial because the system needs to simultaneously learn which letter map to which and which letters are the same as others.</p>
+
+<p>My approach: Exploit an innately encoded N-gram distribution for the characters.  (I assume that this distribution is relatively stable.)</p>
+
+<p>I created an objective that is forced to use the ngram distribution to predict next characters.  It then uses KL to see if its two predictions
+match (its prediction using an encoder vs. using the ngram model from its encoding of other characters).  I also add a “self prediction” loss to
+prevent encoding collapse.</p>
+
+<p>I can show that this objective is optimized if I cheat and pretrain an encoder using labels.  But when training end-to-end without cheating, the
+optimizer rarely finds this and gets a loss substantially higher.</p>
+
+<p>[We should mention all the things that didn’t work.  E.g., Character frequency matching.  Just using bigrams.]</p>
+
+
+</div>
+
+<!-- <div id="related"> -->
+<!--   <h2>Related Posts</h2> -->
+<!--   <ul class="posts"> -->
+<!--      -->
+<!--       <li> -->
+<!--         <div class="first"><span>07 Mar 2026</span></div> -->
+<!--         <div class="sep"> &raquo; </div> -->
+<!--         <div class="second"><a href="/rhuarkpetra/2026/03/07/.html"></a></div> -->
+<!--       </li> -->
+<!--      -->
+<!--       <li> -->
+<!--         <div class="first"><span>25 Feb 2026</span></div> -->
+<!--         <div class="sep"> &raquo; </div> -->
+<!--         <div class="second"><a href="/2026/02/25/How-fast-will-a-year-go-by-when-Im-75.html">How fast will a year go by when I'm 75?</a></div> -->
+<!--       </li> -->
+<!--      -->
+<!--       <li> -->
+<!--         <div class="first"><span>21 Feb 2026</span></div> -->
+<!--         <div class="sep"> &raquo; </div> -->
+<!--         <div class="second"><a href="/rhuarkpetra/2026/02/21/Golem.html">Golem</a></div> -->
+<!--       </li> -->
+<!--      -->
+<!--   </ul> -->
+<!-- </div> -->
+<!-- <script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date-en-US.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--   $("#post p").each( function(index) { -->
+<!--     if (index > 0 && $.trim($(this).text()).length > 0) { -->
+<!--       $(this).attr("id", "par" + index.toString()); -->
+<!--       var html = $(this).html(); -->
+<!--       $(this).html(html + " <a href='#par" + index.toString() + "'>#</a>"); -->
+<!--     } -->
+<!--   }); -->
+<!-- </script> -->
+
+<!-- <script id="dsq-count-scr" src="//marcpickett1-github-io.disqus.com/count.js" async></script> -->
+
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script>
+/**
+* https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = marcpickett1.github.io;
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://marcpickett1-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+      </footer>
+    </div>
+
+    
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-97053603-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  </body>
+</html>

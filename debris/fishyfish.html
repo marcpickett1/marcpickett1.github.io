@@ -1,0 +1,2326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Fish Eat Fish</title>
+  <style>
+    * { margin: 0; padding: 0; }
+    body { background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; touch-action: none; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <script>
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // === CONSTANTS ===
+    const WORLD_W = 6000, WORLD_H = 3000, MAX_LEVEL = 40, FISH_COUNT = 60, BUBBLE_COUNT = 80;
+    const SHARK_COUNT = 3;
+    const POWERUP_TYPES = ['speed', 'shield', 'magnet', 'frenzy', 'x2'];
+    const POWERUP_DURATION = { speed: 6, shield: 8, magnet: 5, frenzy: 5, x2: 8 };
+    const POWERUP_COLORS = { speed: '#44eeff', shield: '#44ff88', magnet: '#ff44ff', frenzy: '#ff4444', x2: '#ffdd00' };
+    const POWERUP_ICONS = { speed: '\u26A1', shield: '\uD83D\uDEE1\uFE0F', magnet: '\uD83E\uDDF2', frenzy: '\uD83D\uDD25', x2: '\u2B50' };
+    const POWERUP_NAMES = { speed: 'Speed Boost', shield: 'Shield', magnet: 'Magnet', frenzy: 'Frenzy', x2: '2x Score' };
+    const MAX_POWERUPS = 6;
+    const COMBO_WINDOW = 2.0; // seconds
+    const VOLUME_EFFICIENCY = 0.2; // 20% of eaten volume becomes growth
+
+    // === SKINS ===
+    const SKINS = [
+      { name: 'Classic', id: 'classic', req: null, desc: 'Default fish' },
+      { name: 'Tiger', id: 'tiger', req: 'Eat 10 fish', check: s => s.totalEaten >= 10, desc: 'Tiger stripes' },
+      { name: 'Ghost', id: 'ghost', req: 'Reach level 20', check: s => s.maxLevel >= 20, desc: 'Translucent & glowing' },
+      { name: 'Golden', id: 'golden', req: 'Score 500+', check: s => s.highScore >= 500, desc: 'Shiny gold scales' },
+      { name: 'Neon', id: 'neon', req: 'Get a 5x combo', check: s => s.maxCombo >= 5, desc: 'Electric neon glow' },
+      { name: 'Shadow', id: 'shadow', req: 'Eat a shark', check: s => s.sharksEaten >= 1, desc: 'Dark predator look' },
+      { name: 'Rainbow', id: 'rainbow', req: 'Win the game', check: s => s.wins >= 1, desc: 'Color-shifting body' },
+    ];
+
+    // === PERSISTENT STATS (localStorage) ===
+    let stats = JSON.parse(localStorage.getItem('fishgame_stats') || 'null') || {
+      highScore: 0, totalEaten: 0, maxLevel: 0, maxCombo: 0, sharksEaten: 0, wins: 0, gamesPlayed: 0, selectedSkin: 'classic'
+    };
+    function saveStats() { localStorage.setItem('fishgame_stats', JSON.stringify(stats)); }
+
+    // === CAMERA ===
+    const cam = { x: 0, y: 0 };
+    function updateCamera() {
+      cam.x += (player.x - canvas.width / 2 - cam.x) * 0.08;
+      cam.y += (player.y - canvas.height / 2 - cam.y) * 0.08;
+      cam.x = Math.max(0, Math.min(WORLD_W - canvas.width, cam.x));
+      cam.y = Math.max(0, Math.min(WORLD_H - canvas.height, cam.y));
+    }
+
+    // === FISH PALETTES ===
+    const FISH_PALETTES = [
+      { body: '#8899aa', belly: '#aabbcc', fin: '#667788', outline: '#556677', glow: '#8899aa' },
+      { body: '#2288dd', belly: '#66bbff', fin: '#1166aa', outline: '#0d4e8a', glow: '#44aaff' },
+      { body: '#22bb66', belly: '#66eebb', fin: '#118844', outline: '#0a6630', glow: '#44ff88' },
+      { body: '#ddcc22', belly: '#ffee77', fin: '#aa9911', outline: '#887711', glow: '#ffee44' },
+      { body: '#ee7722', belly: '#ffaa66', fin: '#cc5500', outline: '#993300', glow: '#ff8844' },
+      { body: '#dd3333', belly: '#ff7777', fin: '#aa1111', outline: '#880000', glow: '#ff4444' },
+      { body: '#9933cc', belly: '#cc77ff', fin: '#7711aa', outline: '#550088', glow: '#bb55ff' },
+      { body: '#ee44aa', belly: '#ff88cc', fin: '#cc2288', outline: '#aa0066', glow: '#ff66bb' },
+      { body: '#ddeeff', belly: '#ffffff', fin: '#aabbdd', outline: '#8899bb', glow: '#ffffff' },
+      { body: '#ffcc00', belly: '#ffee66', fin: '#ddaa00', outline: '#bb8800', glow: '#ffdd44' },
+      { body: '#ff33ff', belly: '#ff88ff', fin: '#dd00dd', outline: '#aa00aa', glow: '#ff66ff' },
+    ];
+    const SIZE_SCALE = 22;
+    // 40 levels spread linearly in size-space from 22px (level 1) to 220px (level 40)
+    function fishSize(level) { return SIZE_SCALE * (1 + 9 * (level - 1) / (MAX_LEVEL - 1)); }
+    function levelVolume(level) { const s = fishSize(level); return s * s * s; }
+    function volumeToLevel(vol) {
+      const s = Math.cbrt(vol);
+      return Math.max(1, Math.min(MAX_LEVEL, Math.floor(1 + (s / SIZE_SCALE - 1) * (MAX_LEVEL - 1) / 9)));
+    }
+    // Map 40 levels to 11 palette entries
+    function fishPalette(level) { return FISH_PALETTES[Math.min(10, Math.floor((level - 1) * 10 / (MAX_LEVEL - 1)))]; }
+
+    // === EVOLUTIONS ===
+    // Each evolution scales with level (player.evoLevels[id]).
+    // Stats are computed dynamically via getStats(lvl).
+    const ALL_EVOLUTIONS = {};
+    const EVOLUTIONS = {
+      3: [
+        {
+          id: 'tuna_fins', name: 'Tuna Fins', species: 'Bluefin Tuna',
+          color: '#44eeff', category: 'SPEED',
+          desc(lvl) { return `+${15+10*lvl}% top speed. Lunate caudal fin.`; },
+          getStats(lvl) { return { speedMult: 1 + (0.15 + 0.10*lvl) }; }, // L1=1.25, L2=1.35, L3=1.45...
+          apply(p, lvl) { /* computed dynamically */ },
+          drawVisual(ctx, hw, hh, t) {
+            const lvl = player.evoLevels['tuna_fins'] || 1;
+            const spread = 0.8 + lvl * 0.1;
+            ctx.fillStyle = `rgba(68,238,255,${0.25+lvl*0.05})`;
+            ctx.beginPath();
+            ctx.moveTo(-hw*0.6, 0);
+            ctx.quadraticCurveTo(-hw*1.0, -hh*spread, -hw*1.3, -hh*(spread+0.2));
+            ctx.quadraticCurveTo(-hw*1.15, 0, -hw*1.3, hh*(spread+0.2));
+            ctx.quadraticCurveTo(-hw*1.0, hh*spread, -hw*0.6, 0);
+            ctx.fill();
+          }
+        },
+        {
+          id: 'parrotfish_beak', name: 'Parrotfish Beak', species: 'Humphead Parrotfish',
+          color: '#88ff88', category: 'GROWTH',
+          desc(lvl) { return `+${20+10*lvl}% volume absorbed per eat.`; },
+          getStats(lvl) { return { volumeAbsorbMult: 1 + (0.20 + 0.10*lvl) }; }, // L1=1.3, L2=1.4, L3=1.5...
+          apply(p, lvl) { /* computed dynamically */ },
+          drawVisual(ctx, hw, hh, t) {
+            const lvl = player.evoLevels['parrotfish_beak'] || 1;
+            ctx.strokeStyle = `rgba(255,255,240,${0.5+lvl*0.1})`;
+            ctx.lineWidth = 2 + lvl*0.5;
+            ctx.beginPath();
+            ctx.moveTo(hw*0.85, -hh*(0.12+lvl*0.02));
+            ctx.quadraticCurveTo(hw*(1.0+lvl*0.03), -hh*0.05, hw*(1.0+lvl*0.02), 0);
+            ctx.quadraticCurveTo(hw*(1.0+lvl*0.03), hh*0.05, hw*0.85, hh*(0.12+lvl*0.02));
+            ctx.stroke();
+          }
+        }
+      ],
+      4: [
+        {
+          id: 'lateral_line', name: 'Lateral Line', species: 'Hammerhead Shark',
+          color: '#aaddff', category: 'UTILITY',
+          desc(lvl) { return `Minimap shows fish (green/red). Threat ring ${400+100*lvl}px.`; },
+          getStats(lvl) { return { lateralRange: 400 + 100*lvl }; }, // L1=500, L2=600...
+          apply(p, lvl) { p.hasLateralLine = true; },
+          drawVisual(ctx, hw, hh, t) {
+            const lvl = player.evoLevels['lateral_line'] || 1;
+            ctx.strokeStyle = `rgba(170,221,255,${0.3+lvl*0.08+Math.sin(t*4)*0.15})`;
+            ctx.lineWidth = 1 + lvl*0.3;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath(); ctx.moveTo(-hw*0.6, 0); ctx.lineTo(hw*0.7, 0); ctx.stroke();
+            ctx.setLineDash([]);
+          }
+        },
+        {
+          id: 'anglerfish_lure', name: 'Anglerfish Lure', species: 'Deep-sea Anglerfish',
+          color: '#ffee44', category: 'UTILITY',
+          desc(lvl) { return `Lure attracts fish ${lvl+1} levels below. Range ${150+50*lvl}px.`; },
+          getStats(lvl) { return { lureRange: 150 + 50*lvl, lureLevels: lvl + 1 }; }, // L1: 2 lvls 200px, L2: 3 lvls 250px...
+          apply(p, lvl) { p.hasLure = true; },
+          drawVisual(ctx, hw, hh, t) {
+            const lvl = player.evoLevels['anglerfish_lure'] || 1;
+            const orbSize = 4 + lvl;
+            const glow = 0.5 + Math.sin(t*6)*0.3;
+            ctx.strokeStyle = `rgba(255,238,68,${0.4+lvl*0.08})`;
+            ctx.lineWidth = 1 + lvl*0.3;
+            ctx.beginPath();
+            ctx.moveTo(hw*0.4, -hh*0.7);
+            ctx.quadraticCurveTo(hw*0.7, -hh*1.2, hw*0.8, -hh*0.5);
+            ctx.stroke();
+            ctx.fillStyle = `rgba(255,238,68,${glow})`;
+            ctx.beginPath(); ctx.arc(hw*0.8, -hh*0.5, orbSize+Math.sin(t*8)*1.5, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = `rgba(255,255,200,${glow*0.3})`;
+            ctx.beginPath(); ctx.arc(hw*0.8, -hh*0.5, orbSize*2.5, 0, Math.PI*2); ctx.fill();
+          }
+        }
+      ],
+      5: [
+        {
+          id: 'porcupinefish_spines', name: 'Porcupinefish Spines', species: 'Porcupinefish',
+          color: '#ffaa44', category: 'DEFENSE',
+          desc(lvl) { return `Auto-block hit every ${Math.max(5, 20-3*lvl)}s. Stun ${1+0.5*lvl}s.`; },
+          getStats(lvl) { return { spineCooldown: Math.max(5, 20 - 3*lvl), spineStun: 1 + 0.5*lvl }; }, // L1: 17s/1.5s, L2: 14s/2s...
+          apply(p, lvl) { p.hasSpines = true; if (p.spineTimer > 0) p.spineTimer = Math.min(p.spineTimer, Math.max(5, 20-3*lvl)); },
+          drawVisual(ctx, hw, hh, t) {
+            const lvl = player.evoLevels['porcupinefish_spines'] || 1;
+            const stats = ALL_EVOLUTIONS['porcupinefish_spines'].getStats(lvl);
+            const charged = player.spineTimer <= 0;
+            const alpha = charged ? 0.6+lvl*0.06 : 0.25;
+            ctx.strokeStyle = `rgba(255,170,68,${alpha})`;
+            ctx.lineWidth = 1.5 + lvl*0.3;
+            const spineCount = 8 + lvl*2;
+            for (let i = 0; i < spineCount; i++) {
+              const angle = (i / spineCount) * Math.PI * 2;
+              const baseX = Math.cos(angle) * hw * 0.9;
+              const baseY = Math.sin(angle) * hh * 0.9;
+              const ext = charged ? 1.25 + lvl*0.05 : 1.1;
+              const tipX = Math.cos(angle) * hw * ext;
+              const tipY = Math.sin(angle) * hh * ext;
+              ctx.beginPath(); ctx.moveTo(baseX, baseY); ctx.lineTo(tipX, tipY); ctx.stroke();
+              if (charged) {
+                ctx.fillStyle = `rgba(255,200,100,${0.5+Math.sin(t*5+i)*0.2})`;
+                ctx.beginPath(); ctx.arc(tipX, tipY, 1.5+lvl*0.3, 0, Math.PI*2); ctx.fill();
+              }
+            }
+          }
+        },
+        {
+          id: 'octopus_ink', name: 'Octopus Ink Cloud', species: 'Common Octopus',
+          color: '#9944cc', category: 'ESCAPE',
+          isActive: true,
+          desc(lvl) { return `Ink scatters fish ${250+50*lvl}px. +${40+10*lvl}% speed ${1.5+0.5*lvl}s. ${Math.max(6, 15-2*lvl)}s CD.`; },
+          getStats(lvl) { return { inkRadius: 250+50*lvl, inkSpeedBoost: 1+(0.40+0.10*lvl), inkSpeedDur: 1.5+0.5*lvl, inkCooldown: Math.max(6, 15-2*lvl) }; },
+          apply(p, lvl) {
+            p.hasInk = true; p.inkCooldown = 0;
+            const existing = p.activeAbilities.find(a=>a.id==='octopus_ink');
+            const cd = ALL_EVOLUTIONS['octopus_ink'].getStats(lvl).inkCooldown;
+            if (existing) { existing.maxCooldown = cd; }
+            else { p.activeAbilities.push({id:'octopus_ink', cooldownProp:'inkCooldown', maxCooldown:cd}); }
+          },
+          drawVisual(ctx, hw, hh, t) {
+            const lvl = player.evoLevels['octopus_ink'] || 1;
+            ctx.fillStyle = `rgba(100,30,160,${0.35+lvl*0.06+Math.sin(t*3)*0.1})`;
+            ctx.beginPath(); ctx.ellipse(hw*-0.1, hh*0.6, hw*(0.2+lvl*0.03), hh*(0.18+lvl*0.02), 0, 0, Math.PI*2); ctx.fill();
+          }
+        }
+      ],
+      6: [
+        {
+          id: 'electric_shock', name: 'Electric Eel Shock', species: 'Electric Eel',
+          color: '#ffcc00', category: 'OFFENSE',
+          isActive: true,
+          desc(lvl) { return `Shock ${150+50*lvl}px. Stun ${1.5+0.5*lvl}s. Sharks ${0.3+0.2*lvl}s. ${Math.max(4, 10-1.5*lvl)}s CD.`; },
+          getStats(lvl) { return { shockRadius: 150+50*lvl, shockStun: 1.5+0.5*lvl, shockSharkStun: 0.3+0.2*lvl, shockCooldown: Math.max(4, 10-1.5*lvl) }; },
+          apply(p, lvl) {
+            p.hasShock = true; p.electricCooldown = 0;
+            const existing = p.activeAbilities.find(a=>a.id==='electric_shock');
+            const cd = ALL_EVOLUTIONS['electric_shock'].getStats(lvl).shockCooldown;
+            if (existing) { existing.maxCooldown = cd; }
+            else { p.activeAbilities.push({id:'electric_shock', cooldownProp:'electricCooldown', maxCooldown:cd}); }
+          },
+          drawVisual(ctx, hw, hh, t) {
+            const lvl = player.evoLevels['electric_shock'] || 1;
+            ctx.fillStyle = `rgba(255,200,0,${0.2+lvl*0.06+Math.sin(t*4)*0.1})`;
+            ctx.beginPath(); ctx.ellipse(hw*0.1, -hh*0.5, hw*(0.25+lvl*0.04), hh*(0.12+lvl*0.02), 0, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.ellipse(hw*0.1, hh*0.5, hw*(0.25+lvl*0.04), hh*(0.12+lvl*0.02), 0, 0, Math.PI*2); ctx.fill();
+            if (player.electricCooldown <= 0) {
+              ctx.strokeStyle = `rgba(255,255,100,${0.25+lvl*0.06+Math.sin(t*10)*0.2})`;
+              ctx.lineWidth = 1 + lvl*0.3;
+              for (let a = 0; a < lvl+1; a++) {
+                const yOff = -hh*0.3 + a*hh*0.15;
+                ctx.beginPath();
+                ctx.moveTo(-hw*0.3, yOff);
+                ctx.lineTo(-hw*0.1, yOff+Math.sin(t*12+a)*3);
+                ctx.lineTo(hw*0.1, yOff-hh*0.05+Math.cos(t*14+a)*3);
+                ctx.lineTo(hw*0.3, yOff+Math.sin(t*11+a)*2);
+                ctx.stroke();
+              }
+            }
+          }
+        },
+        {
+          id: 'barracuda_jaw', name: 'Barracuda Jaw', species: 'Great Barracuda',
+          color: '#cc4444', category: 'OFFENSE',
+          desc(lvl) { return `+${30+10*lvl}% eating range. +${20+10*lvl}% burst ${0.8+0.2*lvl}s on eat.`; },
+          getStats(lvl) { return { eatingRangeMult: 1 + (0.30 + 0.10*lvl), burstSpeedMult: 1 + (0.20+0.10*lvl), burstDuration: 0.8+0.2*lvl }; },
+          apply(p, lvl) { p.hasBarracudaJaw = true; p.burstTimer = 0; },
+          drawVisual(ctx, hw, hh, t) {
+            const lvl = player.evoLevels['barracuda_jaw'] || 1;
+            const teethCount = 3 + lvl;
+            ctx.strokeStyle = `rgba(200,200,200,${0.5+lvl*0.08})`;
+            ctx.lineWidth = 1.5 + lvl*0.3;
+            ctx.beginPath();
+            ctx.moveTo(hw*0.7, hh*(0.18+lvl*0.02));
+            ctx.lineTo(hw*(0.98+lvl*0.02), hh*0.15);
+            ctx.lineTo(hw*0.7, hh*0.05);
+            ctx.stroke();
+            ctx.fillStyle = `rgba(255,255,255,${0.4+lvl*0.06})`;
+            for (let i = 0; i < teethCount; i++) {
+              const tx = hw*0.72 + i*hw*(0.28/teethCount);
+              ctx.beginPath();
+              ctx.moveTo(tx, hh*0.05);
+              ctx.lineTo(tx+2, hh*(0.13+lvl*0.01));
+              ctx.lineTo(tx-2, hh*(0.11+lvl*0.01));
+              ctx.closePath(); ctx.fill();
+            }
+          }
+        }
+      ]
+    };
+    // Index all evolutions by ID + build flat list
+    const ALL_EVOS_LIST = [];
+    for (const lvl in EVOLUTIONS) for (const evo of EVOLUTIONS[lvl]) { ALL_EVOLUTIONS[evo.id] = evo; ALL_EVOS_LIST.push(evo); }
+
+    // Helper: get current stats for an evolution the player has
+    function evoStats(id) {
+      const evo = ALL_EVOLUTIONS[id];
+      if (!evo || !player.evoLevels[id]) return null;
+      return evo.getStats(player.evoLevels[id]);
+    }
+
+    // Pool-based upgrade selection: 2 choices (new ability or level-up existing)
+    function generateUpgradeChoices() {
+      const newAbilities = ALL_EVOS_LIST.filter(e => !player.evoLevels[e.id]);
+      const existing = ALL_EVOS_LIST.filter(e => player.evoLevels[e.id] > 0);
+      const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+      let c1, c2;
+      if (newAbilities.length > 0 && existing.length > 0) {
+        // One new, one existing — breadth vs depth
+        c1 = pick(newAbilities);
+        c2 = pick(existing);
+      } else if (newAbilities.length >= 2) {
+        // Early game: two new
+        c1 = pick(newAbilities);
+        c2 = pick(newAbilities.filter(e => e.id !== c1.id));
+      } else if (existing.length >= 2) {
+        // All unlocked: two existing to level up (lowest levels first)
+        const sorted = [...existing].sort((a,b) => (player.evoLevels[a.id]||0) - (player.evoLevels[b.id]||0));
+        // Pick from the bottom half for variety
+        const pool = sorted.slice(0, Math.max(2, Math.ceil(sorted.length * 0.6)));
+        c1 = pick(pool);
+        c2 = pick(pool.filter(e => e.id !== c1.id));
+      } else if (existing.length === 1) {
+        c1 = existing[0];
+        c2 = newAbilities.length > 0 ? pick(newAbilities) : existing[0];
+      } else {
+        return null;
+      }
+      return [c1, c2];
+    }
+
+    // === INPUT ===
+    const keys = {};
+    const justPressed = {};
+    window.addEventListener('keydown', e => {
+      if (!keys[e.key]) justPressed[e.key] = true;
+      keys[e.key] = true;
+      if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
+    });
+    window.addEventListener('keyup', e => keys[e.key] = false);
+
+    // === TOUCH / MOUSE INPUT ===
+    let abilityButtonRects = []; // [{x,y,w,h,key}] populated by drawHUD
+    let moveTarget = null; // {x, y} in world coords, or null
+    let touchActive = false;
+    let lastTapTime = 0;
+    let tapPos = null; // screen coords of most recent tap (for menu clicks)
+
+    function screenToWorld(sx, sy) { return { x: sx + cam.x, y: sy + cam.y }; }
+
+    function handlePointerStart(sx, sy) {
+      resumeAudio();
+      tapPos = { x: sx, y: sy };
+
+      // If on win screen, tap to restart
+      if (gameState === 'win') { restart(); return; }
+
+      // If skin menu is open, check for skin row taps or close
+      if (skinMenuOpen) {
+        const menuW = 420, menuH = SKINS.length * 50 + 80;
+        const mx = canvas.width/2 - menuW/2, my = canvas.height/2 - menuH/2;
+        // Check if tap is inside menu
+        if (sx >= mx && sx <= mx+menuW && sy >= my && sy <= my+menuH) {
+          for (let i = 0; i < SKINS.length; i++) {
+            const rowY = my + 70 + i * 50;
+            if (sy >= rowY && sy <= rowY + 42) {
+              const skin = SKINS[i];
+              if (!skin.check || skin.check(stats)) {
+                stats.selectedSkin = skin.id;
+                saveStats();
+                addNotification(`Skin: ${skin.name}`, '#4af');
+              } else {
+                addNotification(`Locked: ${skin.req}`, '#884');
+              }
+              return;
+            }
+          }
+        }
+        // Tap outside menu closes it
+        skinMenuOpen = false;
+        return;
+      }
+
+      // If choosing upgrade, check for card taps
+      if (gameState === 'choosing_upgrade' && upgradeChoices) {
+        const menuW = 560, menuH = 320;
+        const mmx = canvas.width/2 - menuW/2, mmy = canvas.height/2 - menuH/2;
+        for (let c = 0; c < 2; c++) {
+          const evo = upgradeChoices[c];
+          if (!evo) continue;
+          const cardW = 230, cardH = 200;
+          const cx = mmx + 30 + c * (cardW + 30);
+          const cy = mmy + 75;
+          if (sx >= cx && sx <= cx+cardW && sy >= cy && sy <= cy+cardH) {
+            const newLvl = (player.evoLevels[evo.id] || 0) + 1;
+            player.evoLevels[evo.id] = newLvl;
+            if (!player.evolutions.includes(evo.id)) player.evolutions.push(evo.id);
+            evo.apply(player, newLvl);
+            const lvlTag = newLvl > 1 ? ` Lv${newLvl}` : '';
+            addNotification(`${evo.name}${lvlTag} acquired!`, evo.color);
+            upgradeChoices = null;
+            gameState = 'playing';
+            return;
+          }
+        }
+        return;
+      }
+
+      // Normal gameplay
+      if (gameState === 'playing') {
+        // Tap ability buttons
+        for (const btn of abilityButtonRects) {
+          if (sx >= btn.x && sx <= btn.x + btn.w && sy >= btn.y && sy <= btn.y + btn.h) {
+            justPressed[btn.key] = true;
+            return;
+          }
+        }
+        // Tap skin button (bottom-right corner)
+        if (sx > canvas.width - 160 && sy > canvas.height - 40) {
+          skinMenuOpen = !skinMenuOpen;
+          return;
+        }
+        // Set move target
+        const w = screenToWorld(sx, sy);
+        moveTarget = w;
+        touchActive = true;
+      }
+    }
+
+    function handlePointerMove(sx, sy) {
+      if (touchActive && gameState === 'playing') {
+        moveTarget = screenToWorld(sx, sy);
+      }
+    }
+
+    function handlePointerEnd() {
+      touchActive = false;
+      moveTarget = null;
+    }
+
+    // Touch events
+    canvas.addEventListener('touchstart', e => {
+      e.preventDefault();
+      const t = e.touches[0];
+      handlePointerStart(t.clientX, t.clientY);
+    }, { passive: false });
+    canvas.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const t = e.touches[0];
+      handlePointerMove(t.clientX, t.clientY);
+    }, { passive: false });
+    canvas.addEventListener('touchend', e => {
+      e.preventDefault();
+      handlePointerEnd();
+    }, { passive: false });
+
+    // Mouse events (also helps desktop click-to-move)
+    canvas.addEventListener('mousedown', e => {
+      handlePointerStart(e.clientX, e.clientY);
+    });
+    canvas.addEventListener('mousemove', e => {
+      if (touchActive) handlePointerMove(e.clientX, e.clientY);
+    });
+    canvas.addEventListener('mouseup', e => {
+      handlePointerEnd();
+    });
+
+    // === AUDIO ===
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function resumeAudio() { if (audioCtx.state === 'suspended') audioCtx.resume(); }
+    window.addEventListener('keydown', resumeAudio, { once: false });
+
+    function playEatSound(fishLevel) {
+      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      o.type = 'sine';
+      const f = 400 + fishLevel * 40;
+      o.frequency.setValueAtTime(f, audioCtx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(f * 1.8, audioCtx.currentTime + 0.08);
+      g.gain.setValueAtTime(0.18, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+      o.start(); o.stop(audioCtx.currentTime + 0.15);
+    }
+    function playComboSound(combo) {
+      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      o.type = 'triangle';
+      const f = 600 + combo * 80;
+      o.frequency.setValueAtTime(f, audioCtx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(f * 1.5, audioCtx.currentTime + 0.06);
+      g.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+      o.start(); o.stop(audioCtx.currentTime + 0.1);
+    }
+    function playLevelUpSound() {
+      [523, 659, 784, 1047].forEach((freq, i) => {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination); o.type = 'square';
+        const t = audioCtx.currentTime + i * 0.1;
+        o.frequency.setValueAtTime(freq, t);
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.13, t + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+        o.start(t); o.stop(t + 0.25);
+      });
+      const o2 = audioCtx.createOscillator(), g2 = audioCtx.createGain();
+      o2.connect(g2); g2.connect(audioCtx.destination); o2.type = 'sine';
+      o2.frequency.setValueAtTime(1200, audioCtx.currentTime + 0.3);
+      o2.frequency.exponentialRampToValueAtTime(2400, audioCtx.currentTime + 0.7);
+      g2.gain.setValueAtTime(0.07, audioCtx.currentTime + 0.3);
+      g2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.7);
+      o2.start(audioCtx.currentTime + 0.3); o2.stop(audioCtx.currentTime + 0.7);
+    }
+    function playDeathSound() {
+      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination); o.type = 'sawtooth';
+      o.frequency.setValueAtTime(300, audioCtx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.8);
+      g.gain.setValueAtTime(0.22, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+      o.start(); o.stop(audioCtx.currentTime + 0.8);
+      const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.4, audioCtx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 2);
+      const n = audioCtx.createBufferSource(), ng = audioCtx.createGain();
+      n.buffer = buf; n.connect(ng); ng.connect(audioCtx.destination);
+      ng.gain.setValueAtTime(0.18, audioCtx.currentTime);
+      ng.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+      n.start();
+    }
+    function playWinSound() {
+      [523, 659, 784, 1047, 1319, 1568].forEach((freq, i) => {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination); o.type = 'sine';
+        const t = audioCtx.currentTime + i * 0.12;
+        o.frequency.setValueAtTime(freq, t);
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.13, t + 0.04);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+        o.start(t); o.stop(t + 0.5);
+      });
+      [1047, 1319, 1568, 2093].forEach(freq => {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination); o.type = 'triangle';
+        const t = audioCtx.currentTime + 0.6;
+        o.frequency.setValueAtTime(freq, t);
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.08, t + 0.05);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
+        o.start(t); o.stop(t + 1.2);
+      });
+    }
+    function playPowerupSound() {
+      [800, 1000, 1300].forEach((freq, i) => {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination); o.type = 'sine';
+        const t = audioCtx.currentTime + i * 0.06;
+        o.frequency.setValueAtTime(freq, t);
+        g.gain.setValueAtTime(0.12, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+        o.start(t); o.stop(t + 0.15);
+      });
+    }
+    function playSharkWarning() {
+      for (let i = 0; i < 2; i++) {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination); o.type = 'sawtooth';
+        const t = audioCtx.currentTime + i * 0.2;
+        o.frequency.setValueAtTime(120, t);
+        g.gain.setValueAtTime(0.1, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+        o.start(t); o.stop(t + 0.15);
+      }
+    }
+
+    // === GAME STATE ===
+    let gameState = 'playing';
+    let score = 0, fishEaten = 0, gameTime = 0, shakeTimer = 0, shakeIntensity = 0;
+    let combo = 0, comboTimer = 0, maxCombo = 0;
+    let activePowerups = {}; // type -> remaining seconds
+    let notifications = []; // floating text
+    let floatingTexts = []; // world-space score popups
+    let skinMenuOpen = false;
+
+    // === PARTICLES ===
+    let particles = [];
+    function spawnParticles(x, y, color, count) {
+      for (let i = 0; i < count; i++) {
+        const a = Math.random() * Math.PI * 2, s = 1 + Math.random() * 3;
+        particles.push({ x, y, vx: Math.cos(a)*s, vy: Math.sin(a)*s, life: 1, decay: 0.015+Math.random()*0.02, size: 2+Math.random()*4, color });
+      }
+    }
+
+    // === FLOATING TEXT (world space) ===
+    function addFloatingText(x, y, text, color, size) {
+      floatingTexts.push({ x, y, text, color, size: size||18, life: 1, vy: -1.5 });
+    }
+
+    // === NOTIFICATIONS (screen space) ===
+    function addNotification(text, color) {
+      notifications.push({ text, color: color||'#fff', life: 3, y: 0 });
+    }
+
+    // === SEABED ===
+    const seabedItems = [];
+    for (let i = 0; i < 80; i++) seabedItems.push({ type:'rock', x:Math.random()*WORLD_W, w:20+Math.random()*60, h:15+Math.random()*40, shade:0.3+Math.random()*0.3 });
+    for (let i = 0; i < 120; i++) seabedItems.push({ type:'seaweed', x:Math.random()*WORLD_W, segments:3+Math.floor(Math.random()*5), segH:12+Math.random()*10, hue:100+Math.random()*40, phase:Math.random()*Math.PI*2 });
+    for (let i = 0; i < 40; i++) seabedItems.push({ type:'coral', x:Math.random()*WORLD_W, branches:3+Math.floor(Math.random()*4), h:20+Math.random()*35, hue:Math.random()*360 });
+    seabedItems.sort((a,b) => a.x - b.x);
+
+    // === CORAL BLOCKS ===
+    // Chunky coral formations with tunnels that only small fish fit through
+    const BARRIER_COUNT = 10;
+    const barriers = [];
+    for (let i = 0; i < BARRIER_COUNT; i++) {
+      const x = 300 + Math.random() * (WORLD_W - 600);
+      const y = 200 + Math.random() * (WORLD_H - 500);
+      const w = 150 + Math.random() * 200; // block width
+      const h = 120 + Math.random() * 180; // block height
+      const maxLevel = 4 + Math.floor(Math.random() * 20);
+      const tunnelSize = fishSize(maxLevel) * 2.2;
+      const hue = Math.random() * 360;
+      // Tunnels: horizontal passages through the block
+      const tunnelCount = 1 + Math.floor(Math.random() * 3);
+      const tunnels = [];
+      for (let t = 0; t < tunnelCount; t++) {
+        const ty = y - h/2 + tunnelSize/2 + (h - tunnelSize) * ((t + 0.5) / tunnelCount) + (Math.random()-0.5)*20;
+        tunnels.push({ y: ty, size: tunnelSize });
+      }
+      barriers.push({ x, y, width: w, height: h, maxLevel, tunnelSize, tunnels, hue, openingSize: fishSize(maxLevel) });
+    }
+
+    // === PLANKTON ===
+    const PLANKTON_COUNT = 120;
+    let plankton = [];
+    function spawnPlankton() {
+      plankton.push({
+        x: Math.random()*WORLD_W, y: 50+Math.random()*(WORLD_H-200),
+        phase: Math.random()*Math.PI*2, size: 2+Math.random()*3,
+        hue: 80+Math.random()*60 // green-yellow
+      });
+    }
+    for (let i = 0; i < PLANKTON_COUNT; i++) spawnPlankton();
+
+    // === BUBBLES ===
+    const bubbles = [];
+    for (let i = 0; i < BUBBLE_COUNT; i++) bubbles.push({ x:Math.random()*WORLD_W, y:Math.random()*WORLD_H, r:2+Math.random()*6, speed:0.3+Math.random()*0.8, wobble:Math.random()*Math.PI*2, wobbleSpeed:0.01+Math.random()*0.03 });
+
+    // === LIGHT RAYS ===
+    const lightRays = [];
+    for (let i = 0; i < 15; i++) lightRays.push({ x:Math.random()*WORLD_W, width:40+Math.random()*120, alpha:0.02+Math.random()*0.04, drift:0.1+Math.random()*0.3, phase:Math.random()*Math.PI*2 });
+
+    // === PLAYER ===
+    const player = {
+      x:WORLD_W/2, y:WORLD_H/2, level:5, speed:4.5, dir:1, mouthOpen:0, tailPhase:0,
+      velX:0, velY:0, shieldHits:0, volume:levelVolume(5),
+      // Evolution state
+      evolutions: [], evoLevels: {}, activeAbilities: [],
+      speedMult: 1.0, volumeAbsorbMult: 1.0, eatingRangeMult: 1.0,
+      hasLateralLine: false, hasLure: false, hasSpines: false, hasInk: false,
+      hasShock: false, hasBarracudaJaw: false,
+      spineTimer: 0, inkCooldown: 0, electricCooldown: 0, burstTimer: 0,
+      inkSpeedBoost: 0, // remaining seconds of ink speed boost
+      invincible: 0, // seconds of invincibility remaining after respawn
+    };
+
+    // Upgrade selection state
+    let upgradeChoices = null; // set to EVOLUTIONS[level] when choosing
+
+    // === ENEMY FISH ===
+    let fishes = [];
+    function spawnFish(forceInView) {
+      let level;
+      const r = Math.random();
+      if (r < 0.35) level = Math.max(1, Math.floor(1 + Math.random() * (player.level - 1)));
+      else if (r < 0.6) level = player.level;
+      else { level = player.level + 1 + Math.floor(Math.random()*12); if (level > MAX_LEVEL) level = MAX_LEVEL; }
+      const vol = levelVolume(level);
+      const size = Math.cbrt(vol);
+      let x, y;
+      if (forceInView) { x = player.x + (Math.random()-0.5)*canvas.width*3; y = 60+Math.random()*(WORLD_H-160); }
+      else { const side = Math.random()<0.5?-1:1; x = player.x + side*(canvas.width/2+size+Math.random()*300); y = 60+Math.random()*(WORLD_H-160); }
+      x = Math.max(size, Math.min(WORLD_W-size, x));
+      const baseSpeed = 1.0 + (MAX_LEVEL - level) * 0.05;
+      const sm = baseSpeed * (0.5 + Math.random()*0.6);
+      const dir = x > player.x ? -1 : 1;
+      const speed = sm * (Math.random()<0.7 ? dir : -dir);
+      fishes.push({ x, y, level, size, volume:vol, speed, baseSpeed: Math.abs(speed), vy:(Math.random()-0.5)*0.5, dir:speed>0?1:-1, tailPhase:Math.random()*Math.PI*2, chaseTarget:null, chaseTimer:Math.random()*0.5, stunTimer:0, scatterTimer:0 });
+    }
+    for (let i = 0; i < FISH_COUNT; i++) spawnFish(true);
+
+    // === SHARKS ===
+    let sharks = [];
+    function spawnShark() {
+      const side = Math.random() < 0.5 ? -1 : 1;
+      const x = player.x + side * (canvas.width + 200 + Math.random()*500);
+      const y = 100 + Math.random() * (WORLD_H - 300);
+      sharks.push({
+        x: Math.max(150, Math.min(WORLD_W-150, x)), y,
+        size: 250 + Math.random() * 80,
+        speed: 1.5 + Math.random() * 1.0,
+        dir: -side,
+        tailPhase: Math.random() * Math.PI * 2,
+        aggroRange: 700 + Math.random() * 300,
+        patrolVy: (Math.random()-0.5)*0.5,
+        warned: false,
+        stunTimer: 0,
+      });
+    }
+    for (let i = 0; i < SHARK_COUNT; i++) spawnShark();
+
+    // === POWERUPS ===
+    let powerups = [];
+    let powerupSpawnTimer = 3;
+    function spawnPowerup() {
+      if (powerups.length >= MAX_POWERUPS) return;
+      const type = POWERUP_TYPES[Math.floor(Math.random()*POWERUP_TYPES.length)];
+      const x = player.x + (Math.random()-0.5)*canvas.width*2;
+      const y = 80 + Math.random()*(WORLD_H-200);
+      powerups.push({ x: Math.max(50,Math.min(WORLD_W-50,x)), y, type, bobPhase: Math.random()*Math.PI*2, life: 30 });
+    }
+
+    // === DRAW FISH ===
+    function drawFish(x, y, size, level, dir, mouthAnim, tailPhase, isPlayer, skinId) {
+      let pal = fishPalette(level);
+      const skin = skinId || 'classic';
+      const hw = size, hh = size * 0.5;
+      const tailSwing = Math.sin(tailPhase) * hh * 0.35;
+
+      // Skin overrides
+      let bodyAlpha = 1;
+      let extraGlow = null;
+      let bodyColorOverride = null;
+
+      if (skin === 'golden' && isPlayer) {
+        pal = { body:'#daa520', belly:'#ffe066', fin:'#b8860b', outline:'#8b6914', glow:'#ffd700' };
+      } else if (skin === 'ghost' && isPlayer) {
+        bodyAlpha = 0.5 + Math.sin(gameTime*4)*0.15;
+        extraGlow = 'rgba(150,220,255,0.3)';
+      } else if (skin === 'neon' && isPlayer) {
+        extraGlow = `hsl(${(gameTime*120)%360},100%,60%)`;
+      } else if (skin === 'shadow' && isPlayer) {
+        pal = { body:'#222', belly:'#444', fin:'#111', outline:'#000', glow:'#660066' };
+      } else if (skin === 'rainbow' && isPlayer) {
+        const h = (gameTime * 60) % 360;
+        pal = { body:`hsl(${h},80%,50%)`, belly:`hsl(${h},80%,70%)`, fin:`hsl(${(h+40)%360},80%,40%)`, outline:`hsl(${(h+40)%360},80%,30%)`, glow:`hsl(${h},100%,60%)` };
+      }
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(dir, 1);
+      ctx.globalAlpha = bodyAlpha;
+
+      // Shield bubble
+      if (isPlayer && player.shieldHits > 0) {
+        ctx.strokeStyle = `rgba(68,255,136,${0.3+Math.sin(gameTime*6)*0.15})`;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, hw*1.4, hh*1.4, 0, 0, Math.PI*2);
+        ctx.stroke();
+        ctx.fillStyle = `rgba(68,255,136,0.06)`;
+        ctx.fill();
+      }
+
+      // Extra glow (neon/ghost)
+      if (extraGlow) {
+        ctx.shadowColor = extraGlow;
+        ctx.shadowBlur = 25;
+      }
+
+      // Shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.12)';
+      ctx.beginPath(); ctx.ellipse(4, hh*0.6, hw*0.7, hh*0.15, 0, 0, Math.PI*2); ctx.fill();
+
+      // Tail
+      ctx.fillStyle = pal.fin;
+      ctx.beginPath();
+      ctx.moveTo(-hw*0.55, 0);
+      ctx.quadraticCurveTo(-hw*0.8, -hh*0.3+tailSwing, -hw*1.15, -hh*0.75+tailSwing);
+      ctx.lineTo(-hw*1.05, tailSwing*0.5);
+      ctx.lineTo(-hw*1.15, hh*0.75+tailSwing);
+      ctx.quadraticCurveTo(-hw*0.8, hh*0.3+tailSwing, -hw*0.55, 0);
+      ctx.fill(); ctx.strokeStyle=pal.outline; ctx.lineWidth=1.5; ctx.stroke();
+
+      // Dorsal fin
+      ctx.fillStyle = pal.fin;
+      ctx.beginPath();
+      ctx.moveTo(-hw*0.1, -hh*0.85);
+      ctx.quadraticCurveTo(hw*0.05, -hh*1.4, hw*0.35, -hh*0.9);
+      ctx.lineTo(hw*0.15, -hh*0.78);
+      ctx.closePath(); ctx.fill(); ctx.strokeStyle=pal.outline; ctx.lineWidth=1; ctx.stroke();
+
+      // Pectoral fin
+      ctx.fillStyle = pal.fin; ctx.globalAlpha = bodyAlpha*0.8;
+      ctx.beginPath();
+      ctx.moveTo(hw*0.05, hh*0.35);
+      ctx.quadraticCurveTo(hw*0.15, hh*0.95, -hw*0.15, hh*0.85);
+      ctx.quadraticCurveTo(-hw*0.05, hh*0.5, hw*0.05, hh*0.35);
+      ctx.fill(); ctx.globalAlpha = bodyAlpha;
+
+      // Body
+      const bodyGrad = ctx.createRadialGradient(hw*0.1, -hh*0.2, hw*0.1, 0, 0, hw);
+      bodyGrad.addColorStop(0, pal.belly); bodyGrad.addColorStop(0.5, pal.body); bodyGrad.addColorStop(1, pal.outline);
+      ctx.fillStyle = bodyGrad;
+      ctx.beginPath(); ctx.ellipse(0, 0, hw, hh, 0, 0, Math.PI*2); ctx.fill();
+      ctx.strokeStyle = pal.outline; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.ellipse(0, 0, hw, hh, 0, 0, Math.PI*2); ctx.stroke();
+
+      // Belly highlight
+      ctx.fillStyle = 'rgba(255,255,255,0.1)';
+      ctx.beginPath(); ctx.ellipse(hw*0.05, -hh*0.15, hw*0.65, hh*0.35, -0.1, 0, Math.PI*2); ctx.fill();
+
+      // Scale pattern
+      ctx.globalAlpha = bodyAlpha*0.08; ctx.strokeStyle='#000'; ctx.lineWidth=0.5;
+      for (let row=-2; row<=2; row++) for (let col=-3; col<=2; col++) {
+        const sx=col*hw*0.25+(row%2)*hw*0.125, sy=row*hh*0.22;
+        if (Math.hypot(sx,sy)<hw*0.85) { ctx.beginPath(); ctx.arc(sx,sy,hw*0.13,0.2,Math.PI-0.2); ctx.stroke(); }
+      }
+      ctx.globalAlpha = bodyAlpha;
+
+      // Tiger stripes
+      if (skin === 'tiger' && isPlayer) {
+        ctx.globalAlpha = 0.3;
+        ctx.strokeStyle = '#000'; ctx.lineWidth = 3;
+        for (let i = 0; i < 5; i++) {
+          const sx = -hw*0.4 + i*hw*0.2;
+          ctx.beginPath(); ctx.moveTo(sx, -hh*0.7); ctx.quadraticCurveTo(sx+5, 0, sx, hh*0.7); ctx.stroke();
+        }
+        ctx.globalAlpha = bodyAlpha;
+      } else if (level >= 3 && !isPlayer) {
+        ctx.globalAlpha = 0.12; ctx.strokeStyle='#000'; ctx.lineWidth=2+level*0.3;
+        const sc = 2+Math.floor(level/3);
+        for (let i=0; i<sc; i++) { const sx=-hw*0.3+i*(hw*0.6/sc); ctx.beginPath(); ctx.moveTo(sx,-hh*0.6); ctx.quadraticCurveTo(sx+3,0,sx,hh*0.6); ctx.stroke(); }
+        ctx.globalAlpha = bodyAlpha;
+      }
+
+      // Eye
+      const eyeX=hw*0.5, eyeY=-hh*0.15, eyeR=size*0.14;
+      const eyeGrad = ctx.createRadialGradient(eyeX-1,eyeY-1,eyeR*0.2,eyeX,eyeY,eyeR);
+      eyeGrad.addColorStop(0,'#fff'); eyeGrad.addColorStop(1,'#dde');
+      ctx.fillStyle=eyeGrad; ctx.beginPath(); ctx.arc(eyeX,eyeY,eyeR,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle=pal.outline; ctx.lineWidth=1; ctx.stroke();
+      ctx.fillStyle=level>=8?'#c33':'#234'; ctx.beginPath(); ctx.arc(eyeX+2,eyeY,eyeR*0.55,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle='#000'; ctx.beginPath(); ctx.arc(eyeX+2.5,eyeY,eyeR*0.3,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,0.8)'; ctx.beginPath(); ctx.arc(eyeX+0.5,eyeY-eyeR*0.25,eyeR*0.18,0,Math.PI*2); ctx.fill();
+
+      // Mouth
+      const mouthGap = Math.abs(Math.sin(mouthAnim||0))*hh*0.2;
+      ctx.strokeStyle=pal.outline; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(hw*0.9,-mouthGap); ctx.quadraticCurveTo(hw*0.95,0,hw*0.9,mouthGap); ctx.stroke();
+
+      ctx.shadowBlur = 0;
+
+      // Player glow
+      if (isPlayer) {
+        ctx.shadowColor = pal.glow; ctx.shadowBlur = 20+Math.sin(gameTime*3)*5;
+        ctx.globalAlpha = 0.15; ctx.fillStyle = pal.glow;
+        ctx.beginPath(); ctx.ellipse(0,0,hw*1.15,hh*1.15,0,0,Math.PI*2); ctx.fill();
+        ctx.shadowBlur=0; ctx.globalAlpha=1;
+        // Frenzy fire effect
+        if (activePowerups.frenzy > 0) {
+          for (let i = 0; i < 5; i++) {
+            const fx = -hw*0.5 + Math.random()*hw, fy = -hh + Math.random()*hh*0.5;
+            const fr = 3 + Math.random()*5;
+            ctx.globalAlpha = 0.4*Math.random();
+            ctx.fillStyle = Math.random()>0.5 ? '#ff4400' : '#ffaa00';
+            ctx.beginPath(); ctx.arc(fx, fy-Math.random()*10, fr, 0, Math.PI*2); ctx.fill();
+          }
+          ctx.globalAlpha = 1;
+        }
+
+        // Evolution visuals
+        if (player.evolutions) {
+          for (const evoId of player.evolutions) {
+            const evo = ALL_EVOLUTIONS[evoId];
+            if (evo && evo.drawVisual) evo.drawVisual(ctx, hw, hh, gameTime);
+          }
+        }
+      }
+
+      ctx.restore();
+    }
+
+    // === DRAW STUN EFFECT on enemy fish ===
+    function drawStunEffect(x, y, size) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.globalAlpha = 0.6;
+      // Daze stars
+      for (let i = 0; i < 3; i++) {
+        const angle = gameTime*4 + i*Math.PI*2/3;
+        const sx = Math.cos(angle) * size * 0.6;
+        const sy = Math.sin(angle) * size * 0.3 - size*0.5;
+        ctx.fillStyle = '#ffcc00';
+        ctx.font = `${Math.max(8,size*0.2)}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('\u2B50', sx, sy);
+      }
+      // Electric arcs
+      ctx.strokeStyle = 'rgba(255,255,100,0.5)';
+      ctx.lineWidth = 1.5;
+      for (let i = 0; i < 3; i++) {
+        const a = Math.random()*Math.PI*2;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a)*size*0.3, Math.sin(a)*size*0.2);
+        ctx.lineTo(Math.cos(a+0.5)*size*0.6, Math.sin(a+0.5)*size*0.35);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+
+    // === DRAW SHARK ===
+    function drawShark(s) {
+      const hw = s.size * 0.7, hh = s.size * 0.2;
+      const tailSwing = Math.sin(s.tailPhase) * hh * 0.5;
+      ctx.save();
+      ctx.translate(s.x, s.y);
+      ctx.scale(s.dir, 1);
+
+      // Shadow
+      ctx.fillStyle='rgba(0,0,0,0.15)';
+      ctx.beginPath(); ctx.ellipse(5,hh*1.0,hw*0.9,hh*0.15,0,0,Math.PI*2); ctx.fill();
+
+      // Tail (large, powerful crescent)
+      ctx.fillStyle='#3a4555';
+      ctx.beginPath();
+      ctx.moveTo(-hw*0.65, 0);
+      ctx.quadraticCurveTo(-hw*0.85, -hh*0.3+tailSwing, -hw*1.15, -hh*1.2+tailSwing);
+      ctx.quadraticCurveTo(-hw*1.0, -hh*0.1+tailSwing, -hw*0.95, tailSwing*0.3);
+      ctx.quadraticCurveTo(-hw*1.0, hh*0.3+tailSwing, -hw*1.1, hh*0.8+tailSwing);
+      ctx.quadraticCurveTo(-hw*0.85, hh*0.3+tailSwing, -hw*0.65, 0);
+      ctx.fill();
+
+      // Second dorsal fin (small, rear)
+      ctx.fillStyle='#3a4555';
+      ctx.beginPath();
+      ctx.moveTo(-hw*0.3, -hh*0.85);
+      ctx.lineTo(-hw*0.22, -hh*1.3);
+      ctx.lineTo(-hw*0.1, -hh*0.8);
+      ctx.closePath(); ctx.fill();
+
+      // Pectoral fins (long, swept back)
+      ctx.fillStyle='#3e4a5a';
+      ctx.beginPath();
+      ctx.moveTo(hw*0.1, hh*0.6);
+      ctx.quadraticCurveTo(hw*0.0, hh*1.8, -hw*0.25, hh*1.6);
+      ctx.quadraticCurveTo(hw*0.0, hh*1.2, hw*0.15, hh*0.6);
+      ctx.closePath(); ctx.fill();
+      // Other side hint
+      ctx.globalAlpha = 0.4;
+      ctx.beginPath();
+      ctx.moveTo(hw*0.1, -hh*0.5);
+      ctx.quadraticCurveTo(hw*0.0, -hh*1.5, -hw*0.2, -hh*1.3);
+      ctx.quadraticCurveTo(hw*0.0, -hh*1.0, hw*0.15, -hh*0.5);
+      ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Dorsal fin (big, iconic)
+      ctx.fillStyle='#3a4555';
+      ctx.beginPath();
+      ctx.moveTo(hw*0.0, -hh*0.9);
+      ctx.lineTo(hw*0.12, -hh*2.0);
+      ctx.lineTo(hw*0.38, -hh*0.85);
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle='#2a3040'; ctx.lineWidth=2; ctx.stroke();
+
+      // Body (elongated ellipse)
+      const bodyGrad = ctx.createRadialGradient(hw*0.15,-hh*0.2,hw*0.1,0,0,hw);
+      bodyGrad.addColorStop(0,'#667788'); bodyGrad.addColorStop(0.4,'#4a5565'); bodyGrad.addColorStop(1,'#2a3040');
+      ctx.fillStyle=bodyGrad;
+      ctx.beginPath(); ctx.ellipse(0,0,hw,hh,0,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='#2a3040'; ctx.lineWidth=2.5;
+      ctx.beginPath(); ctx.ellipse(0,0,hw,hh,0,0,Math.PI*2); ctx.stroke();
+
+      // Snout taper (extends body forward into a point)
+      ctx.fillStyle='#4a5565';
+      ctx.beginPath();
+      ctx.moveTo(hw*0.85, -hh*0.4);
+      ctx.quadraticCurveTo(hw*1.1, -hh*0.15, hw*1.15, 0);
+      ctx.quadraticCurveTo(hw*1.1, hh*0.15, hw*0.85, hh*0.4);
+      ctx.closePath(); ctx.fill();
+
+      // White belly
+      ctx.fillStyle='rgba(200,210,220,0.35)';
+      ctx.beginPath(); ctx.ellipse(hw*0.05,hh*0.25,hw*0.8,hh*0.45,0,0,Math.PI); ctx.fill();
+
+      // Gill slits (more, spread along body)
+      ctx.strokeStyle='rgba(0,0,0,0.2)'; ctx.lineWidth=1.5;
+      for (let i=0;i<4;i++) { const gx=hw*0.3+i*10; ctx.beginPath(); ctx.moveTo(gx,-hh*0.35); ctx.lineTo(gx,hh*0.2); ctx.stroke(); }
+
+      // Eye (menacing, small, dark)
+      const eyeX=hw*0.6, eyeY=-hh*0.15;
+      ctx.fillStyle='#111'; ctx.beginPath(); ctx.ellipse(eyeX,eyeY,s.size*0.025,s.size*0.04,0,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle='rgba(255,50,50,0.6)'; ctx.beginPath(); ctx.arc(eyeX-1,eyeY-1,s.size*0.015,0,Math.PI*2); ctx.fill();
+
+      // Mouth with teeth (wider jaw)
+      ctx.strokeStyle='#1a2030'; ctx.lineWidth=2.5;
+      ctx.beginPath(); ctx.moveTo(hw*0.95,-hh*0.2); ctx.lineTo(hw*1.15,0); ctx.lineTo(hw*0.95,hh*0.2); ctx.stroke();
+      // Teeth (more, bigger)
+      ctx.fillStyle='#eee';
+      for (let i=0; i<6; i++) {
+        const tx = hw*0.92+i*4, ty=-hh*0.18+i*(hh*0.06);
+        ctx.beginPath(); ctx.moveTo(tx,ty); ctx.lineTo(tx+4,ty+5); ctx.lineTo(tx-2,ty+4); ctx.closePath(); ctx.fill();
+      }
+
+      // "SHARK" label
+      ctx.fillStyle='rgba(255,60,60,0.9)'; ctx.strokeStyle='rgba(0,0,0,0.6)'; ctx.lineWidth=3;
+      ctx.font=`bold ${Math.max(14,s.size*0.12)}px 'Segoe UI',sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.strokeText('\u2620', -hw*0.05, hh*0.05); ctx.fillText('\u2620', -hw*0.05, hh*0.05);
+
+      // Danger aura
+      ctx.globalAlpha = 0.08 + Math.sin(gameTime*4)*0.04;
+      ctx.fillStyle='#ff0000';
+      ctx.beginPath(); ctx.ellipse(0,0,hw*1.2,hh*1.2,0,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha=1;
+
+      ctx.restore();
+    }
+
+    // === DRAW POWERUP ===
+    function drawPowerup(p) {
+      const px = p.x, py = p.y + Math.sin(p.bobPhase)*8;
+      const r = 18;
+      const col = POWERUP_COLORS[p.type];
+
+      ctx.save(); ctx.translate(px, py);
+
+      // Glow
+      ctx.shadowColor = col; ctx.shadowBlur = 15+Math.sin(gameTime*5)*5;
+      ctx.fillStyle = col; ctx.globalAlpha = 0.15;
+      ctx.beginPath(); ctx.arc(0,0,r*1.5,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+
+      // Circle bg
+      const grad = ctx.createRadialGradient(-3,-3,2,0,0,r);
+      grad.addColorStop(0, '#fff'); grad.addColorStop(0.5, col); grad.addColorStop(1, '#000');
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.5)'; ctx.lineWidth=2; ctx.stroke();
+
+      // Icon
+      ctx.fillStyle='#fff'; ctx.font='bold 16px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(POWERUP_ICONS[p.type], 0, 1);
+
+      // Spinning ring
+      ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.globalAlpha = 0.5;
+      ctx.beginPath(); ctx.arc(0, 0, r+5, gameTime*3, gameTime*3+Math.PI*1.2); ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      ctx.restore();
+    }
+
+    // === SEABED ===
+    function drawSeabed() {
+      const seabedY = WORLD_H - 80;
+      const sandGrad = ctx.createLinearGradient(0,seabedY-20,0,WORLD_H);
+      sandGrad.addColorStop(0,'#2a3a25'); sandGrad.addColorStop(0.3,'#3a4a30'); sandGrad.addColorStop(1,'#1a2a15');
+      ctx.fillStyle=sandGrad; ctx.fillRect(0,seabedY-20,WORLD_W,WORLD_H-seabedY+20);
+
+      ctx.fillStyle='rgba(255,255,200,0.04)';
+      for (let i=0;i<WORLD_W;i+=8) { const sy=seabedY-5+Math.sin(i*0.3)*10+Math.sin(i*0.07)*15; ctx.fillRect(i,sy,3,2); }
+
+      ctx.strokeStyle='rgba(255,255,200,0.08)'; ctx.lineWidth=2; ctx.beginPath();
+      for (let i=0;i<=WORLD_W;i+=5) { const sy=seabedY-15+Math.sin(i*0.02+gameTime*0.5)*8+Math.sin(i*0.05)*4; if(i===0)ctx.moveTo(i,sy);else ctx.lineTo(i,sy); }
+      ctx.stroke();
+
+      for (const item of seabedItems) {
+        if (item.x < cam.x-200 || item.x > cam.x+canvas.width+200) continue;
+        if (item.type==='rock') {
+          const ry=seabedY-item.h*0.4;
+          const g=ctx.createRadialGradient(item.x,ry-item.h*0.2,2,item.x,ry,item.w);
+          g.addColorStop(0,`rgba(120,120,110,${item.shade})`); g.addColorStop(1,`rgba(50,55,45,${item.shade})`);
+          ctx.fillStyle=g; ctx.beginPath(); ctx.ellipse(item.x,ry,item.w/2,item.h/2,0,0,Math.PI*2); ctx.fill();
+        }
+        if (item.type==='seaweed') {
+          let sx=item.x, sy=seabedY-10;
+          for (let s=0;s<item.segments;s++) {
+            const sway=Math.sin(gameTime*1.2+item.phase+s*0.8)*(8+s*2);
+            ctx.fillStyle=`hsl(${item.hue},60%,${30+s*8}%)`;
+            ctx.beginPath(); const nx=sx+sway, ny=sy-item.segH;
+            ctx.ellipse(nx,ny+item.segH/2,4+(item.segments-s)*0.8,item.segH/2,sway*0.02,0,Math.PI*2); ctx.fill();
+            sx=nx; sy=ny;
+          }
+        }
+        if (item.type==='coral') {
+          const baseY=seabedY-5;
+          for (let b=0;b<item.branches;b++) {
+            const angle=-Math.PI/2+(b-item.branches/2)*0.4, bh=item.h*(0.7+b*0.05);
+            const ex=item.x+Math.cos(angle)*bh*0.6, ey=baseY+Math.sin(angle)*bh;
+            ctx.strokeStyle=`hsla(${item.hue},70%,50%,0.8)`; ctx.lineWidth=4+(item.branches-b); ctx.lineCap='round';
+            ctx.beginPath(); ctx.moveTo(item.x,baseY); ctx.quadraticCurveTo(item.x+(ex-item.x)*0.5,ey-10,ex,ey); ctx.stroke();
+            ctx.fillStyle=`hsla(${item.hue},80%,65%,0.9)`; ctx.beginPath(); ctx.arc(ex,ey,4,0,Math.PI*2); ctx.fill();
+          }
+        }
+      }
+    }
+
+    // === DRAW CORAL BLOCKS ===
+    function drawBarriers() {
+      for (const b of barriers) {
+        const bx = b.x, by = b.y, hw = b.width/2, hh = b.height/2;
+        if (bx + hw < cam.x - 50 || bx - hw > cam.x + canvas.width + 50) continue;
+        if (by + hh < cam.y - 50 || by - hh > cam.y + canvas.height + 50) continue;
+
+        const sortedTunnels = [...b.tunnels].sort((a,c) => a.y - c.y);
+
+        // Draw solid coral sections (the block minus tunnel holes)
+        let segTop = by - hh;
+        for (let g = 0; g <= sortedTunnels.length; g++) {
+          const segBot = g < sortedTunnels.length ? sortedTunnels[g].y - sortedTunnels[g].size/2 : by + hh;
+          if (segBot <= segTop) { if (g < sortedTunnels.length) segTop = sortedTunnels[g].y + sortedTunnels[g].size/2; continue; }
+          const segH = segBot - segTop;
+
+          // Coral body gradient
+          const grad = ctx.createRadialGradient(bx, segTop+segH/2, 10, bx, segTop+segH/2, hw);
+          grad.addColorStop(0, `hsla(${b.hue},65%,45%,0.95)`);
+          grad.addColorStop(0.6, `hsla(${b.hue},60%,38%,0.95)`);
+          grad.addColorStop(1, `hsla(${b.hue},55%,28%,0.9)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath(); ctx.roundRect(bx - hw, segTop, b.width, segH, 10); ctx.fill();
+
+          // Edge outline
+          ctx.strokeStyle = `hsla(${b.hue},45%,22%,0.6)`;
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.roundRect(bx - hw, segTop, b.width, segH, 10); ctx.stroke();
+
+          // Coral texture bumps
+          for (let tx = bx - hw + 20; tx < bx + hw - 15; tx += 30 + (b.hue % 11)) {
+            for (let ty = segTop + 15; ty < segBot - 10; ty += 28 + (b.hue % 9)) {
+              const br = 5 + (tx * 3 + ty * 7) % 7;
+              ctx.fillStyle = `hsla(${b.hue},70%,55%,0.25)`;
+              ctx.beginPath(); ctx.arc(tx, ty, br, 0, Math.PI*2); ctx.fill();
+            }
+          }
+
+          // Polyp tips along top and bottom edges
+          ctx.fillStyle = `hsla(${(b.hue+30)%360},80%,65%,0.45)`;
+          for (let px = bx - hw + 8; px < bx + hw - 5; px += 14 + (b.hue % 5)) {
+            ctx.beginPath(); ctx.arc(px, segTop - 2, 3, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(px + 7, segBot + 2, 2.5, 0, Math.PI*2); ctx.fill();
+          }
+          // Side polyps
+          for (let py = segTop + 10; py < segBot - 5; py += 16 + (b.hue % 7)) {
+            ctx.beginPath(); ctx.arc(bx - hw - 2, py, 3, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(bx + hw + 2, py + 8, 2.5, 0, Math.PI*2); ctx.fill();
+          }
+
+          if (g < sortedTunnels.length) segTop = sortedTunnels[g].y + sortedTunnels[g].size/2;
+        }
+
+        // Draw tunnel openings (dark holes through the coral)
+        for (const tun of sortedTunnels) {
+          // Dark tunnel interior
+          ctx.fillStyle = 'rgba(0,5,15,0.7)';
+          ctx.beginPath(); ctx.roundRect(bx - hw - 2, tun.y - tun.size/2, b.width + 4, tun.size, 5); ctx.fill();
+          // Tunnel rim highlight
+          ctx.strokeStyle = `hsla(${b.hue},40%,35%,0.5)`;
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.roundRect(bx - hw, tun.y - tun.size/2, b.width, tun.size, 5); ctx.stroke();
+        }
+      }
+    }
+
+    // === BACKGROUND ===
+    function drawBackground() {
+      const depthRatio = Math.max(0, Math.min(1, cam.y / Math.max(1, WORLD_H - canvas.height)));
+      const grad = ctx.createLinearGradient(0,0,0,canvas.height);
+      grad.addColorStop(0, `rgb(${5+depthRatio*5},${20+(1-depthRatio)*25},${50+(1-depthRatio)*30})`);
+      grad.addColorStop(1, `rgb(${3+depthRatio*10},${15+depthRatio*15},${25+depthRatio*20})`);
+      ctx.fillStyle=grad; ctx.fillRect(0,0,canvas.width,canvas.height);
+      for (const ray of lightRays) {
+        const rx = ray.x-cam.x+Math.sin(gameTime*0.3+ray.phase)*ray.drift*50;
+        if (rx<-ray.width*2||rx>canvas.width+ray.width*2) continue;
+        const rg=ctx.createLinearGradient(0,-cam.y,0,canvas.height);
+        rg.addColorStop(0,`rgba(180,220,255,${ray.alpha*(1-depthRatio*0.7)})`); rg.addColorStop(1,'rgba(180,220,255,0)');
+        ctx.fillStyle=rg; ctx.beginPath();
+        ctx.moveTo(rx-ray.width/2,0); ctx.lineTo(rx+ray.width/2,0); ctx.lineTo(rx+ray.width*0.8,canvas.height); ctx.lineTo(rx-ray.width*0.3,canvas.height);
+        ctx.closePath(); ctx.fill();
+      }
+    }
+
+    function drawBubbles() {
+      for (const b of bubbles) {
+        const bx=b.x-cam.x, by=b.y-cam.y;
+        if (bx<-20||bx>canvas.width+20||by<-20||by>canvas.height+20) continue;
+        const bg=ctx.createRadialGradient(bx-b.r*0.3,by-b.r*0.3,b.r*0.1,bx,by,b.r);
+        bg.addColorStop(0,'rgba(200,240,255,0.25)'); bg.addColorStop(0.7,'rgba(150,220,255,0.08)'); bg.addColorStop(1,'rgba(150,220,255,0.02)');
+        ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(bx,by,b.r,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.beginPath(); ctx.arc(bx-b.r*0.25,by-b.r*0.25,b.r*0.25,0,Math.PI*2); ctx.fill();
+      }
+    }
+
+    function drawPlankton() {
+      for (const p of plankton) {
+        const px=p.x-cam.x, py=p.y-cam.y;
+        if (px<-10||px>canvas.width+10||py<-10||py>canvas.height+10) continue;
+        const wobble = Math.sin(gameTime*0.8+p.phase)*2;
+        ctx.globalAlpha = 0.6;
+        ctx.fillStyle = `hsl(${p.hue},60%,50%)`;
+        ctx.beginPath(); ctx.arc(px+wobble, py+wobble*0.5, p.size, 0, Math.PI*2); ctx.fill();
+        // Tiny glow
+        ctx.globalAlpha = 0.15;
+        ctx.beginPath(); ctx.arc(px+wobble, py+wobble*0.5, p.size*2.5, 0, Math.PI*2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawParticles() {
+      for (const p of particles) {
+        ctx.globalAlpha=p.life; ctx.fillStyle=p.color;
+        ctx.beginPath(); ctx.arc(p.x-cam.x,p.y-cam.y,p.size*p.life,0,Math.PI*2); ctx.fill();
+      }
+      ctx.globalAlpha=1;
+    }
+
+    function fishCollides(ax,ay,aSize,bx,by,bSize) { return Math.hypot(ax-bx,ay-by)<(aSize+bSize)*0.5; }
+
+    // Mouth-based collision: eater's mouth point must be inside prey's body ellipse
+    function mouthHitsBody(eater, prey, rangeMult) {
+      const rm = rangeMult || 1;
+      const mx = eater.x + eater.dir * eater.size * 0.9;
+      const my = eater.y;
+      const dx = mx - prey.x, dy = my - prey.y;
+      const rx = prey.size * rm, ry = prey.size * 0.5 * rm;
+      return (dx*dx)/(rx*rx) + (dy*dy)/(ry*ry) <= 1.0;
+    }
+
+    function sharkMouthHitsBody(shark, prey) {
+      const mx = shark.x + shark.dir * shark.size * 0.805;
+      const my = shark.y;
+      const dx = mx - prey.x, dy = my - prey.y;
+      const rx = prey.size, ry = prey.size * 0.5;
+      return (dx*dx)/(rx*rx) + (dy*dy)/(ry*ry) <= 1.0;
+    }
+
+    // === MINIMAP ===
+    function drawMinimap() {
+      const mw=160, mh=mw*(WORLD_H/WORLD_W), mx=canvas.width-mw-12, my=canvas.height-mh-12;
+      ctx.fillStyle='rgba(0,15,30,0.6)'; ctx.strokeStyle='rgba(100,150,200,0.3)'; ctx.lineWidth=1;
+      ctx.fillRect(mx,my,mw,mh); ctx.strokeRect(mx,my,mw,mh);
+      for (const bar of barriers) { const bx=mx+(bar.x/WORLD_W)*mw, by=my+(bar.y/WORLD_H)*mh, bw=Math.max(2,(bar.width/WORLD_W)*mw), bh=Math.max(2,(bar.height/WORLD_H)*mh); ctx.fillStyle=`hsla(${bar.hue},50%,40%,0.5)`; ctx.fillRect(bx-bw/2,by-bh/2,bw,bh); }
+      for (const f of fishes) {
+        const fx=mx+(f.x/WORLD_W)*mw, fy=my+(f.y/WORLD_H)*mh;
+        if (player.hasLateralLine) {
+          const edible = f.level < player.level || (f.level === player.level && player.volume > f.volume);
+          const dotSize = 2.5;
+          ctx.fillStyle = edible ? 'rgba(68,255,68,0.7)' : 'rgba(255,68,68,0.7)';
+          ctx.beginPath(); ctx.arc(fx, fy, dotSize, 0, Math.PI*2); ctx.fill();
+        } else {
+          ctx.fillStyle=f.level<=player.level?'rgba(100,180,255,0.5)':'rgba(255,80,80,0.5)'; ctx.fillRect(fx-1,fy-1,2,2);
+        }
+      }
+      for (const s of sharks) { const sx=mx+(s.x/WORLD_W)*mw, sy=my+(s.y/WORLD_H)*mh; ctx.fillStyle='#ff0000'; ctx.fillRect(sx-2,sy-2,4,4); }
+      for (const p of powerups) { const px=mx+(p.x/WORLD_W)*mw, py=my+(p.y/WORLD_H)*mh; ctx.fillStyle=POWERUP_COLORS[p.type]; ctx.beginPath(); ctx.arc(px,py,2,0,Math.PI*2); ctx.fill(); }
+      ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.lineWidth=1;
+      ctx.strokeRect(mx+(cam.x/WORLD_W)*mw, my+(cam.y/WORLD_H)*mh, (canvas.width/WORLD_W)*mw, (canvas.height/WORLD_H)*mh);
+      const px=mx+(player.x/WORLD_W)*mw, py=my+(player.y/WORLD_H)*mh;
+      ctx.fillStyle='#4f4'; ctx.beginPath(); ctx.arc(px,py,3,0,Math.PI*2); ctx.fill();
+    }
+
+    // === HUD ===
+    function drawHUD() {
+      const barH = 42;
+      ctx.fillStyle='rgba(0,0,0,0.55)'; ctx.fillRect(0,0,canvas.width,barH);
+
+      // Level
+      ctx.fillStyle='#fff'; ctx.font='bold 18px "Segoe UI",sans-serif'; ctx.textAlign='left'; ctx.textBaseline='middle';
+      ctx.fillText(`Level ${player.level}`, 16, barH/2);
+
+      // Progress bar (volume toward next level)
+      const progW=120, progH=8, progX=100, progY=barH/2-progH/2;
+      const curLvlVol = levelVolume(player.level);
+      const nextLvlVol = levelVolume(player.level + 1);
+      const progress = player.level >= MAX_LEVEL ? 1 : Math.min(1, (player.volume - curLvlVol) / (nextLvlVol - curLvlVol));
+      ctx.fillStyle='rgba(255,255,255,0.15)'; ctx.beginPath(); ctx.roundRect(progX,progY,progW,progH,4); ctx.fill();
+      const pal=fishPalette(player.level);
+      ctx.fillStyle=pal.glow; ctx.beginPath(); ctx.roundRect(progX,progY,Math.max(0,progW*progress),progH,4); ctx.fill();
+      ctx.textAlign='center'; ctx.fillStyle='#aabbcc'; ctx.font='13px "Segoe UI",sans-serif';
+      ctx.fillText(`${Math.round(progress*100)}%`, progX+progW/2, barH/2);
+
+      // Combo
+      if (combo >= 2) {
+        const comboX = progX + progW + 20;
+        const pulse = 1 + Math.sin(gameTime*10)*0.1;
+        ctx.save(); ctx.translate(comboX, barH/2); ctx.scale(pulse,pulse);
+        ctx.fillStyle = combo>=8?'#ff4444':combo>=5?'#ffaa00':'#44ddff';
+        ctx.font = `bold ${16+combo}px "Segoe UI",sans-serif`; ctx.textAlign='left'; ctx.textBaseline='middle';
+        ctx.fillText(`${combo}x COMBO`, 0, 0);
+        ctx.restore();
+      }
+
+      // Score + high score
+      ctx.textAlign='right'; ctx.fillStyle='#fff'; ctx.font='bold 18px "Segoe UI",sans-serif';
+      ctx.fillText(`Score: ${score}`, canvas.width-180, barH/2-8);
+      ctx.fillStyle='#7799bb'; ctx.font='12px "Segoe UI",sans-serif';
+      ctx.fillText(`Best: ${stats.highScore}`, canvas.width-180, barH/2+10);
+
+      // Active power-ups bar
+      let puX = 16, puY = barH + 8;
+      for (const type of POWERUP_TYPES) {
+        if (!activePowerups[type] || activePowerups[type] <= 0) continue;
+        const remaining = activePowerups[type];
+        const maxDur = POWERUP_DURATION[type];
+        const ratio = remaining / maxDur;
+        const col = POWERUP_COLORS[type];
+
+        ctx.fillStyle='rgba(0,0,0,0.5)'; ctx.beginPath(); ctx.roundRect(puX,puY,110,22,6); ctx.fill();
+        ctx.fillStyle=col; ctx.globalAlpha=0.3; ctx.beginPath(); ctx.roundRect(puX,puY,110*ratio,22,6); ctx.fill(); ctx.globalAlpha=1;
+        ctx.fillStyle='#fff'; ctx.font='bold 12px "Segoe UI",sans-serif'; ctx.textAlign='left';
+        ctx.fillText(`${POWERUP_ICONS[type]} ${POWERUP_NAMES[type]}`, puX+6, puY+12);
+        ctx.fillStyle=col; ctx.font='11px "Segoe UI",sans-serif'; ctx.textAlign='right';
+        ctx.fillText(`${remaining.toFixed(1)}s`, puX+105, puY+12);
+        puY += 26;
+      }
+
+      // Active ability cooldowns
+      abilityButtonRects = [];
+      for (let ai = 0; ai < player.activeAbilities.length; ai++) {
+        const ab = player.activeAbilities[ai];
+        const evo = ALL_EVOLUTIONS[ab.id];
+        const cd = player[ab.cooldownProp];
+        const ratio = Math.max(0, cd / ab.maxCooldown);
+        const ready = cd <= 0;
+        const col = evo ? evo.color : '#fff';
+
+        abilityButtonRects.push({ x: puX, y: puY, w: 110, h: 22, key: String(ai + 1) });
+        ctx.fillStyle='rgba(0,0,0,0.5)'; ctx.beginPath(); ctx.roundRect(puX,puY,110,22,6); ctx.fill();
+        if (!ready) {
+          ctx.fillStyle=col; ctx.globalAlpha=0.2; ctx.beginPath(); ctx.roundRect(puX,puY,110*ratio,22,6); ctx.fill(); ctx.globalAlpha=1;
+        }
+        ctx.fillStyle = ready ? col : '#888'; ctx.font='bold 12px "Segoe UI",sans-serif'; ctx.textAlign='left';
+        ctx.fillText(`[${ai+1}] ${evo ? evo.name : ab.id}`, puX+6, puY+12);
+        if (!ready) {
+          ctx.fillStyle=col; ctx.font='11px "Segoe UI",sans-serif'; ctx.textAlign='right';
+          ctx.fillText(`${cd.toFixed(1)}s`, puX+105, puY+12);
+        } else {
+          ctx.fillStyle='#4f8'; ctx.font='bold 11px "Segoe UI",sans-serif'; ctx.textAlign='right';
+          ctx.fillText('READY', puX+105, puY+12);
+        }
+        puY += 26;
+      }
+
+      // Spine cooldown (passive, shown if has spines)
+      if (player.hasSpines) {
+        const spReady = player.spineTimer <= 0;
+        const spSt = evoStats('porcupinefish_spines') || {spineCooldown:20};
+        ctx.fillStyle='rgba(0,0,0,0.5)'; ctx.beginPath(); ctx.roundRect(puX,puY,110,22,6); ctx.fill();
+        if (!spReady) {
+          ctx.fillStyle='#ffaa44'; ctx.globalAlpha=0.2; ctx.beginPath(); ctx.roundRect(puX,puY,110*(player.spineTimer/spSt.spineCooldown),22,6); ctx.fill(); ctx.globalAlpha=1;
+        }
+        ctx.fillStyle = spReady ? '#ffaa44' : '#888'; ctx.font='bold 12px "Segoe UI",sans-serif'; ctx.textAlign='left';
+        ctx.fillText('Spines', puX+6, puY+12);
+        ctx.fillStyle = spReady ? '#4f8' : '#ffaa44'; ctx.font='bold 11px "Segoe UI",sans-serif'; ctx.textAlign='right';
+        ctx.fillText(spReady ? 'READY' : `${player.spineTimer.toFixed(1)}s`, puX+105, puY+12);
+        puY += 26;
+      }
+
+      // Depth
+      const depthMeters = Math.floor((player.y/WORLD_H)*300);
+      ctx.fillStyle='#7799bb'; ctx.font='13px "Segoe UI",sans-serif'; ctx.textAlign='left';
+      ctx.fillText(`Depth: ${depthMeters}m`, 16, puY + 8);
+
+      // Skin indicator
+      const skinName = SKINS.find(s=>s.id===stats.selectedSkin)?.name || 'Classic';
+      ctx.fillStyle='#667'; ctx.font='12px "Segoe UI",sans-serif'; ctx.textAlign='right';
+      ctx.fillText(`[E] Skin: ${skinName}`, canvas.width-12, canvas.height-20);
+
+      // Evolution badges
+      if (player.evolutions.length > 0) {
+        let evoX = canvas.width-12;
+        const evoY = canvas.height - 38;
+        ctx.textAlign='right'; ctx.font='11px "Segoe UI",sans-serif';
+        for (let ei = player.evolutions.length-1; ei >= 0; ei--) {
+          const evoId = player.evolutions[ei];
+          const evo = ALL_EVOLUTIONS[evoId];
+          if (!evo) continue;
+          const lvl = player.evoLevels[evoId] || 1;
+          const label = lvl > 1 ? `${evo.name} Lv${lvl}` : evo.name;
+          const tw = ctx.measureText(label).width + 12;
+          ctx.fillStyle='rgba(0,0,0,0.4)'; ctx.beginPath(); ctx.roundRect(evoX-tw, evoY-8, tw, 16, 4); ctx.fill();
+          ctx.fillStyle=evo.color;
+          ctx.fillText(label, evoX-6, evoY+3);
+          evoX -= tw + 6;
+        }
+      }
+
+      // Fish eaten counter
+      ctx.fillStyle='#8899aa'; ctx.font='14px "Segoe UI",sans-serif'; ctx.textAlign='center';
+      ctx.fillText(`Fish: ${fishEaten}`, canvas.width/2, barH/2);
+
+      drawMinimap();
+    }
+
+    // === DRAW FLOATING TEXTS ===
+    function drawFloatingTexts() {
+      for (const ft of floatingTexts) {
+        const sx = ft.x - cam.x, sy = ft.y - cam.y;
+        ctx.globalAlpha = ft.life;
+        ctx.fillStyle = ft.color;
+        ctx.strokeStyle = 'rgba(0,0,0,0.5)'; ctx.lineWidth = 3;
+        ctx.font = `bold ${ft.size}px "Segoe UI",sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.strokeText(ft.text, sx, sy); ctx.fillText(ft.text, sx, sy);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    // === DRAW NOTIFICATIONS ===
+    function drawNotifications() {
+      let ny = 80;
+      for (const n of notifications) {
+        const alpha = Math.min(1, n.life);
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle='rgba(0,0,0,0.6)';
+        ctx.font='bold 20px "Segoe UI",sans-serif'; ctx.textAlign='center';
+        const tw = ctx.measureText(n.text).width;
+        ctx.beginPath(); ctx.roundRect(canvas.width/2-tw/2-16, ny-14, tw+32, 32, 8); ctx.fill();
+        ctx.fillStyle = n.color;
+        ctx.fillText(n.text, canvas.width/2, ny+2);
+        ny += 40;
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    // === UPGRADE MENU ===
+    function drawUpgradeMenu() {
+      if (gameState !== 'choosing_upgrade' || !upgradeChoices) return;
+      ctx.fillStyle='rgba(0,0,0,0.75)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      const menuW=560, menuH=320;
+      const mx=canvas.width/2-menuW/2, my=canvas.height/2-menuH/2;
+      ctx.fillStyle='rgba(5,15,35,0.95)'; ctx.strokeStyle='rgba(100,180,255,0.4)'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.roundRect(mx,my,menuW,menuH,14); ctx.fill(); ctx.stroke();
+
+      // Title
+      ctx.fillStyle='#44ff88'; ctx.font='bold 26px "Segoe UI",sans-serif'; ctx.textAlign='center';
+      const hasNew = upgradeChoices && upgradeChoices.some(e => !player.evoLevels[e.id]);
+      const hasExisting = upgradeChoices && upgradeChoices.some(e => player.evoLevels[e.id] > 0);
+      ctx.fillText(`EVOLVE — Level ${player.level}`, canvas.width/2, my+36);
+      ctx.fillStyle='#8899aa'; ctx.font='14px "Segoe UI",sans-serif';
+      const subtitle = hasNew && hasExisting ? 'New ability or level up?' : hasNew ? 'Choose an adaptation' : 'Level up an adaptation';
+      ctx.fillText(subtitle, canvas.width/2, my+58);
+
+      // Two cards
+      for (let c = 0; c < 2; c++) {
+        const evo = upgradeChoices[c];
+        if (!evo) continue;
+        const curLvl = player.evoLevels[evo.id] || 0;
+        const nextLvl = curLvl + 1;
+        const cardW = 230, cardH = 200;
+        const cx = mx + 30 + c * (cardW + 30);
+        const cy = my + 75;
+
+        // Card background
+        ctx.fillStyle = 'rgba(20,35,60,0.9)';
+        ctx.strokeStyle = evo.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.roundRect(cx, cy, cardW, cardH, 10); ctx.fill(); ctx.stroke();
+
+        // Key indicator
+        ctx.fillStyle = evo.color; ctx.font = 'bold 22px "Segoe UI",sans-serif'; ctx.textAlign = 'left';
+        ctx.fillText(`[${c+1}]`, cx + 12, cy + 28);
+
+        // Name + level
+        ctx.fillStyle = '#fff'; ctx.font = 'bold 18px "Segoe UI",sans-serif'; ctx.textAlign = 'left';
+        ctx.fillText(evo.name, cx + 50, cy + 28);
+        const nameW = ctx.measureText(evo.name).width;
+        if (curLvl > 0) {
+          ctx.fillStyle = '#ffdd44'; ctx.font = 'bold 13px "Segoe UI",sans-serif';
+          ctx.fillText(`Lv${curLvl}\u2192${nextLvl}`, cx + 50 + nameW + 6, cy + 28);
+        } else {
+          ctx.fillStyle = '#44ff88'; ctx.font = 'bold 11px "Segoe UI",sans-serif';
+          ctx.fillText('NEW', cx + 50 + nameW + 6, cy + 28);
+        }
+
+        // Species
+        ctx.fillStyle = '#7799bb'; ctx.font = 'italic 13px "Segoe UI",sans-serif';
+        ctx.fillText(evo.species, cx + 12, cy + 50);
+
+        // Description — word wrap (use next level's description)
+        ctx.fillStyle = '#ccdde8'; ctx.font = '14px "Segoe UI",sans-serif';
+        const descText = typeof evo.desc === 'function' ? evo.desc(nextLvl) : evo.desc;
+        const words = descText.split(' ');
+        let line = '', lineY = cy + 75;
+        for (const word of words) {
+          const test = line + word + ' ';
+          if (ctx.measureText(test).width > cardW - 24 && line) {
+            ctx.fillText(line.trim(), cx + 12, lineY);
+            line = word + ' '; lineY += 18;
+          } else { line = test; }
+        }
+        if (line) ctx.fillText(line.trim(), cx + 12, lineY);
+
+        // Category badge
+        ctx.fillStyle = evo.color; ctx.globalAlpha = 0.2;
+        ctx.beginPath(); ctx.roundRect(cx + 12, cy + cardH - 36, 80, 22, 4); ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = evo.color; ctx.font = 'bold 11px "Segoe UI",sans-serif';
+        ctx.fillText(evo.category, cx + 18, cy + cardH - 21);
+
+        // Active indicator
+        if (evo.isActive) {
+          ctx.fillStyle = '#ffcc00'; ctx.font = 'bold 11px "Segoe UI",sans-serif';
+          ctx.textAlign = 'right';
+          ctx.fillText('ACTIVE', cx + cardW - 12, cy + cardH - 21);
+        }
+      }
+
+      // Footer
+      ctx.fillStyle = '#667788'; ctx.font = '14px "Segoe UI",sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('Press 1/2 or tap to choose', canvas.width/2, my + menuH - 16);
+    }
+
+    // === SKIN MENU ===
+    function drawSkinMenu() {
+      if (!skinMenuOpen) return;
+      ctx.fillStyle='rgba(0,0,0,0.75)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      const menuW=420, menuH=SKINS.length*50+80;
+      const mx=canvas.width/2-menuW/2, my=canvas.height/2-menuH/2;
+      ctx.fillStyle='rgba(10,20,40,0.95)'; ctx.strokeStyle='rgba(100,150,200,0.4)'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.roundRect(mx,my,menuW,menuH,12); ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle='#fff'; ctx.font='bold 22px "Segoe UI",sans-serif'; ctx.textAlign='center';
+      ctx.fillText('Fish Skins', canvas.width/2, my+30);
+      ctx.fillStyle='#667'; ctx.font='13px "Segoe UI",sans-serif';
+      ctx.fillText('Tap or press number to select  |  tap outside to close', canvas.width/2, my+52);
+
+      SKINS.forEach((skin, i) => {
+        const sy = my + 70 + i*50;
+        const unlocked = !skin.check || skin.check(stats);
+        const selected = stats.selectedSkin === skin.id;
+
+        ctx.fillStyle = selected ? 'rgba(68,170,255,0.15)' : 'rgba(255,255,255,0.03)';
+        ctx.beginPath(); ctx.roundRect(mx+10, sy, menuW-20, 42, 6); ctx.fill();
+        if (selected) { ctx.strokeStyle='#4af'; ctx.lineWidth=1; ctx.stroke(); }
+
+        ctx.textAlign='left'; ctx.textBaseline='middle';
+        ctx.fillStyle = unlocked ? '#fff' : '#555';
+        ctx.font='bold 16px "Segoe UI",sans-serif';
+        ctx.fillText(`${i+1}. ${skin.name}`, mx+20, sy+14);
+        ctx.font='12px "Segoe UI",sans-serif'; ctx.fillStyle=unlocked?'#99aabb':'#444';
+        ctx.fillText(skin.desc, mx+20, sy+32);
+
+        ctx.textAlign='right';
+        if (!unlocked) { ctx.fillStyle='#884'; ctx.font='11px "Segoe UI",sans-serif'; ctx.fillText(`\uD83D\uDD12 ${skin.req}`, mx+menuW-20, sy+22); }
+        else if (selected) { ctx.fillStyle='#4f8'; ctx.font='bold 12px "Segoe UI",sans-serif'; ctx.fillText('EQUIPPED', mx+menuW-20, sy+22); }
+        else { ctx.fillStyle='#668'; ctx.font='12px "Segoe UI",sans-serif'; ctx.fillText('Unlocked', mx+menuW-20, sy+22); }
+      });
+    }
+
+    // === UPDATE ===
+    function update(dt) {
+      // Skin menu toggle
+      if (justPressed['e'] || justPressed['E']) {
+        skinMenuOpen = !skinMenuOpen;
+      }
+      // Skin selection
+      if (skinMenuOpen) {
+        for (let i = 0; i < SKINS.length; i++) {
+          if (justPressed[String(i+1)]) {
+            const skin = SKINS[i];
+            if (!skin.check || skin.check(stats)) {
+              stats.selectedSkin = skin.id;
+              saveStats();
+              addNotification(`Skin: ${skin.name}`, '#4af');
+            } else {
+              addNotification(`Locked: ${skin.req}`, '#884');
+            }
+          }
+        }
+        Object.keys(justPressed).forEach(k => delete justPressed[k]);
+        return; // pause game while menu open
+      }
+
+      // Evolution upgrade selection
+      if (gameState === 'choosing_upgrade') {
+        for (const key of ['1','2']) {
+          const idx = parseInt(key) - 1;
+          if (justPressed[key] && upgradeChoices && upgradeChoices[idx]) {
+            const evo = upgradeChoices[idx];
+            const newLvl = (player.evoLevels[evo.id] || 0) + 1;
+            player.evoLevels[evo.id] = newLvl;
+            if (!player.evolutions.includes(evo.id)) player.evolutions.push(evo.id);
+            evo.apply(player, newLvl);
+            const lvlTag = newLvl > 1 ? ` Lv${newLvl}` : '';
+            addNotification(`${evo.name}${lvlTag} acquired!`, evo.color);
+            upgradeChoices = null;
+            gameState = 'playing';
+            break;
+          }
+        }
+        Object.keys(justPressed).forEach(k => delete justPressed[k]);
+        return;
+      }
+
+      if (gameState !== 'playing') {
+        if (keys[' '] || keys['Enter']) restart();
+        Object.keys(justPressed).forEach(k => delete justPressed[k]);
+        return;
+      }
+
+      gameTime += dt;
+      player.mouthOpen += 9 * dt;
+      player.tailPhase += 7.2 * dt;
+
+      // Invincibility timer
+      if (player.invincible > 0) player.invincible -= dt;
+
+      // Evolution timers
+      if (player.spineTimer > 0) player.spineTimer -= dt;
+      if (player.inkCooldown > 0) player.inkCooldown -= dt;
+      if (player.electricCooldown > 0) player.electricCooldown -= dt;
+      if (player.burstTimer > 0) player.burstTimer -= dt;
+      if (player.inkSpeedBoost > 0) player.inkSpeedBoost -= dt;
+
+      // Active ability key handling
+      for (let ai = 0; ai < player.activeAbilities.length; ai++) {
+        const ab = player.activeAbilities[ai];
+        const key = String(ai + 1);
+        if (justPressed[key] && !skinMenuOpen) {
+          if (ab.id === 'octopus_ink' && player.inkCooldown <= 0) {
+            const inkS = evoStats('octopus_ink') || {inkRadius:300, inkSpeedDur:2, inkCooldown:15};
+            player.inkCooldown = ab.maxCooldown;
+            player.inkSpeedBoost = inkS.inkSpeedDur;
+            // Spawn ink particles
+            for (let ip = 0; ip < 30; ip++) {
+              const a = Math.random()*Math.PI*2, s = 2+Math.random()*4;
+              particles.push({x:player.x, y:player.y, vx:Math.cos(a)*s, vy:Math.sin(a)*s, life:1.5, decay:0.015, size:6+Math.random()*8, color:'rgba(60,20,80,0.8)'});
+            }
+            // Scatter all fish within radius
+            for (const f of fishes) {
+              if (Math.hypot(f.x-player.x, f.y-player.y) < inkS.inkRadius) {
+                f.scatterTimer = 3;
+                f.chaseTarget = null;
+                f.speed = (Math.random()>0.5?1:-1) * f.baseSpeed * 1.5;
+                f.vy = (Math.random()-0.5) * f.baseSpeed * 2;
+              }
+            }
+            addNotification('Ink Cloud!', '#9944cc');
+            shakeTimer=0.15; shakeIntensity=5;
+          } else if (ab.id === 'electric_shock' && player.electricCooldown <= 0) {
+            const shockS = evoStats('electric_shock') || {shockRadius:200, shockStun:2, shockSharkStun:0.5};
+            player.electricCooldown = ab.maxCooldown;
+            // Spawn shock ring effect
+            for (let ip = 0; ip < 20; ip++) {
+              const a = (ip/20)*Math.PI*2;
+              particles.push({x:player.x+Math.cos(a)*30, y:player.y+Math.sin(a)*30, vx:Math.cos(a)*6, vy:Math.sin(a)*6, life:0.8, decay:0.02, size:4, color:'#ffcc00'});
+            }
+            // Stun all fish within radius
+            for (const f of fishes) {
+              if (Math.hypot(f.x-player.x, f.y-player.y) < shockS.shockRadius) {
+                f.stunTimer = shockS.shockStun;
+              }
+            }
+            // Stun sharks within radius (shorter)
+            for (const s of sharks) {
+              if (Math.hypot(s.x-player.x, s.y-player.y) < shockS.shockRadius) {
+                s.stunTimer = shockS.shockSharkStun;
+                // Knockback
+                const dx = s.x-player.x, dy = s.y-player.y, d = Math.hypot(dx,dy)||1;
+                s.x += (dx/d)*50; s.y += (dy/d)*30;
+              }
+            }
+            addNotification('Electric Shock!', '#ffcc00');
+            shakeTimer=0.2; shakeIntensity=8;
+          }
+        }
+      }
+
+      // Combo timer
+      if (comboTimer > 0) { comboTimer -= dt; if (comboTimer <= 0) combo = 0; }
+
+      // Power-up timers
+      for (const type of POWERUP_TYPES) {
+        if (activePowerups[type] > 0) {
+          activePowerups[type] -= dt;
+          if (activePowerups[type] <= 0) { activePowerups[type] = 0; addNotification(`${POWERUP_NAMES[type]} expired`, '#888'); }
+        }
+      }
+      // Shield hits from powerup
+      if (activePowerups.shield > 0 && player.shieldHits <= 0) player.shieldHits = 1;
+      if (!activePowerups.shield || activePowerups.shield <= 0) { if (player.shieldHits > 0 && !activePowerups.shield) player.shieldHits = 0; }
+
+      // Delta-time scaling factor (normalize to 60fps)
+      const t = dt * 60;
+
+      // Movement
+      const pSize = Math.cbrt(player.volume);
+      player.size = pSize; // keep .size in sync for mouth collision
+      let ax = 0, ay = 0;
+      if (keys['ArrowUp']||keys['w']) ay=-1;
+      if (keys['ArrowDown']||keys['s']) ay=1;
+      if (keys['ArrowLeft']||keys['a']) { ax=-1; player.dir=-1; }
+      if (keys['ArrowRight']||keys['d']) { ax=1; player.dir=1; }
+      // Touch/click-to-move: steer toward moveTarget
+      if (moveTarget && ax === 0 && ay === 0) {
+        const tdx = moveTarget.x - player.x, tdy = moveTarget.y - player.y;
+        const tdist = Math.hypot(tdx, tdy);
+        if (tdist > pSize * 0.5) {
+          ax = tdx / tdist;
+          ay = tdy / tdist;
+          if (ax > 0.2) player.dir = 1;
+          else if (ax < -0.2) player.dir = -1;
+        }
+      }
+
+      const accel = 0.5, friction = Math.pow(0.88, t);
+      player.velX += ax*accel*t; player.velY += ay*accel*t;
+      player.velX *= friction; player.velY *= friction;
+      const tunaStats = evoStats('tuna_fins');
+      let maxSpeed = player.speed * (tunaStats ? tunaStats.speedMult : 1);
+      if (activePowerups.speed > 0) maxSpeed *= 1.7;
+      if (player.inkSpeedBoost > 0) { const inkS = evoStats('octopus_ink'); maxSpeed *= inkS ? inkS.inkSpeedBoost : 1.5; }
+      if (player.burstTimer > 0) { const bjS = evoStats('barracuda_jaw'); maxSpeed *= bjS ? bjS.burstSpeedMult : 1.3; }
+      const mag = Math.hypot(player.velX, player.velY);
+      if (mag > maxSpeed) { player.velX=(player.velX/mag)*maxSpeed; player.velY=(player.velY/mag)*maxSpeed; }
+      player.x += player.velX*t; player.y += player.velY*t;
+      player.x = Math.max(pSize, Math.min(WORLD_W-pSize, player.x));
+      player.y = Math.max(pSize, Math.min(WORLD_H-100, player.y));
+
+      // Coral block collision for player
+      for (const bar of barriers) {
+        const bhw = bar.width/2 + pSize*0.3, bhh = bar.height/2 + pSize*0.3;
+        const dx = player.x - bar.x, dy = player.y - bar.y;
+        if (Math.abs(dx) < bhw && Math.abs(dy) < bhh) {
+          // Check if player fits through a tunnel
+          let inTunnel = false;
+          if (pSize <= bar.openingSize) {
+            for (const tun of bar.tunnels) {
+              if (player.y > tun.y - tun.size/2 + pSize*0.3 && player.y < tun.y + tun.size/2 - pSize*0.3) { inTunnel = true; break; }
+            }
+          }
+          if (!inTunnel) {
+            // Push out along shortest axis
+            if (Math.abs(dx)/bhw > Math.abs(dy)/bhh) { player.x = bar.x + Math.sign(dx)*bhw; player.velX *= -0.3; }
+            else { player.y = bar.y + Math.sign(dy)*bhh; player.velY *= -0.3; }
+          }
+        }
+      }
+
+      // Speed trail particles
+      if (activePowerups.speed > 0 && Math.random() < 0.5*t) {
+        spawnParticles(player.x - player.dir*pSize*0.8, player.y, '#44eeff', 1);
+      }
+
+      // Plankton: player and fish can eat them
+      for (let i=plankton.length-1;i>=0;i--) {
+        const p = plankton[i];
+        // Player eats plankton
+        if (Math.hypot(player.x-p.x, player.y-p.y) < pSize) {
+          plankton.splice(i,1);
+          player.volume += 50 * VOLUME_EFFICIENCY;
+          score += 1;
+          continue;
+        }
+        // Fish eat plankton
+        let eaten = false;
+        for (const f of fishes) {
+          if (Math.hypot(f.x-p.x, f.y-p.y) < f.size) {
+            plankton.splice(i,1);
+            f.volume += 50;
+            eaten = true; break;
+          }
+        }
+        if (eaten) continue;
+      }
+      // Replenish plankton
+      while (plankton.length < PLANKTON_COUNT) spawnPlankton();
+
+      // Bubbles
+      for (const b of bubbles) { b.y-=b.speed*t; b.x+=Math.sin(b.wobble)*0.4*t; b.wobble+=b.wobbleSpeed*t; if(b.y<-10){b.y=WORLD_H+10;b.x=Math.random()*WORLD_W;} }
+
+      // Particles
+      const pFric = Math.pow(0.96, t);
+      for (let i=particles.length-1;i>=0;i--) { const p=particles[i]; p.x+=p.vx*t; p.y+=p.vy*t; p.vx*=pFric; p.vy*=pFric; p.life-=p.decay*t; if(p.life<=0) particles.splice(i,1); }
+
+      // Floating texts
+      for (let i=floatingTexts.length-1;i>=0;i--) { const ft=floatingTexts[i]; ft.y+=ft.vy*t; ft.life-=dt*0.8; if(ft.life<=0) floatingTexts.splice(i,1); }
+
+      // Notifications
+      for (let i=notifications.length-1;i>=0;i--) { notifications[i].life-=dt; if(notifications[i].life<=0) notifications.splice(i,1); }
+
+      // Screen shake
+      if (shakeTimer > 0) shakeTimer -= dt;
+
+      // Powerup spawning
+      powerupSpawnTimer -= dt;
+      if (powerupSpawnTimer <= 0) { spawnPowerup(); powerupSpawnTimer = 8+Math.random()*10; }
+
+      // Powerup magnet effect & collection
+      for (let i=powerups.length-1;i>=0;i--) {
+        const p = powerups[i];
+        p.bobPhase += dt*3;
+        p.life -= dt;
+        if (p.life <= 0) { powerups.splice(i,1); continue; }
+        // Magnet pulls powerups toward player
+        if (activePowerups.magnet > 0) {
+          const dx=player.x-p.x, dy=player.y-p.y, dist=Math.hypot(dx,dy);
+          if (dist < 400) { const pull = 3*t/Math.max(dist,1); p.x += dx*pull; p.y += dy*pull; }
+        }
+        // Collect
+        if (Math.hypot(player.x-p.x, player.y-p.y) < pSize+20) {
+          activePowerups[p.type] = POWERUP_DURATION[p.type];
+          if (p.type === 'shield') player.shieldHits = 1;
+          powerups.splice(i,1);
+          playPowerupSound();
+          addNotification(`${POWERUP_ICONS[p.type]} ${POWERUP_NAMES[p.type]}!`, POWERUP_COLORS[p.type]);
+          spawnParticles(p.x, p.y, POWERUP_COLORS[p.type], 15);
+          shakeTimer=0.1; shakeIntensity=4;
+        }
+      }
+
+      // Enemy fish
+      const frenzyActive = activePowerups.frenzy > 0;
+      const effectiveLevel = frenzyActive ? player.level + 8 : player.level;
+      const eatenSet = new Set(); // track fish eaten this frame by other fish
+      for (let i=fishes.length-1;i>=0;i--) {
+        const f=fishes[i];
+        if (eatenSet.has(i)) continue;
+
+        // Stun: skip AI, just drift
+        if (f.stunTimer > 0) {
+          f.stunTimer -= dt;
+          f.x += f.speed * 0.02 * t;
+          f.tailPhase += 0.01 * t;
+          f.size = Math.cbrt(f.volume);
+          f.dir = f.speed > 0 ? 1 : -1;
+          f.y += f.vy * 0.02 * t;
+          // Still check if out of bounds
+          if (f.x<-200||f.x>WORLD_W+200||Math.hypot(f.x-player.x,f.y-player.y)>canvas.width*2.5) { fishes.splice(i,1); continue; }
+          // Still check player collision while stunned
+        }
+
+        // Scatter: flee randomly (from ink cloud)
+        if (f.scatterTimer > 0) {
+          f.scatterTimer -= dt;
+          f.chaseTarget = null;
+        }
+
+        // Chase AI: scan for prey periodically (skip if stunned)
+        if (f.stunTimer > 0) { /* stunned — skip AI */ }
+        else {
+        f.chaseTimer -= dt;
+        if (f.chaseTimer <= 0) {
+          f.chaseTimer = 0.3 + Math.random()*0.3;
+          f.chaseTarget = null;
+          let bestDist = 300; // chase range
+          // Look for smaller fish to eat
+          for (let j=0;j<fishes.length;j++) {
+            if (j===i || eatenSet.has(j)) continue;
+            const prey = fishes[j];
+            if (prey.level >= f.level) continue; // only chase smaller
+            const d = Math.hypot(f.x-prey.x, f.y-prey.y);
+            if (d < bestDist) { bestDist = d; f.chaseTarget = j; }
+          }
+          // Also chase player if fish is bigger
+          if (f.level > effectiveLevel) {
+            const dp = Math.hypot(f.x-player.x, f.y-player.y);
+            if (dp < bestDist) { f.chaseTarget = -1; } // -1 = player
+          }
+        }
+
+        // Steering toward chase target
+        let chasing = false;
+        if (f.chaseTarget !== null) {
+          let tx, ty;
+          if (f.chaseTarget === -1) { tx = player.x; ty = player.y; }
+          else if (f.chaseTarget < fishes.length && !eatenSet.has(f.chaseTarget)) {
+            tx = fishes[f.chaseTarget].x; ty = fishes[f.chaseTarget].y;
+          } else { f.chaseTarget = null; }
+          if (f.chaseTarget !== null) {
+            const dx = tx - f.x, dy = ty - f.y, dist = Math.hypot(dx, dy);
+            if (dist > 0) {
+              const chaseAccel = 0.06 * t;
+              f.speed += (dx/dist) * chaseAccel * f.baseSpeed;
+              f.vy += (dy/dist) * chaseAccel * f.baseSpeed * 0.8;
+              f.dir = dx > 0 ? 1 : -1;
+              chasing = true;
+              // Clamp speed
+              const maxSpd = f.baseSpeed * 1.3;
+              if (Math.abs(f.speed) > maxSpd) f.speed = Math.sign(f.speed) * maxSpd;
+              if (Math.abs(f.vy) > maxSpd*0.6) f.vy = Math.sign(f.vy) * maxSpd*0.6;
+            }
+          }
+        }
+        } // end stun else block
+
+        f.size = Math.cbrt(f.volume); // continuous size from volume
+        f.dir = f.speed > 0 ? 1 : -1; // keep dir in sync with speed
+        if (f.stunTimer <= 0) { f.x+=f.speed*t; f.y+=f.vy*t; }
+        f.tailPhase+=(0.08+Math.abs(f.speed)*0.02)*t;
+        if (f.y<50) f.vy+=0.02*t; if (f.y>WORLD_H-120) f.vy-=0.02*t; f.vy*=Math.pow(0.99,t);
+
+        // Coral block collision: block fish too big to fit through tunnels
+        for (const bar of barriers) {
+          const bHw = bar.width/2 + f.size*0.3, bHh = bar.height/2 + f.size*0.3;
+          const dx = f.x - bar.x, dy = f.y - bar.y;
+          if (Math.abs(dx) < bHw && Math.abs(dy) < bHh) {
+            let inTunnel = false;
+            if (f.size <= bar.openingSize) {
+              for (const tun of bar.tunnels) {
+                if (f.y > tun.y - tun.size/2 + f.size*0.2 && f.y < tun.y + tun.size/2 - f.size*0.2) { inTunnel = true; break; }
+              }
+            }
+            if (!inTunnel) {
+              if (Math.abs(dx)/bHw > Math.abs(dy)/bHh) { f.x = bar.x + Math.sign(dx)*bHw; f.speed *= -0.5; }
+              else { f.y = bar.y + Math.sign(dy)*bHh; f.vy *= -0.5; }
+              f.chaseTarget = null;
+            }
+          }
+        }
+
+        // Magnet attracts smaller fish
+        if (activePowerups.magnet > 0 && f.level <= player.level) {
+          const dx=player.x-f.x, dy=player.y-f.y, dist=Math.hypot(dx,dy);
+          if (dist < 300) { f.x += dx*0.01*t; f.y += dy*0.01*t; }
+        }
+
+        // Anglerfish lure: attract fish below player within range
+        if (player.hasLure && f.stunTimer <= 0) {
+          const lrStats = evoStats('anglerfish_lure') || {lureRange:200, lureLevels:2};
+          if (f.level >= player.level - lrStats.lureLevels && f.level < player.level) {
+            const lureX = player.x + player.dir * pSize * 1.5;
+            const lureY = player.y;
+            const dx=lureX-f.x, dy=lureY-f.y, dist=Math.hypot(dx,dy);
+            if (dist < lrStats.lureRange && dist > 0) { f.x += (dx/dist)*0.5*t; f.y += (dy/dist)*0.3*t; }
+          }
+        }
+
+        const distToPlayer=Math.hypot(f.x-player.x,f.y-player.y);
+        if (f.x<-200||f.x>WORLD_W+200||distToPlayer>canvas.width*2.5) { fishes.splice(i,1); continue; }
+
+        // Fish-on-fish interactions: eat smaller or same-level-but-smaller-volume
+        for (let j=fishes.length-1;j>=0;j--) {
+          if (j===i || eatenSet.has(j)) continue;
+          const other = fishes[j];
+          // Mouth collision for eating, body collision for bounce
+          const bodiesOverlap = fishCollides(f.x,f.y,f.size,other.x,other.y,other.size);
+          const fMouthHits = mouthHitsBody(f, other);
+          if (!bodiesOverlap && !fMouthHits) continue;
+          if (other.level > f.level) continue; // can't eat higher level
+          if (other.level === f.level) {
+            // Same level: bigger volume eats the other (with mouth), else bounce
+            if (f.volume > other.volume && fMouthHits) {
+              // f eats other — fall through
+            } else if (other.volume > f.volume) {
+              continue; // other is bigger, skip (it'll eat f on its turn)
+            } else {
+              // Equal or no mouth hit: bounce
+              if (bodiesOverlap) {
+                const bx=f.x-other.x, by=f.y-other.y, bd=Math.hypot(bx,by)||1;
+                f.speed += (bx/bd)*0.8; f.vy += (by/bd)*0.8;
+                other.speed += -(bx/bd)*0.8; other.vy += -(by/bd)*0.8;
+              }
+              continue;
+            }
+          }
+          if (!fMouthHits) continue; // must use mouth to eat
+          const fpal=fishPalette(other.level);
+          spawnParticles(other.x,other.y,fpal.body,8+other.level);
+          eatenSet.add(j);
+          // Absorb volume — level derives from volume
+          f.volume += other.volume;
+          f.size = Math.cbrt(f.volume);
+          const newLevel = Math.min(MAX_LEVEL, volumeToLevel(f.volume));
+          if (newLevel > f.level) {
+            f.level = newLevel;
+            const newBase = 1.0 + (MAX_LEVEL - f.level) * 0.05;
+            f.baseSpeed = newBase * (0.5 + Math.random()*0.6);
+            f.speed = Math.sign(f.speed || 1) * f.baseSpeed;
+            spawnParticles(f.x, f.y, '#fff', 10);
+          }
+        }
+
+        // Mouth-based collision: player mouth→fish body, fish mouth→player body
+        const playerBodyOverlap = fishCollides(player.x,player.y,pSize,f.x,f.y,f.size);
+        const jawStats = evoStats('barracuda_jaw');
+        const playerMouthHitsF = mouthHitsBody(player, f, jawStats ? jawStats.eatingRangeMult : 1);
+        const fMouthHitsPlayer = mouthHitsBody(f, {x:player.x, y:player.y, size:pSize});
+        if (playerMouthHitsF || fMouthHitsPlayer || playerBodyOverlap) {
+          // Can player eat this fish? Lower level, or same level but smaller volume
+          const canEat = f.level < effectiveLevel || (f.level === effectiveLevel && player.volume > f.volume)
+            || (f.stunTimer > 0 && f.level <= effectiveLevel + 8);
+          const getsEaten = !canEat && (f.level > effectiveLevel || (f.level === effectiveLevel && f.volume > player.volume));
+          if (canEat && playerMouthHitsF) {
+            const fpal=fishPalette(f.level);
+            spawnParticles(f.x,f.y,fpal.body,12+f.level*2);
+            const beakStats = evoStats('parrotfish_beak');
+            player.volume += f.volume * VOLUME_EFFICIENCY * (beakStats ? beakStats.volumeAbsorbMult : 1);
+            fishes.splice(i,1);
+            fishEaten++;
+            // Barracuda jaw: speed burst on eat
+            if (player.hasBarracudaJaw) {
+              const bjStats = evoStats('barracuda_jaw');
+              player.burstTimer = bjStats ? bjStats.burstDuration : 1.0;
+            }
+            // Combo
+            combo++; comboTimer = COMBO_WINDOW;
+            if (combo > maxCombo) maxCombo = combo;
+            if (combo > stats.maxCombo) { stats.maxCombo = combo; saveStats(); }
+            const comboMult = combo >= 2 ? combo : 1;
+            const scoreMult = activePowerups.x2 > 0 ? 2 : 1;
+            const pts = f.level * f.level * comboMult * scoreMult;
+            score += pts;
+            if (combo >= 2) playComboSound(combo);
+            playEatSound(f.level);
+            let txt = `+${pts}`;
+            if (combo >= 2) txt += ` (${combo}x)`;
+            addFloatingText(f.x, f.y-20, txt, comboMult>=5?'#ffaa00':'#fff', 14+Math.min(combo*2,16));
+            shakeTimer=0.1; shakeIntensity=3+f.level;
+            // Check for level up from volume (one level at a time for evolution choices)
+            const newLevel = Math.min(MAX_LEVEL, volumeToLevel(player.volume));
+            if (player.level < newLevel) {
+              player.level++;
+              player.speed=Math.max(2.5,4.5-player.level*0.04);
+              spawnParticles(player.x,player.y,'#fff',25);
+              shakeTimer=0.3; shakeIntensity=8;
+              playLevelUpSound();
+              addNotification(`LEVEL UP! Level ${player.level}`, '#44ff88');
+              addFloatingText(player.x, player.y-50, `LEVEL ${player.level}!`, '#44ff88', 28);
+              if (player.level > stats.maxLevel) { stats.maxLevel = player.level; saveStats(); }
+              if (player.level >= MAX_LEVEL) { gameState='win'; stats.wins++; saveStats(); playWinSound(); }
+              else {
+                upgradeChoices = generateUpgradeChoices();
+                if (upgradeChoices) gameState = 'choosing_upgrade';
+              }
+            }
+          } else if (getsEaten && fMouthHitsPlayer) {
+            // Porcupinefish spines: auto-block and stun attacker
+            if (player.hasSpines && player.spineTimer <= 0) {
+              const spStats = evoStats('porcupinefish_spines') || {spineCooldown:20, spineStun:1.5};
+              player.spineTimer = spStats.spineCooldown;
+              f.stunTimer = spStats.spineStun;
+              // Knockback attacker
+              const bx=f.x-player.x, by=f.y-player.y, bd=Math.hypot(bx,by)||1;
+              f.speed = (bx/bd)*f.baseSpeed*2; f.vy = (by/bd)*f.baseSpeed*2;
+              spawnParticles(player.x,player.y,'#ffaa44',20);
+              addNotification('Spines blocked!', '#ffaa44');
+              shakeTimer=0.2; shakeIntensity=6;
+            } else if (player.shieldHits > 0) {
+              player.shieldHits--;
+              activePowerups.shield = 0;
+              fishes.splice(i,1);
+              spawnParticles(player.x,player.y,'#44ff88',20);
+              addNotification('Shield blocked!', '#44ff88');
+              shakeTimer=0.2; shakeIntensity=6;
+              playPowerupSound();
+            } else {
+              if (player.invincible <= 0) respawn();
+            }
+          } else if (playerBodyOverlap) {
+            // Equal volume or no mouth contact: just bounce
+            const bx=player.x-f.x, by=player.y-f.y, bd=Math.hypot(bx,by)||1;
+            player.velX += (bx/bd)*2; player.velY += (by/bd)*2;
+            f.speed += -(bx/bd)*1.5; f.vy += -(by/bd)*1.5;
+          }
+        }
+      }
+      // Remove fish eaten by other fish (iterate in reverse to preserve indices)
+      const eatenArr = [...eatenSet].sort((a,b)=>b-a);
+      for (const idx of eatenArr) { if (idx < fishes.length) fishes.splice(idx, 1); }
+
+      // === SHARKS ===
+      for (let i=sharks.length-1;i>=0;i--) {
+        const s=sharks[i];
+        s.tailPhase += (0.06 + s.speed*0.02)*t;
+        if (s.stunTimer > 0) { s.stunTimer -= dt; continue; } // stunned sharks skip AI
+        const dx=player.x-s.x, dy=player.y-s.y, dist=Math.hypot(dx,dy);
+
+        // Priority 1: Aggro chase player when in range (only at level 6+)
+        let chasingPlayer = dist < s.aggroRange && player.level >= 24;
+        if (chasingPlayer) {
+          const chase = (2.5 + (1 - dist/s.aggroRange) * 2)*t;
+          s.x += (dx/dist) * chase;
+          s.y += (dy/dist) * chase * 0.6;
+          s.dir = dx > 0 ? 1 : -1;
+          if (!s.warned) { s.warned = true; playSharkWarning(); addNotification('SHARK!', '#ff4444'); }
+        } else {
+          // Priority 2: Hunt the biggest nearby fish
+          let huntTarget = null, bestLevel = 2, bestDist = s.aggroRange * 1.2;
+          for (let j=0;j<fishes.length;j++) {
+            const f = fishes[j];
+            if (f.level < bestLevel) continue; // only hunt big fish (level 3+)
+            const fd = Math.hypot(s.x-f.x, s.y-f.y);
+            if (fd < bestDist) { bestDist = fd; bestLevel = f.level; huntTarget = j; }
+          }
+          if (huntTarget !== null) {
+            const prey = fishes[huntTarget];
+            const fdx = prey.x-s.x, fdy = prey.y-s.y, fdist = Math.hypot(fdx,fdy);
+            if (fdist > 0) {
+              const chase = (2.0 + (1 - fdist/bestDist) * 1.5)*t;
+              s.x += (fdx/fdist) * chase;
+              s.y += (fdy/fdist) * chase * 0.6;
+              s.dir = fdx > 0 ? 1 : -1;
+            }
+            // Shark eats the fish on collision (mouth-based)
+            if (sharkMouthHitsBody(s, prey)) {
+              const fpal=fishPalette(prey.level);
+              spawnParticles(prey.x,prey.y,fpal.body,15+prey.level*2);
+              fishes.splice(huntTarget,1);
+            }
+          } else {
+            // Patrol
+            s.x += s.speed * s.dir * t;
+            s.y += s.patrolVy * t;
+            if (s.y < 100 || s.y > WORLD_H-200) s.patrolVy *= -1;
+            if (s.x < 100 || s.x > WORLD_W-100) s.dir *= -1;
+          }
+          s.warned = false;
+        }
+
+        // Collision with player (sharks ignore you below level 6) — shark mouth must hit player body
+        if (player.level >= 24 && sharkMouthHitsBody(s, {x:player.x, y:player.y, size:pSize})) {
+          // Can the player eat the shark? Only at max level with frenzy
+          if (player.level >= MAX_LEVEL && frenzyActive) {
+            spawnParticles(s.x,s.y,'#667788',40);
+            sharks.splice(i,1);
+            score += 500;
+            stats.sharksEaten++; saveStats();
+            addNotification('SHARK DESTROYED! +500', '#ff4444');
+            addFloatingText(s.x,s.y-30,'+500 SHARK!','#ff4444',30);
+            shakeTimer=0.4; shakeIntensity=12;
+            playLevelUpSound();
+            // Respawn a new one
+            setTimeout(() => { if (sharks.length < SHARK_COUNT) spawnShark(); }, 5000);
+          } else if (player.shieldHits > 0) {
+            player.shieldHits--;
+            activePowerups.shield = 0;
+            // Knockback
+            player.velX = -dx/dist * 6;
+            player.velY = -dy/dist * 6;
+            spawnParticles(player.x,player.y,'#44ff88',20);
+            addNotification('Shield blocked shark!', '#44ff88');
+            shakeTimer=0.3; shakeIntensity=10;
+          } else {
+            if (player.invincible <= 0) respawn();
+          }
+        }
+
+        // Remove if too far and respawn
+        if (Math.hypot(s.x-player.x,s.y-player.y) > canvas.width*3) {
+          sharks.splice(i,1);
+          spawnShark();
+        }
+      }
+
+      while (fishes.length < FISH_COUNT) spawnFish(false);
+      // Keep shark count up
+      while (sharks.length < SHARK_COUNT) spawnShark();
+
+      updateCamera();
+      Object.keys(justPressed).forEach(k => delete justPressed[k]);
+
+      // Update stats
+      stats.totalEaten = Math.max(stats.totalEaten, fishEaten + stats.totalEaten);
+      if (score > stats.highScore) { stats.highScore = score; saveStats(); }
+    }
+
+    // === DRAW ===
+    function draw() {
+      ctx.save();
+      if (shakeTimer>0) { ctx.translate((Math.random()-0.5)*shakeIntensity*2,(Math.random()-0.5)*shakeIntensity*2); }
+
+      drawBackground();
+
+      ctx.save();
+      ctx.translate(-cam.x,-cam.y);
+
+      drawSeabed();
+      drawBarriers();
+      drawPlankton();
+      drawBubbles();
+
+      // Powerups
+      for (const p of powerups) {
+        const sx=p.x-cam.x; if(sx<-50||sx>canvas.width+50) continue;
+        drawPowerup(p);
+      }
+
+      // Fish sorted by size
+      const sorted=[...fishes].sort((a,b)=>b.size-a.size);
+      for (const f of sorted) {
+        const sx=f.x-cam.x,sy=f.y-cam.y;
+        if(sx<-f.size*3||sx>canvas.width+f.size*3||sy<-f.size*3||sy>canvas.height+f.size*3) continue;
+        drawFish(f.x,f.y,f.size,f.level,f.speed>0?1:-1,gameTime*3,f.tailPhase,false);
+        if (f.stunTimer > 0) drawStunEffect(f.x, f.y, f.size);
+      }
+
+      // Sharks
+      for (const s of sharks) {
+        const sx=s.x-cam.x;
+        if(sx<-s.size*2||sx>canvas.width+s.size*2) continue;
+        drawShark(s);
+      }
+
+      // Player
+      const pSize=Math.cbrt(player.volume);
+      if (player.invincible > 0) ctx.globalAlpha = 0.3 + 0.4 * Math.abs(Math.sin(gameTime * 8));
+      drawFish(player.x,player.y,pSize,player.level,player.dir,player.mouthOpen,player.tailPhase,true,stats.selectedSkin);
+      if (player.invincible > 0) ctx.globalAlpha = 1;
+
+      // Lateral line threat ring
+      if (player.hasLateralLine) {
+        const llStats = evoStats('lateral_line') || {lateralRange:500};
+        const ringR = llStats.lateralRange;
+        ctx.strokeStyle = `rgba(170,221,255,${0.1+Math.sin(gameTime*3)*0.05})`;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([8,8]);
+        ctx.beginPath(); ctx.arc(player.x, player.y, ringR, 0, Math.PI*2); ctx.stroke();
+        ctx.setLineDash([]);
+        // Highlight nearby threats
+        for (const f of fishes) {
+          if (f.level > player.level && Math.hypot(f.x-player.x,f.y-player.y) < ringR) {
+            ctx.strokeStyle = 'rgba(255,68,68,0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(f.x, f.y, f.size*1.3, 0, Math.PI*2); ctx.stroke();
+          }
+        }
+      }
+
+      // Electric shock ring effect (expanding ring when recently fired)
+      const shockVfxStats = player.hasShock ? (evoStats('electric_shock') || {shockCooldown:10, shockRadius:200}) : null;
+      if (shockVfxStats && player.electricCooldown > shockVfxStats.shockCooldown - 0.8) {
+        const ringProgress = (shockVfxStats.shockCooldown - player.electricCooldown) / 0.8;
+        const ringR = ringProgress * shockVfxStats.shockRadius;
+        ctx.strokeStyle = `rgba(255,204,0,${0.7*(1-ringProgress)})`;
+        ctx.lineWidth = 3 + (1-ringProgress)*4;
+        ctx.beginPath(); ctx.arc(player.x, player.y, ringR, 0, Math.PI*2); ctx.stroke();
+        ctx.strokeStyle = `rgba(255,255,150,${0.3*(1-ringProgress)})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(player.x, player.y, ringR*0.8, 0, Math.PI*2); ctx.stroke();
+      }
+
+      // Ink cloud effect (dark cloud when recently fired)
+      const inkVfxStats = player.hasInk ? (evoStats('octopus_ink') || {inkCooldown:15, inkRadius:300}) : null;
+      if (inkVfxStats && player.inkCooldown > inkVfxStats.inkCooldown - 1.0) {
+        const cloudProgress = (inkVfxStats.inkCooldown - player.inkCooldown) / 1.0;
+        const cloudR = 100 + cloudProgress * (inkVfxStats.inkRadius * 0.67);
+        ctx.fillStyle = `rgba(40,10,60,${0.4*(1-cloudProgress)})`;
+        ctx.beginPath(); ctx.arc(player.x, player.y, cloudR, 0, Math.PI*2); ctx.fill();
+      }
+
+      drawParticles();
+      drawFloatingTexts();
+
+      ctx.restore();
+
+      drawHUD();
+      drawNotifications();
+      drawSkinMenu();
+      drawUpgradeMenu();
+
+      // === OVERLAYS ===
+      if (gameState==='win') {
+        ctx.fillStyle='rgba(0,40,100,0.7)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.textAlign='center';
+        ctx.fillStyle='#ffd700'; ctx.font='bold 56px "Segoe UI",sans-serif';
+        ctx.fillText('KING OF THE SEA!', canvas.width/2, canvas.height/2-50);
+        ctx.fillStyle='#fff'; ctx.font='22px "Segoe UI",sans-serif';
+        ctx.fillText(`Score: ${score}  |  Fish: ${fishEaten}  |  Best Combo: ${maxCombo}x`, canvas.width/2, canvas.height/2);
+        ctx.fillStyle='#ffdd44'; ctx.font='18px "Segoe UI",sans-serif';
+        ctx.fillText(`High Score: ${stats.highScore}`, canvas.width/2, canvas.height/2+30);
+        ctx.font='16px "Segoe UI",sans-serif'; ctx.fillStyle='#aaa';
+        ctx.fillText('Tap or press SPACE to play again', canvas.width/2, canvas.height/2+65);
+      }
+
+      ctx.restore();
+    }
+
+    // === RESPAWN ===
+    function respawn() {
+      // Lose 50% of volume, floor at starting level
+      player.volume = Math.max(levelVolume(5), player.volume * 0.5);
+      player.level = volumeToLevel(player.volume);
+      player.speed = Math.max(2.5, 4.5 - player.level * 0.04);
+
+      // Reposition to a safe spot
+      player.x = WORLD_W / 2 + (Math.random() - 0.5) * 1000;
+      player.y = WORLD_H / 2 + (Math.random() - 0.5) * 600;
+      player.velX = 0;
+      player.velY = 0;
+
+      // Brief invincibility (2 seconds)
+      player.invincible = 2.0;
+
+      // Clear shield & active powerups (penalty)
+      player.shieldHits = 0;
+      activePowerups = {};
+
+      // Reset combo
+      combo = 0;
+      comboTimer = 0;
+
+      // Visual feedback
+      spawnParticles(player.x, player.y, '#ff4444', 30);
+      shakeTimer = 0.5;
+      shakeIntensity = 15;
+      playDeathSound();
+
+      const newLevel = player.level;
+      addNotification(`Respawned at Level ${newLevel}!`, '#ff8844');
+      addFloatingText(player.x, player.y - 50, '-50% VOLUME', '#ff4444', 24);
+    }
+
+    // === RESTART ===
+    function restart() {
+      stats.gamesPlayed++; stats.totalEaten += fishEaten;
+      if (score > stats.highScore) stats.highScore = score;
+      if (player.level > stats.maxLevel) stats.maxLevel = player.level;
+      if (maxCombo > stats.maxCombo) stats.maxCombo = maxCombo;
+      saveStats();
+
+      player.x=WORLD_W/2; player.y=WORLD_H/2; player.level=5; player.speed=4.5; player.dir=1; player.velX=0; player.velY=0; player.shieldHits=0; player.volume=levelVolume(5); player.invincible=0;
+      // Reset evolution state
+      player.evolutions=[]; player.evoLevels={}; player.activeAbilities=[];
+      player.speedMult=1.0; player.volumeAbsorbMult=1.0; player.eatingRangeMult=1.0;
+      player.hasLateralLine=false; player.hasLure=false; player.hasSpines=false;
+      player.hasInk=false; player.hasShock=false; player.hasBarracudaJaw=false;
+      player.spineTimer=0; player.inkCooldown=0; player.electricCooldown=0; player.burstTimer=0; player.inkSpeedBoost=0;
+      upgradeChoices=null;
+      score=0; fishEaten=0; gameTime=0; gameState='playing'; combo=0; comboTimer=0; maxCombo=0;
+      activePowerups={}; particles=[]; floatingTexts=[]; notifications=[]; powerups=[];
+      fishes=[]; sharks=[]; plankton=[];
+      for (let i=0;i<PLANKTON_COUNT;i++) spawnPlankton();
+      powerupSpawnTimer = 3;
+      for (let i=0;i<FISH_COUNT;i++) spawnFish(true);
+      for (let i=0;i<SHARK_COUNT;i++) spawnShark();
+    }
+
+    // === GAME LOOP ===
+    let lastTime = performance.now();
+    function gameLoop(now) {
+      const dt=Math.min((now-lastTime)/1000, 0.05);
+      lastTime=now;
+      update(dt); draw();
+      requestAnimationFrame(gameLoop);
+    }
+    requestAnimationFrame(gameLoop);
+  </script>
+</body>
+</html>
