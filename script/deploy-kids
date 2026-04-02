@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """Split rhuarkpetra/kids.md into posts, build, encrypt, and deploy."""
-import os, re, subprocess, sys
+import os, re, shutil, subprocess, sys
 from os.path import expanduser
 
-BLOG_DIR  = expanduser('~/blog')
-SOURCE    = os.path.join(BLOG_DIR, 'rhuarkpetra', 'kids.md')
-POSTS_DIR = os.path.join(BLOG_DIR, 'rhuarkpetra', '_posts')
-SITE_DIR  = os.path.join(BLOG_DIR, '_site')
+BLOG_DIR     = expanduser('~/blog')
+SOURCE       = os.path.join(BLOG_DIR, 'rhuarkpetra', 'kids.md')
+POSTS_DIR    = os.path.join(BLOG_DIR, 'rhuarkpetra', '_posts')
+SITE_DIR     = os.path.join(BLOG_DIR, '_site')
+WORKTREE_DIR = os.path.join(BLOG_DIR, '.deploy-worktree')
 
 KEY_CHARS = set('1234567890abcdefghijklmnopqrstuvwxyz'
                 'ABCDEFGHIJKLMNOPQRSTUVWXYZ@#%^-=,.~_+:')
+WEB_EXTENSIONS = {'.html', '.xml', '.json'}
+
 
 def is_header(lines, i):
     return lines[i].startswith('# ') and lines[i+1].startswith('#### ')
@@ -39,7 +42,7 @@ def split_posts():
             defs.append(lines[i])
         i += 1
     bodies.append(lines[lasthead:])
-    bodies.pop(0)  # drop preamble before first post
+    bodies.pop(0)
 
     for idx, fname in enumerate(fnames):
         path = os.path.join(POSTS_DIR, fname)
@@ -48,19 +51,18 @@ def split_posts():
                     f'secondary: secondary\n---\n\n')
             if defs:
                 f.write('\n'.join(defs) + '\n\n')
-            for line in bodies[idx][2:]:  # skip '# Title' and '#### date' lines
+            for line in bodies[idx][2:]:
                 f.write(line + '\n')
 
     stale = set(os.listdir(POSTS_DIR)) - set(fnames)
     for name in sorted(stale):
         print(f'Removing stale post: {name}')
         os.remove(os.path.join(POSTS_DIR, name))
-
     print(f'Split into {len(fnames)} posts.')
 
-def run(args):
-    print('+', ' '.join(args))
-    subprocess.run(args, check=True, cwd=BLOG_DIR)
+def run(args, cwd=BLOG_DIR):
+    print('+', ' '.join(str(a) for a in args))
+    subprocess.run(args, check=True, cwd=cwd)
 
 def encrypt_kids():
     password = os.environ.get('KIDS_PASSWORD')
@@ -73,9 +75,85 @@ def encrypt_kids():
                 fpath = os.path.join(root, fname)
                 run(['staticrypt', fpath, '--password', password, '-d', root])
 
+def strip_non_web(directory):
+    """Remove non-web files from _site/rhuarkpetra/ before deploying.
+    Images for posts should live in assets/kids/ (committed to master) so
+    their git objects already exist on the remote."""
+    removed, removed_bytes = 0, 0
+    for root, _, files in os.walk(directory):
+        for fname in files:
+            if os.path.splitext(fname)[1].lower() not in WEB_EXTENSIONS:
+                fpath = os.path.join(root, fname)
+                removed_bytes += os.path.getsize(fpath)
+                os.remove(fpath)
+                removed += 1
+    if removed:
+        print(f'Stripped {removed} files ({removed_bytes/1024/1024:.1f} MB) from {directory}')
+
+def deploy():
+    """Deploy _site/ to gh-pages via a git worktree.
+
+    Using a worktree (instead of ghp-import) means git reuses blob objects
+    already in this repo's object store — files shared with master (assets/,
+    etc.) won't be re-sent to the remote even on the first push.
+    """
+    # Clean up any worktree left over from a previous failed run
+    if os.path.exists(WORKTREE_DIR):
+        subprocess.run(['git', 'worktree', 'remove', '--force', WORKTREE_DIR],
+                       cwd=BLOG_DIR)
+
+    gh_pages_exists = bool(subprocess.run(
+        ['git', 'ls-remote', '--heads', 'origin', 'gh-pages'],
+        capture_output=True, text=True, cwd=BLOG_DIR
+    ).stdout.strip())
+
+    if gh_pages_exists:
+        run(['git', 'fetch', 'origin', 'gh-pages'])
+        run(['git', 'worktree', 'add', '-B', 'gh-pages', WORKTREE_DIR, 'origin/gh-pages'])
+    else:
+        run(['git', 'worktree', 'add', '--orphan', '-b', 'gh-pages', WORKTREE_DIR])
+
+    try:
+        # Replace worktree contents with _site/
+        for item in os.listdir(WORKTREE_DIR):
+            if item == '.git':
+                continue
+            path = os.path.join(WORKTREE_DIR, item)
+            shutil.rmtree(path) if os.path.isdir(path) else os.remove(path)
+
+        for item in os.listdir(SITE_DIR):
+            src = os.path.join(SITE_DIR, item)
+            dst = os.path.join(WORKTREE_DIR, item)
+            shutil.copytree(src, dst) if os.path.isdir(src) else shutil.copy2(src, dst)
+
+        # Prevent GitHub from re-running Jekyll on the pre-built files
+        open(os.path.join(WORKTREE_DIR, '.nojekyll'), 'w').close()
+
+        run(['git', 'add', '-A'], cwd=WORKTREE_DIR)
+
+        result = subprocess.run(
+            ['git', 'commit', '-m', 'Deploy kids blog'],
+            cwd=WORKTREE_DIR, capture_output=True, text=True
+        )
+        if result.returncode != 0:
+            if 'nothing to commit' in result.stdout + result.stderr:
+                print('Nothing changed, skipping push.')
+                return
+            print(result.stdout, result.stderr)
+            sys.exit(result.returncode)
+
+        run(['git', 'push', '-f', 'origin', 'gh-pages'], cwd=WORKTREE_DIR)
+    finally:
+        subprocess.run(['git', 'worktree', 'remove', '--force', WORKTREE_DIR],
+                       cwd=BLOG_DIR)
+        # Remove local gh-pages branch (it's just a deploy artifact)
+        subprocess.run(['git', 'branch', '-D', 'gh-pages'], cwd=BLOG_DIR)
+
+
 if __name__ == '__main__':
     split_posts()
     run(['bundle', 'exec', 'jekyll', 'build'])
     encrypt_kids()
-    run(['ghp-import', '-n', '-p', '-f', '_site'])
+    strip_non_web(os.path.join(SITE_DIR, 'rhuarkpetra'))
+    deploy()
     print('Deployed.')
