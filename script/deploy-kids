@@ -97,10 +97,12 @@ def deploy():
     already in this repo's object store — files shared with master (assets/,
     etc.) won't be re-sent to the remote even on the first push.
     """
-    # Clean up any worktree left over from a previous failed run
+    # Clean up any worktree/branch left over from a previous failed run
     if os.path.exists(WORKTREE_DIR):
         subprocess.run(['git', 'worktree', 'remove', '--force', WORKTREE_DIR],
                        cwd=BLOG_DIR)
+    subprocess.run(['git', 'branch', '-D', 'gh-pages'], cwd=BLOG_DIR,
+                   capture_output=True)  # ignore error if branch doesn't exist
 
     gh_pages_exists = bool(subprocess.run(
         ['git', 'ls-remote', '--heads', 'origin', 'gh-pages'],
