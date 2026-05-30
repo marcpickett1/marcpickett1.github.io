@@ -1,9 +1,264 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Spiral Calendar</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #fff; }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  canvas { display: block; width: 100vmin; height: 100vmin; }
+  #tooltip {
+    position: fixed;
+    background: #ffffe1;
+    color: #000;
+    border: 1px solid #555;
+    padding: 2px 6px;
+    font-family: sans-serif;
+    font-size: 12px;
+    pointer-events: none;
+    display: none;
+    white-space: nowrap;
+    z-index: 100;
+  }
+</style>
+</head>
 <body>
-<canvas id="myCanvas" width="2200" height="2200" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.</canvas>
-<p id="date"></p>
-<script src="uzumakal.js"></script>
+<canvas id="cal" width="2200" height="2200"></canvas>
+<div id="tooltip"></div>
+<script>
+"use strict";
+
+const R = 200;
+const YEAR_LENGTH = 365.2422;
+const MS_PER_DAY = 86400000;
+const START_DAY = Date.UTC(1976, 11, 21);
+const BIRTHDAY_OFFSET = Math.round((Date.UTC(1977, 2, 20) - START_DAY) / MS_PER_DAY);
+const END_DAY = Math.round((Date.UTC(2077, 2, 19) - START_DAY) / MS_PER_DAY) + 1; // exclusive
+
+// Equal-area day cells: r²(d) = A + B·d.
+const A = R * R;
+const NUM_YEARS = 100; // used only for decade-line iteration (0, 10, ..., 90)
+const CANVAS_R = 1000;
+const B = (CANVAS_R * CANVAS_R - A) / END_DAY;
+
+// Rotate the spiral so horizontal lands on the leading edge of 2075-03-20.
+const EQUINOX_DAY = Math.round((Date.UTC(2075, 2, 20) - START_DAY) / MS_PER_DAY);
+const PHASE_OFFSET = ((Math.PI / 2 - 2 * Math.PI * EQUINOX_DAY / YEAR_LENGTH) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+
+const MONTHCOLORS = [
+  [  0, 127, 255], [  0, 255, 255],
+  [  0, 255,   0], [127, 255,   0], [255, 255,   0],
+  [255, 127, 127], [255,  15, 191], [255,   0,   0],
+  [255, 191,   0], [255,  63,   0], [127,  31,   0],
+  [255, 255, 255],
+];
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
+                     'July', 'August', 'September', 'October', 'November', 'December'];
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+const CENTER = [1100, 1100];
+
+function _r(d) { return Math.sqrt(A + B * d); }
+
+function polarToCartesian(r, theta) {
+  theta += PHASE_OFFSET;
+  return [CENTER[0] - r * Math.sin(theta), CENTER[1] - r * Math.cos(theta)];
+}
+
+function buildPolygons() {
+  const polygons = [];
+  for (let day = BIRTHDAY_OFFSET; day < END_DAY; day++) {
+    const date = new Date(START_DAY + day * MS_PER_DAY);
+    const theta1 = 2 * Math.PI * day / YEAR_LENGTH;
+    const theta2 = 2 * Math.PI * (day + 1) / YEAR_LENGTH;
+    const [x1, y1] = polarToCartesian(_r(day), theta1);
+    const [x2, y2] = polarToCartesian(_r(day + YEAR_LENGTH), theta1);
+    const [x3, y3] = polarToCartesian(_r(day + 1), theta2);
+    const [x4, y4] = polarToCartesian(_r(day + 1 + YEAR_LENGTH), theta2);
+    const path = new Path2D();
+    path.moveTo(x1, y1);
+    path.lineTo(x2, y2);
+    path.lineTo(x4, y4);
+    path.lineTo(x3, y3);
+    path.closePath();
+    polygons.push({ path, date });
+  }
+  return polygons;
+}
+
+const polygons = buildPolygons();
+const canvas = document.getElementById('cal');
+const ctx = canvas.getContext('2d');
+const tooltipEl = document.getElementById('tooltip');
+
+let highlightStart = null;
+let highlightEnd = null;
+let highlightedSet = new Set();
+const bigDates = new Set();
+let redrawScheduled = false;
+
+function todayIndex() {
+  const t = new Date();
+  const todayUTC = Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
+  return Math.round((todayUTC - START_DAY) / MS_PER_DAY) - BIRTHDAY_OFFSET;
+}
+
+function draw() {
+  redrawScheduled = false;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const today = todayIndex();
+  let lastMonth = 0;
+
+  for (let i = 0; i < polygons.length; i++) {
+    const { path, date } = polygons[i];
+    const month = date.getUTCMonth(); // 0..11
+    let rgb = MONTHCOLORS[month].slice();
+    const dow = date.getUTCDay(); // 0=Sun, 6=Sat
+    if (dow === 0 || dow === 6) rgb = rgb.map(v => Math.floor(v / 2));
+    if (i < today) rgb = rgb.map(v => Math.floor((v + 255) / 2));
+    else if (i === today) rgb = [255, 255, 255];
+    if (highlightedSet.has(i)) rgb = rgb.map(v => Math.floor(v / 2));
+    if (bigDates.has(i)) rgb = [0, 0, 0];
+
+    ctx.fillStyle = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+    ctx.strokeStyle = 'black';
+    const newMonth = month + 1 !== lastMonth;
+    ctx.lineWidth = newMonth ? 2 : 1;
+    if (newMonth) lastMonth = month + 1;
+    ctx.fill(path);
+    ctx.stroke(path);
+  }
+
+  // Decade boundary spirals, starting/ending at the birthday angle.
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 3;
+  const steps = 360;
+  for (let decadeStart = 0; decadeStart < NUM_YEARS; decadeStart += 10) {
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const d = (decadeStart + i / steps) * YEAR_LENGTH + BIRTHDAY_OFFSET;
+      const thetaV = 2 * Math.PI * d / YEAR_LENGTH;
+      const [x, y] = polarToCartesian(_r(d), thetaV);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+
+  // Month names around the outside.
+  ctx.fillStyle = 'black';
+  ctx.font = 'bold 32px sans-serif';
+  ctx.textBaseline = 'alphabetic';
+  ctx.textAlign = 'left';
+  const theta_offset = 18;
+  const padding = 35;
+  for (let theta = 0; theta < 360; theta += 30) {
+    const monthName = MONTH_NAMES[theta / 30];
+    for (let ii = 0; ii < monthName.length; ii++) {
+      const charTheta = theta + ii * 2;
+      const theta2 = (charTheta + theta_offset) * Math.PI / 180;
+      const [x, y] = polarToCartesian(padding + _r(END_DAY), theta2);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(((180 - theta_offset) - charTheta) * Math.PI / 180);
+      ctx.fillText(monthName[ii], 0, 0);
+      ctx.restore();
+    }
+  }
+
+  // Compass rose: screen-aligned horizontal + vertical through the spiral center.
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 3;
+  const cx = CENTER[0], cy = CENTER[1];
+  ctx.beginPath();
+  ctx.moveTo(cx - 1200, cy);
+  ctx.lineTo(cx + 1200, cy);
+  ctx.moveTo(cx, cy - 1200);
+  ctx.lineTo(cx, cy + 1200);
+  ctx.stroke();
+}
+
+function scheduleRedraw() {
+  if (redrawScheduled) return;
+  redrawScheduled = true;
+  requestAnimationFrame(draw);
+}
+
+function mousePos(e) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: (e.clientX - rect.left) * canvas.width / rect.width,
+    y: (e.clientY - rect.top) * canvas.height / rect.height,
+  };
+}
+
+function findPolygon(x, y) {
+  for (let i = 0; i < polygons.length; i++) {
+    if (ctx.isPointInPath(polygons[i].path, x, y)) return i;
+  }
+  return -1;
+}
+
+canvas.addEventListener('mousedown', (e) => {
+  const { x, y } = mousePos(e);
+  const i = findPolygon(x, y);
+  if (i >= 0) highlightStart = i;
+});
+
+canvas.addEventListener('mouseup', (e) => {
+  if (highlightStart !== null) {
+    const { x, y } = mousePos(e);
+    const i = findPolygon(x, y);
+    if (i >= 0) highlightEnd = i;
+    if (highlightStart === highlightEnd) {
+      if (bigDates.has(highlightStart)) bigDates.delete(highlightStart);
+      else bigDates.add(highlightStart);
+    }
+  }
+  highlightStart = null;
+  highlightEnd = null;
+  highlightedSet = new Set();
+  scheduleRedraw();
+});
+
+canvas.addEventListener('mousemove', (e) => {
+  const { x, y } = mousePos(e);
+  const i = findPolygon(x, y);
+  if (i < 0) {
+    tooltipEl.style.display = 'none';
+    return;
+  }
+  const date = polygons[i].date;
+  let text = 'Date: ' + DAY_NAMES[date.getUTCDay()] + ' ' +
+    date.getUTCFullYear() + '-' +
+    String(date.getUTCMonth() + 1).padStart(2, '0') + '-' +
+    String(date.getUTCDate()).padStart(2, '0');
+  if (highlightStart !== null) {
+    highlightEnd = i;
+    const mind = Math.min(highlightStart, highlightEnd);
+    const maxd = Math.max(highlightStart, highlightEnd);
+    highlightedSet = new Set();
+    for (let k = mind; k <= maxd; k++) highlightedSet.add(k);
+    const dayCount = maxd - mind;
+    const years = Math.floor(dayCount / YEAR_LENGTH);
+    const remDays = Math.floor(dayCount % YEAR_LENGTH);
+    text += ' (';
+    if (years > 1) text += years + ' years, ';
+    else if (years > 0) text += years + ' year, ';
+    text += remDays + ' days)';
+    scheduleRedraw();
+  }
+  tooltipEl.style.display = 'block';
+  tooltipEl.style.left = (e.clientX + 12) + 'px';
+  tooltipEl.style.top = (e.clientY + 12) + 'px';
+  tooltipEl.textContent = text;
+});
+
+canvas.addEventListener('mouseleave', () => {
+  tooltipEl.style.display = 'none';
+});
+
+draw();
+</script>
 </body>
 </html>
