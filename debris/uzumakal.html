@@ -31,19 +31,31 @@
 const R = 200;
 const YEAR_LENGTH = 365.2422;
 const MS_PER_DAY = 86400000;
-const START_DAY = Date.UTC(1976, 11, 21);
-const BIRTHDAY_OFFSET = Math.round((Date.UTC(1977, 2, 20) - START_DAY) / MS_PER_DAY);
-const END_DAY = Math.round((Date.UTC(2057, 2, 19) - START_DAY) / MS_PER_DAY) + 1; // exclusive
+
+const BIRTHDAY = Date.UTC(1977, 2, 20);
+const NUM_YEARS = 80;
+
+const BIRTHDAY_DATE = new Date(BIRTHDAY);
+const BIRTHDAY_YEAR = BIRTHDAY_DATE.getUTCFullYear();
+// Winter solstice (~Dec 21) at or before BIRTHDAY.
+const START_DAY = Date.UTC(
+  BIRTHDAY_YEAR - (Date.UTC(BIRTHDAY_YEAR, 11, 21) > BIRTHDAY ? 1 : 0),
+  11, 21
+);
+const BIRTHDAY_OFFSET = Math.round((BIRTHDAY - START_DAY) / MS_PER_DAY);
+const END_DAY = Math.round((Date.UTC(
+  BIRTHDAY_YEAR + NUM_YEARS,
+  BIRTHDAY_DATE.getUTCMonth(),
+  BIRTHDAY_DATE.getUTCDate()
+) - START_DAY) / MS_PER_DAY); // exclusive
 
 // Equal-area day cells: r²(d) = A + B·d.
 const A = R * R;
-const NUM_YEARS = 80; // used only for decade-line iteration (0, 10, ..., 70)
 const CANVAS_R = 1000;
 const B = (CANVAS_R * CANVAS_R - A) / END_DAY;
 
-// Rotate the spiral so horizontal lands on the leading edge of 2075-03-20.
-const EQUINOX_DAY = Math.round((Date.UTC(2075, 2, 20) - START_DAY) / MS_PER_DAY);
-const PHASE_OFFSET = ((Math.PI / 2 - 2 * Math.PI * EQUINOX_DAY / YEAR_LENGTH) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+// Rotate the spiral so horizontal lands on the leading edge of BIRTHDAY (spring equinox).
+const PHASE_OFFSET = ((Math.PI / 2 - 2 * Math.PI * BIRTHDAY_OFFSET / YEAR_LENGTH) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
 
 const MONTHCOLORS = [
   [  0, 127, 255], [  0, 255, 255],
