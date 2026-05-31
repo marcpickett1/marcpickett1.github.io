@@ -28,22 +28,37 @@
 <script>
 "use strict";
 
+const BIRTHDAY = [1977, 3, 20];
+// const BIRTHDAY = [2014, 10, 29];
+// const BIRTHDAY = [2016, 7, 25];
+
+const NUM_YEARS = 80;
 const R = 200;
 const YEAR_LENGTH = 365.2422;
 const MS_PER_DAY = 86400000;
-const START_DAY = Date.UTC(1976, 11, 21);
-const BIRTHDAY_OFFSET = Math.round((Date.UTC(1977, 2, 20) - START_DAY) / MS_PER_DAY);
-const END_DAY = Math.round((Date.UTC(2057, 2, 19) - START_DAY) / MS_PER_DAY) + 1; // exclusive
+
+const [BY, BM, BD] = BIRTHDAY;
+const BIRTHDAY_MS = Date.UTC(BY, BM - 1, BD);
+// Winter solstice (~Dec 21) at or before BIRTHDAY.
+const START_DAY = Date.UTC(
+  BY - (Date.UTC(BY, 11, 21) > BIRTHDAY_MS ? 1 : 0),
+  11, 21
+);
+const BIRTHDAY_OFFSET = Math.round((BIRTHDAY_MS - START_DAY) / MS_PER_DAY);
+const END_DAY = Math.round(
+  (Date.UTC(BY + NUM_YEARS, BM - 1, BD) - START_DAY) / MS_PER_DAY
+); // exclusive
 
 // Equal-area day cells: r²(d) = A + B·d.
 const A = R * R;
-const NUM_YEARS = 80; // used only for decade-line iteration (0, 10, ..., 70)
 const CANVAS_R = 1000;
 const B = (CANVAS_R * CANVAS_R - A) / END_DAY;
 
-// Rotate the spiral so horizontal lands on the leading edge of 2075-03-20.
-const EQUINOX_DAY = Math.round((Date.UTC(2075, 2, 20) - START_DAY) / MS_PER_DAY);
-const PHASE_OFFSET = ((Math.PI / 2 - 2 * Math.PI * EQUINOX_DAY / YEAR_LENGTH) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+// Rotate so the spring equinox lands on the horizontal line. 89 days from
+// Dec 21 → March 20 is ~2.3° shy of a quarter turn, so we nudge by that much.
+// Winter solstice ends up a hair (~2.3°) left of 12 o'clock.
+const SOLSTICE_TO_EQUINOX_DAYS = 89;
+const PHASE_OFFSET = Math.PI / 2 - 2 * Math.PI * SOLSTICE_TO_EQUINOX_DAYS / YEAR_LENGTH;
 
 const MONTHCOLORS = [
   [  0, 127, 255], [  0, 255, 255],
