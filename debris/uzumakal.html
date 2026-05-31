@@ -28,34 +28,37 @@
 <script>
 "use strict";
 
+const BIRTHDAY = [1977, 3, 20];
+// const BIRTHDAY = [2014, 10, 29];
+// const BIRTHDAY = [2016, 7, 25];
+
+const NUM_YEARS = 80;
 const R = 200;
 const YEAR_LENGTH = 365.2422;
 const MS_PER_DAY = 86400000;
 
-const BIRTHDAY = Date.UTC(1977, 2, 20);
-const NUM_YEARS = 80;
-
-const BIRTHDAY_DATE = new Date(BIRTHDAY);
-const BIRTHDAY_YEAR = BIRTHDAY_DATE.getUTCFullYear();
+const [BY, BM, BD] = BIRTHDAY;
+const BIRTHDAY_MS = Date.UTC(BY, BM - 1, BD);
 // Winter solstice (~Dec 21) at or before BIRTHDAY.
 const START_DAY = Date.UTC(
-  BIRTHDAY_YEAR - (Date.UTC(BIRTHDAY_YEAR, 11, 21) > BIRTHDAY ? 1 : 0),
+  BY - (Date.UTC(BY, 11, 21) > BIRTHDAY_MS ? 1 : 0),
   11, 21
 );
-const BIRTHDAY_OFFSET = Math.round((BIRTHDAY - START_DAY) / MS_PER_DAY);
-const END_DAY = Math.round((Date.UTC(
-  BIRTHDAY_YEAR + NUM_YEARS,
-  BIRTHDAY_DATE.getUTCMonth(),
-  BIRTHDAY_DATE.getUTCDate()
-) - START_DAY) / MS_PER_DAY); // exclusive
+const BIRTHDAY_OFFSET = Math.round((BIRTHDAY_MS - START_DAY) / MS_PER_DAY);
+const END_DAY = Math.round(
+  (Date.UTC(BY + NUM_YEARS, BM - 1, BD) - START_DAY) / MS_PER_DAY
+); // exclusive
 
 // Equal-area day cells: r²(d) = A + B·d.
 const A = R * R;
 const CANVAS_R = 1000;
 const B = (CANVAS_R * CANVAS_R - A) / END_DAY;
 
-// Rotate the spiral so horizontal lands on the leading edge of BIRTHDAY (spring equinox).
-const PHASE_OFFSET = ((Math.PI / 2 - 2 * Math.PI * BIRTHDAY_OFFSET / YEAR_LENGTH) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+// Rotate so the spring equinox lands on the horizontal line. 89 days from
+// Dec 21 → March 20 is ~2.3° shy of a quarter turn, so we nudge by that much.
+// Winter solstice ends up a hair (~2.3°) left of 12 o'clock.
+const SOLSTICE_TO_EQUINOX_DAYS = 89;
+const PHASE_OFFSET = Math.PI / 2 - 2 * Math.PI * SOLSTICE_TO_EQUINOX_DAYS / YEAR_LENGTH;
 
 const MONTHCOLORS = [
   [  0, 127, 255], [  0, 255, 255],
