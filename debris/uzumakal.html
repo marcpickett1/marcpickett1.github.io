@@ -111,6 +111,7 @@ let highlightEnd = null;
 let highlightedSet = new Set();
 const bigDates = new Set();
 let redrawScheduled = false;
+let lastDrawnToday = null;
 
 function todayIndex() {
   const t = new Date();
@@ -122,6 +123,7 @@ function draw() {
   redrawScheduled = false;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const today = todayIndex();
+  lastDrawnToday = today;
   let lastMonth = 0;
 
   for (let i = 0; i < polygons.length; i++) {
@@ -275,16 +277,15 @@ canvas.addEventListener('mouseleave', () => {
 
 draw();
 
-function msUntilNextMidnight() {
-  const now = new Date();
-  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5);
-  return next - now;
+// Poll for the day rolling over. A single long setTimeout to midnight is
+// unreliable across sleep/suspend, and a redraw routed through
+// requestAnimationFrame can stall while the tab is backgrounded. Checking
+// once a minute and drawing directly on change keeps today's cell current.
+function refreshIfDayChanged() {
+  if (todayIndex() !== lastDrawnToday) draw();
 }
-function scheduleMidnightRedraw() {
-  setTimeout(() => { scheduleRedraw(); scheduleMidnightRedraw(); }, msUntilNextMidnight());
-}
-scheduleMidnightRedraw();
-document.addEventListener('visibilitychange', () => { if (!document.hidden) scheduleRedraw(); });
+setInterval(refreshIfDayChanged, 60000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshIfDayChanged(); });
 </script>
 </body>
 </html>
