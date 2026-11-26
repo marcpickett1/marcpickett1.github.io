@@ -14,9 +14,21 @@ bundle exec jekyll serve --livereload     # Local preview at http://localhost:40
 bundle exec jekyll serve --drafts         # Include drafts in preview
 bundle exec jekyll build                  # Build site to _site/
 script/cibuild                            # Full CI build (also packages theme gem)
+KIDS_PASSWORD=... script/deploy-kids      # Build, encrypt, and deploy the kids' section
 ```
 
 A warning-free `bundle exec jekyll build` is the minimum acceptance test.
+
+## Deployment
+
+- **Main site:** GitHub Pages builds the `master` branch directly. Pushing to
+  master is the deploy. There is no gh-pages step.
+- **Kids' section (`rhuarkpetra/`):** gitignored and password-protected, so it
+  is built separately by `script/deploy-kids`, which encrypts every page with
+  staticrypt and force-pushes the output to the `marcpickett1/rhuarkpetra`
+  repo. GitHub serves that repo as a project site at
+  marcpickett.com/rhuarkpetra/. Run it only when kids' content changes.
+- `rhuarkpetra/pics/` (tens of GB of photos and video) is never deployed.
 
 ## Architecture
 

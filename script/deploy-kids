@@ -1,17 +1,38 @@
 #!/usr/bin/env python3
-"""Split rhuarkpetra/kids.md into posts, build, encrypt, and deploy."""
+"""Build and deploy the password-protected kids' section as its own site.
+
+The main site (marcpickett.com) is built by GitHub Pages straight from the
+master branch, so ordinary posts need no deploy step at all. This script only
+handles rhuarkpetra/, which is gitignored and must be encrypted before it is
+published. The output goes to the separate repo marcpickett1/rhuarkpetra,
+which GitHub serves as a project site at marcpickett.com/rhuarkpetra/.
+
+Steps: split rhuarkpetra/kids.md into posts, assemble a small Jekyll source
+tree, build it with baseurl /rhuarkpetra, encrypt every page with staticrypt,
+and force-push the result to the rhuarkpetra repo's main branch.
+"""
 import os, re, shutil, subprocess, sys
 from os.path import expanduser
 
-BLOG_DIR     = expanduser('~/blog')
-SOURCE       = os.path.join(BLOG_DIR, 'rhuarkpetra', 'kids.md')
-POSTS_DIR    = os.path.join(BLOG_DIR, 'rhuarkpetra', '_posts')
-SITE_DIR     = os.path.join(BLOG_DIR, '_site')
-WORKTREE_DIR = os.path.join(BLOG_DIR, '.deploy-worktree')
+BLOG_DIR    = expanduser('~/blog')
+KIDS_DIR    = os.path.join(BLOG_DIR, 'rhuarkpetra')
+SOURCE      = os.path.join(KIDS_DIR, 'kids.md')
+POSTS_DIR   = os.path.join(KIDS_DIR, '_posts')
+BUILD_SRC   = os.path.join(BLOG_DIR, '.kids-src')    # assembled Jekyll source
+BUILD_SITE  = os.path.join(BLOG_DIR, '.kids-site')   # built output
+DEPLOY_REPO = 'git@github.com:marcpickett1/rhuarkpetra.git'
+DEPLOY_BRANCH = 'main'
 
 KEY_CHARS = set('1234567890abcdefghijklmnopqrstuvwxyz'
                 'ABCDEFGHIJKLMNOPQRSTUVWXYZ@#%^-=,.~_+:')
-WEB_EXTENSIONS = {'.html', '.xml', '.json'}
+WEB_EXTENSIONS = {'.html', '.xml', '.json', '.css'}
+
+KIDS_CONFIG = """\
+title: More Debris
+url: https://marcpickett.com
+baseurl: /rhuarkpetra
+theme: jekyll-theme-slate
+"""
 
 
 def is_header(lines, i):
@@ -44,6 +65,7 @@ def split_posts():
     bodies.append(lines[lasthead:])
     bodies.pop(0)
 
+    os.makedirs(POSTS_DIR, exist_ok=True)
     for idx, fname in enumerate(fnames):
         path = os.path.join(POSTS_DIR, fname)
         with open(path, 'w') as f:
@@ -64,98 +86,81 @@ def run(args, cwd=BLOG_DIR):
     print('+', ' '.join(str(a) for a in args))
     subprocess.run(args, check=True, cwd=cwd)
 
-def encrypt_kids():
+def has_front_matter(path):
+    with open(path, errors='replace') as f:
+        return f.readline().strip() == '---'
+
+def assemble_source():
+    """Build a self-contained Jekyll source tree for the kids' site.
+    Layouts and styles come from the main blog so the two sites match.
+    Only pages are copied, never the photos and videos in pics/ (54 GB)."""
+    shutil.rmtree(BUILD_SRC, ignore_errors=True)
+    os.makedirs(BUILD_SRC)
+    with open(os.path.join(BUILD_SRC, '_config.yml'), 'w') as f:
+        f.write(KIDS_CONFIG)
+    for d in ('_layouts', '_sass'):
+        shutil.copytree(os.path.join(BLOG_DIR, d), os.path.join(BUILD_SRC, d))
+    os.makedirs(os.path.join(BUILD_SRC, 'assets', 'css'))
+    shutil.copy2(os.path.join(BLOG_DIR, 'assets', 'css', 'style.scss'),
+                 os.path.join(BUILD_SRC, 'assets', 'css', 'style.scss'))
+    shutil.copytree(POSTS_DIR, os.path.join(BUILD_SRC, '_posts'))
+    for name in os.listdir(KIDS_DIR):
+        src = os.path.join(KIDS_DIR, name)
+        if name.endswith('.md') and os.path.isfile(src) and has_front_matter(src):
+            shutil.copy2(src, os.path.join(BUILD_SRC, name))
+    pics_html = [n for n in os.listdir(os.path.join(KIDS_DIR, 'pics'))
+                 if n.endswith('.html')]
+    if pics_html:
+        os.makedirs(os.path.join(BUILD_SRC, 'pics'))
+        for n in pics_html:
+            shutil.copy2(os.path.join(KIDS_DIR, 'pics', n),
+                         os.path.join(BUILD_SRC, 'pics', n))
+    print(f'Assembled source in {BUILD_SRC}')
+
+def build():
+    shutil.rmtree(BUILD_SITE, ignore_errors=True)
+    run(['bundle', 'exec', 'jekyll', 'build', '-s', BUILD_SRC, '-d', BUILD_SITE])
+
+def encrypt():
     password = os.environ.get('KIDS_PASSWORD')
     if not password:
         sys.exit('KIDS_PASSWORD environment variable is not set.')
-    kids_site = os.path.join(SITE_DIR, 'rhuarkpetra')
-    for root, _, files in os.walk(kids_site):
+    count = 0
+    for root, _, files in os.walk(BUILD_SITE):
         for fname in files:
             if fname.endswith('.html'):
                 fpath = os.path.join(root, fname)
-                run(['staticrypt', fpath, '--password', password, '-d', root])
+                subprocess.run(['staticrypt', fpath, '--password', password,
+                                '-d', root], check=True, capture_output=True)
+                count += 1
+    print(f'Encrypted {count} pages.')
 
-def strip_non_web(directory):
-    """Remove non-web files from _site/rhuarkpetra/ before deploying.
-    Images for posts should live in assets/kids/ (committed to master) so
-    their git objects already exist on the remote."""
-    removed, removed_bytes = 0, 0
-    for root, _, files in os.walk(directory):
+def strip_non_web():
+    """Safety net: never publish anything but web files."""
+    removed = 0
+    for root, _, files in os.walk(BUILD_SITE):
         for fname in files:
             if os.path.splitext(fname)[1].lower() not in WEB_EXTENSIONS:
-                fpath = os.path.join(root, fname)
-                removed_bytes += os.path.getsize(fpath)
-                os.remove(fpath)
+                os.remove(os.path.join(root, fname))
                 removed += 1
     if removed:
-        print(f'Stripped {removed} files ({removed_bytes/1024/1024:.1f} MB) from {directory}')
+        print(f'Stripped {removed} non-web files.')
 
 def deploy():
-    """Deploy _site/ to gh-pages via a git worktree.
-
-    Using a worktree (instead of ghp-import) means git reuses blob objects
-    already in this repo's object store — files shared with master (assets/,
-    etc.) won't be re-sent to the remote even on the first push.
-    """
-    # Clean up any worktree/branch left over from a previous failed run
-    if os.path.exists(WORKTREE_DIR):
-        subprocess.run(['git', 'worktree', 'remove', '--force', WORKTREE_DIR],
-                       cwd=BLOG_DIR)
-    subprocess.run(['git', 'branch', '-D', 'gh-pages'], cwd=BLOG_DIR,
-                   capture_output=True)  # ignore error if branch doesn't exist
-
-    gh_pages_exists = bool(subprocess.run(
-        ['git', 'ls-remote', '--heads', 'origin', 'gh-pages'],
-        capture_output=True, text=True, cwd=BLOG_DIR
-    ).stdout.strip())
-
-    if gh_pages_exists:
-        run(['git', 'fetch', 'origin', 'gh-pages'])
-        run(['git', 'worktree', 'add', '-B', 'gh-pages', WORKTREE_DIR, 'origin/gh-pages'])
-    else:
-        run(['git', 'worktree', 'add', '--orphan', '-b', 'gh-pages', WORKTREE_DIR])
-
-    try:
-        # Replace worktree contents with _site/
-        for item in os.listdir(WORKTREE_DIR):
-            if item == '.git':
-                continue
-            path = os.path.join(WORKTREE_DIR, item)
-            shutil.rmtree(path) if os.path.isdir(path) else os.remove(path)
-
-        for item in os.listdir(SITE_DIR):
-            src = os.path.join(SITE_DIR, item)
-            dst = os.path.join(WORKTREE_DIR, item)
-            shutil.copytree(src, dst) if os.path.isdir(src) else shutil.copy2(src, dst)
-
-        # Prevent GitHub from re-running Jekyll on the pre-built files
-        open(os.path.join(WORKTREE_DIR, '.nojekyll'), 'w').close()
-
-        run(['git', 'add', '-A'], cwd=WORKTREE_DIR)
-
-        result = subprocess.run(
-            ['git', 'commit', '-m', 'Deploy kids blog'],
-            cwd=WORKTREE_DIR, capture_output=True, text=True
-        )
-        if result.returncode != 0:
-            if 'nothing to commit' in result.stdout + result.stderr:
-                print('Nothing changed, skipping push.')
-                return
-            print(result.stdout, result.stderr)
-            sys.exit(result.returncode)
-
-        run(['git', 'push', '-f', 'origin', 'gh-pages'], cwd=WORKTREE_DIR)
-    finally:
-        subprocess.run(['git', 'worktree', 'remove', '--force', WORKTREE_DIR],
-                       cwd=BLOG_DIR)
-        # Remove local gh-pages branch (it's just a deploy artifact)
-        subprocess.run(['git', 'branch', '-D', 'gh-pages'], cwd=BLOG_DIR)
+    """Push the built site as a single fresh commit to the rhuarkpetra repo."""
+    open(os.path.join(BUILD_SITE, '.nojekyll'), 'w').close()
+    git = lambda *a: run(['git', *a], cwd=BUILD_SITE)
+    git('init', '-q', '-b', DEPLOY_BRANCH)
+    git('add', '-A')
+    git('commit', '-q', '-m', 'Deploy kids site')
+    git('push', '-f', DEPLOY_REPO, f'HEAD:{DEPLOY_BRANCH}')
 
 
 if __name__ == '__main__':
     split_posts()
-    run(['bundle', 'exec', 'jekyll', 'build'])
-    encrypt_kids()
-    strip_non_web(os.path.join(SITE_DIR, 'rhuarkpetra'))
+    assemble_source()
+    build()
+    encrypt()
+    strip_non_web()
     deploy()
-    print('Deployed.')
+    print('Deployed. Live in a minute or two at https://marcpickett.com/rhuarkpetra/')
