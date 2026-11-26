@@ -26,7 +26,7 @@ title: Marc's Debris
 * [Montezuma's Revenge in under 5KB](montezuma): A hand-crafted script that achieves infinite score in Atari 2600 Montezuma's Revenge.
 * [Europe Debris](./debris/europe.pdf) (2006): Also on [Amazon](http://www.amazon.com/EUROPE-DEBRIS-Epic-Gabe-Europe/dp/0557033764).
 * [A Memex on The Meaning of Life](./debris/meaning.pdf)
-* [MC Penrose](./debris/penrose.html) [The original](./debris/penscher.jpg) was from 1995.  I finally asked an agent to make it procedurally generated.
+* [MC Penrose](./debris/penrose.html) [The original](./debris/penescher.jpg) was from 1995.  I finally asked an agent to make it procedurally generated.
 
 (Some [help for Marc](marchelp) and [my main page](index).)
 
